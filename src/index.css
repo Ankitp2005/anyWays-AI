@@ -74,3 +74,107 @@
     color: hsl(var(--foreground));
   }
 }
+
+/* ─── Animation keyframes ──────────────────────────────────── */
+
+@keyframes animate-in-keyframe {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-keyframe {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slide-in-from-right {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-from-bottom {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-from-top {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes accordion-open {
+  from { max-height: 0; opacity: 0; }
+  to   { max-height: 2000px; opacity: 1; }
+}
+
+@keyframes accordion-close {
+  from { max-height: 2000px; opacity: 1; }
+  to   { max-height: 0; opacity: 0; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ─── Utility animation classes ────────────────────────────── */
+
+.animate-in {
+  animation: animate-in-keyframe 0.4s ease-out both;
+}
+
+.fade-in {
+  animation: fade-in-keyframe 0.3s ease-out both;
+}
+
+.slide-in-from-right-4 {
+  animation: slide-in-from-right 0.3s ease-out both;
+}
+
+.slide-in-from-bottom-4 {
+  animation: slide-in-from-bottom 0.5s ease-out both;
+}
+
+.slide-in-from-top-2 {
+  animation: slide-in-from-top 0.25s ease-out both;
+}
+
+.accordion-content-open {
+  animation: accordion-open 0.35s ease-out both;
+  overflow: hidden;
+}
+
+.accordion-content-closed {
+  animation: accordion-close 0.25s ease-out both;
+  overflow: hidden;
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--secondary)) 25%,
+    hsl(var(--muted)) 50%,
+    hsl(var(--secondary)) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ─── Scrollbar styling ────────────────────────────────────── */
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 999px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}

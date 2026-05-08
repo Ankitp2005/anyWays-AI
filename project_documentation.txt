@@ -1,0 +1,68 @@
+# anyWays - Project Documentation
+
+## 1. Project Overview & Core Idea
+**Project Name**: anyWays
+**Core Idea**: "anyWays" is a Place Intelligence platform designed to provide ground truth data about real-world locations for AI agents, copilots, robotics systems, and logistics applications.
+**Vision**: To enable AI systems to understand, validate, and act on real-world places with confidence, moving beyond static map pins to dynamic, validated intelligence.
+
+## 2. Origin & Inception
+The project started as a web application to demonstrate the capabilities of the Place Intelligence platform.
+- **Initial Setup**: Built using a modern frontend stack (React 19 + TypeScript + Vite) to ensure performance and type safety.
+- **Goal**: To create a "Developer Console" experience where users can view place data, manage API keys, and monitor validation signals, serving as the interface for the underlying intelligence system.
+
+## 3. Current Status & Achievements
+We have successfully implemented the MVP (Minimum Viable Product) of the frontend application.
+
+### implemented Features:
+1.  **Marketing Landing Page**:
+    - a responsive public-facing page explaining the value proposition.
+    - Features sections highlighting Live Signal Monitoring and Confidence Validation.
+    - API preview section.
+
+2.  **Developer Dashboard**:
+    - A comprehensive dashboard layout with a sidebar navigation.
+    - **Dashboard Overview**: Displays key metrics (Total Places, API Usage) and recent activity.
+    - **Places Intelligence**: A searchable, filterable table of places with status indicators (OPEN, CLOSED, etc.).
+    - **Place Details**: Detailed view of a specific place showing validation signals (Foot Traffic, OCR Menu, etc.) and confidence scores.
+    - **API Key Management**: Fully functional section to generate, copy, and revoke API keys. (Recently fixed and integrated).
+    - **Settings**: Configuration interface (UI placeholder).
+
+3.  **Technical Foundation**:
+    - **State Management**: Built with React Context API (`AppContext`) for global state.
+    - **Persistence**: Implemented a `StorageService` to persist data (Places, API Keys) to the browser's `localStorage`, allowing the app to retain state between reloads without a backend.
+    - **Design System**: A custom design system built on Tailwind CSS 4, featuring a responsive layout, dark mode compatibility, and consistent component styling.
+    - **Routing**: Custom view management system switching between Marketing and Dashboard views.
+
+## 4. Technical Architecture
+- **Framework**: React 19.2.0
+- **Language**: TypeScript 5.9.3
+- **Build Tool**: Vite 7.2.4
+- **Styling**: Tailwind CSS 4.1.18, PostCSS
+- **Icons**: Lucide React
+- **Utils**: `uuid` for ID generation, `date-fns` for time formatting, `clsx`/`tailwind-merge` for class management.
+
+## 5. Recent Updates
+- **API Key Fix**: Resolved an issue where generating API keys would fail due to `crypto.randomUUID` compatibility. Replaced with `uuid` v4 for robust generation.
+- **Component Integration**: Fixed a regression where the Dashboard was using a static placeholder for the API Keys section instead of the functional component.
+
+## 6. Future Roadmap
+The project has a clear roadmap for evolution from a frontend prototype to a full-stack platform.
+
+### Phase 2: Enhanced Frontend
+- **Real-time Signal Monitoring**: Dashboard widgets that update live.
+- **Advanced Filtering**: More granular control over place search.
+- **Data Import/Export**: Capability to bulk upload place data.
+
+### Phase 3: Backend Integration (The "Real" Platform)
+- **API Layer**: Replacing `localStorage` with a real backend API.
+- **Authentication**: Implementing JWT-based auth and user accounts.
+- **Live Data**: Connecting to real signal sources (Mobility data, OCR inputs).
+- **Machine Learning**: Integrating actual ML models for confidence scoring.
+
+### Phase 4: Enterprise & Scale
+- **Multi-tenancy**: Support for teams and organizations.
+- **API Quotas**: Rate limiting and usage tracking for the SDK.
+- **Mobile App**: Extension to mobile platforms for field validation.
+
+## 7. Conclusion
+"anyWays" has evolved from a concept into a functional, interactive frontend prototype. It demonstrates the core workflows of validating place data and managing access via API keys, setting a solid foundation for the integration of real backend intelligence services.

@@ -1,20 +1,24 @@
 import React from 'react';
-import { Activity, ShieldCheck, MapPin, AlertCircle, TrendingUp } from 'lucide-react';
-import type { Place } from '../models/types';
+import { MapPin, ShieldCheck, Activity, AlertCircle, TrendingUp } from 'lucide-react';
 import { cn } from '../utils/cn';
+import { Place } from '../models/types';
+import { SystemHealthPanel } from './dashboard/SystemHealthPanel';
 
 interface DashboardOverviewProps {
     places: Place[];
 }
 
 export const DashboardOverview: React.FC<DashboardOverviewProps> = ({ places }) => {
-    // Calculate simple metrics mock
+    // ... logic remains same ...
     const totalPlaces = places.length;
-    const verifiedPlaces = places.filter(p => p.validationState === 'CONFIRMED').length;
-    const validationRate = totalPlaces > 0 ? Math.round((verifiedPlaces / totalPlaces) * 100) : 0;
-    const activeSignals = places.reduce((acc, p) => acc + p.signals.length, 0);
+    const openPlaces = places.filter(p => p.status === 'OPEN').length;
+    const avgConfidence = totalPlaces > 0
+        ? Math.round(places.reduce((acc, p) => acc + ((p as any).confidence_score ?? 0), 0) / totalPlaces)
+        : 0;
+    const lowConfidencePlaces = places.filter(p => ((p as any).confidence_score ?? 0) < 40).length;
 
     const metrics = [
+        // ... (existing metrics array)
         {
             label: 'Monitored Places',
             value: totalPlaces,
@@ -24,24 +28,24 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({ places }) 
             bg: 'bg-blue-500/10'
         },
         {
-            label: 'Validation Accuracy',
-            value: `${validationRate}%`,
+            label: 'Open Places',
+            value: openPlaces,
             change: '+2.4%',
             icon: ShieldCheck,
             color: 'text-green-500',
             bg: 'bg-green-500/10'
         },
         {
-            label: 'Live Signals (24h)',
-            value: activeSignals * 142, // Mock multiplier for visual scale
+            label: 'Avg Confidence Score',
+            value: `${avgConfidence}%`,
             change: '+8%',
             icon: Activity,
             color: 'text-purple-500',
             bg: 'bg-purple-500/10'
         },
         {
-            label: 'Pending Review',
-            value: places.filter(p => p.validationState === 'FLAGGED').length,
+            label: 'Low Confidence (<40)',
+            value: lowConfidencePlaces,
             change: '-5%',
             icon: AlertCircle,
             color: 'text-orange-500',
@@ -76,41 +80,47 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({ places }) 
                 ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Recent Places */}
                 <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
-                    <h3 className="font-semibold mb-4">Recent Signals</h3>
+                    <h3 className="font-semibold mb-4 text-sm">Recent Places</h3>
                     <div className="space-y-4">
-                        {places.flatMap(p => p.signals.map(s => ({ ...s, placeName: p.name }))).slice(0, 5).map((signal, idx) => (
-                            <div key={idx} className="flex items-center gap-3 text-sm">
-                                <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                                <span className="font-medium text-foreground">{signal.type.replace('_', ' ')}</span>
-                                <span className="text-muted-foreground">detected at</span>
-                                <span className="font-medium text-foreground">{signal.placeName}</span>
-                                <span className="ml-auto text-xs text-muted-foreground/70">{new Date(signal.timestamp).toLocaleTimeString()}</span>
+                        {places.slice(0, 5).map((place) => (
+                            <div key={place.id} className="flex items-center gap-3 text-sm">
+                                <div className="w-2 h-2 rounded-full bg-primary" />
+                                <span className="font-medium text-foreground truncate max-w-[150px]">{place.name}</span>
+                                <span className={cn("ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full",
+                                    place.status === 'OPEN' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                                )}>{place.status}</span>
                             </div>
                         ))}
-                        {places.flatMap(p => p.signals).length === 0 && (
-                            <div className="text-muted-foreground text-sm italic">No recent signals detected.</div>
+                        {places.length === 0 && (
+                            <div className="text-muted-foreground text-sm italic">No places added yet.</div>
                         )}
                     </div>
                 </div>
+
+                {/* System Status */}
                 <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
-                    <h3 className="font-semibold mb-4">System Status</h3>
+                    <h3 className="font-semibold mb-4 text-sm">System Status</h3>
                     <div className="space-y-3">
-                        <div className="flex items-center justify-between text-sm">
-                            <span className="text-muted-foreground">API Latency</span>
-                            <span className="font-mono text-green-500">24ms</span>
+                        <div className="flex items-center justify-between text-xs">
+                            <span className="text-muted-foreground">Supabase Realtime</span>
+                            <span className="font-mono text-green-500 font-bold">● ACTIVE</span>
                         </div>
-                        <div className="flex items-center justify-between text-sm">
-                            <span className="text-muted-foreground">Crawler Status</span>
-                            <span className="font-mono text-green-500">Active (423/s)</span>
+                        <div className="flex items-center justify-between text-xs">
+                            <span className="text-muted-foreground">API Gateway</span>
+                            <span className="font-mono text-green-500 font-bold">● ONLINE</span>
                         </div>
-                        <div className="flex items-center justify-between text-sm">
-                            <span className="text-muted-foreground">Validation Queue</span>
-                            <span className="font-mono text-blue-500">Empty</span>
+                        <div className="flex items-center justify-between text-xs">
+                            <span className="text-muted-foreground">Validation Workers</span>
+                            <span className="font-mono text-blue-500 font-bold">IDLE</span>
                         </div>
                     </div>
                 </div>
+
+                {/* System Health Panel (Model Monitoring) */}
+                <SystemHealthPanel />
             </div>
         </div>
     );

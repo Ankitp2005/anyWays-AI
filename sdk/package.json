@@ -1,0 +1,20 @@
+{
+  "name": "anyways-sdk",
+  "version": "1.0.0",
+  "description": "Official TypeScript SDK for the anyWays API - Real-time place intelligence and verification.",
+  "main": "index.ts",
+  "types": "index.ts",
+  "author": "anyWays Team",
+  "license": "MIT",
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": [
+    "anyways",
+    "signals",
+    "places",
+    "verification",
+    "api-sdk"
+  ]
+}

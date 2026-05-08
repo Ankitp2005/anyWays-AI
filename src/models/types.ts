@@ -78,3 +78,14 @@ export interface FilterState {
     notebookId: string | null; // null means 'All Notes'
     favoritesOnly: boolean;
 }
+
+export interface SignalEvent {
+    id: string;
+    place_id: string;
+    signal_type: string;
+    confidence_delta: number;
+    score_before: number;
+    score_after: number;
+    metadata: any;
+    created_at: string;
+}

@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+
+
+
+
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String    @map("password_hash")
+  name          String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+
+  apiKeys       ApiKey[]
+  places        Place[]
+  refreshTokens RefreshToken[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String   @map("user_id")
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("refresh_tokens")
+}
+
+model ApiKey {
+  id          String    @id @default(uuid())
+  userId      String    @map("user_id")
+  keyHash     String    @map("key_hash")
+  name        String
+  permissions Json      // Storing as JSON for flexibility: ['read', 'write', 'admin']
+  lastUsedAt  DateTime? @map("last_used_at")
+  revokedAt   DateTime? @map("revoked_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+
+  user        User      @relation(fields: [userId], references: [id])
+  usages      ApiKeyUsage[]
+  signals     ValidationSignal[]
+  trust       ApiKeyTrust?
+
+  @@map("api_keys")
+}
+
+model ApiKeyUsage {
+  id          String   @id @default(uuid())
+  apiKeyId    String   @map("api_key_id")
+  endpoint    String
+  method      String
+  statusCode  Int      @map("status_code")
+  timestamp   DateTime @default(now())
+
+  apiKey      ApiKey   @relation(fields: [apiKeyId], references: [id])
+
+  @@map("api_key_usage")
+}
+
+enum PlaceStatus {
+  OPEN
+  CLOSED
+  TEMPORARILY_CLOSED
+  PERMANENTLY_CLOSED
+}
+
+model Place {
+  id              String      @id @default(uuid())
+  userId          String      @map("user_id")
+  name            String
+  address         String?
+  latitude        Decimal?    @db.Decimal(10, 8)
+  longitude       Decimal?    @db.Decimal(11, 8)
+  status          PlaceStatus @default(OPEN)
+  confidenceScore Int         @default(0) @map("confidence_score")
+  lastValidatedAt DateTime?   @map("last_validated_at")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  user            User        @relation(fields: [userId], references: [id])
+  signals         ValidationSignal[]
+  deliveryAttempts DeliveryAttempt[]
+
+  @@map("places")
+}
+
+enum SignalType {
+  FOOT_TRAFFIC
+  OCR_MENU
+  SOCIAL_SENTIMENT
+  HOURS_VERIFIED
+  PHONE_VERIFIED
+  PICKUP_LOCATION_VERIFIED
+  CLOSED_DETECTED
+  LOW_TRAFFIC
+  GPS_ARRIVAL_VERIFIED
+  REAL_DWELL_TIME
+  DEVICE_VERIFIED_PRESENCE
+  DECAY
+}
+
+model ValidationSignal {
+  id               String     @id @default(uuid())
+  placeId          String     @map("place_id")
+  apiKeyId         String?    @map("api_key_id")
+  signalType       SignalType @map("signal_type")
+  signalValue      Json       @map("signal_value")
+  confidenceImpact Int        @map("confidence_impact")
+  detectedAt       DateTime   @default(now()) @map("detected_at")
+  createdAt        DateTime   @default(now()) @map("created_at")
+
+  place            Place      @relation(fields: [placeId], references: [id])
+  apiKey           ApiKey?    @relation(fields: [apiKeyId], references: [id])
+
+  @@map("validation_signals")
+}
+
+enum DeliveryOutcome {
+  SUCCESS
+  FAILED
+  CLOSED
+  UNKNOWN
+}
+
+model DeliveryAttempt {
+  id             String          @id @default(uuid())
+  placeId        String          @map("place_id")
+  predictedScore Int             @map("predicted_score")
+  predictedLabel String?         @map("predicted_label")
+  actualOutcome  DeliveryOutcome @default(UNKNOWN) @map("actual_outcome")
+  failureReason  String?         @map("failure_reason")
+  createdAt      DateTime        @default(now()) @map("created_at")
+
+  place          Place           @relation(fields: [placeId], references: [id])
+
+  @@map("delivery_attempts")
+}
+
+model ApiKeyTrust {
+  apiKeyId         String   @id @map("api_key_id")
+  trustScore       Float    @default(0.5) @map("trust_score")
+  successfulSignals Int     @default(0) @map("successful_signals")
+  failedSignals     Int     @default(0) @map("failed_signals")
+  lastUpdatedAt    DateTime @default(now()) @map("last_updated_at")
+
+  apiKey           ApiKey   @relation(fields: [apiKeyId], references: [id], onDelete: Cascade)
+
+  @@map("api_key_trust")
+}
