@@ -33,7 +33,7 @@ const auth = {
 
 const places = {
     getPlaces: async (): Promise<Place[]> => {
-        const { headers: traceHeaders } = generateTraceContext();
+        generateTraceContext();
         const { data, error } = await supabase
             .from('places')
             .select('*', { head: false, count: 'exact' })
@@ -115,7 +115,7 @@ const apiKeys = {
      * never appear in the UI even if RLS policy changes.
      */
     getApiKeys: async (): Promise<ApiKey[]> => {
-        const { headers: traceHeaders } = generateTraceContext();
+        generateTraceContext();
         const { data, error } = await supabase
             .from('api_keys')
             .select('id, name, permissions, created_at, last_used_at')

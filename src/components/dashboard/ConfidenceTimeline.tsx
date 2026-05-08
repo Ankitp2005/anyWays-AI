@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Dot } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import { formatDistanceToNow, format } from 'date-fns';
 import { useConfidenceTimeline, Timeframe } from '../../hooks/useConfidenceTimeline';
 import { SignalEvent } from '../../models/types';

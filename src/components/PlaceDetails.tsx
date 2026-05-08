@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, lazy, Suspense } from 'react';
+import React, { useEffect, useState, useMemo, Suspense } from 'react';
 import api from '../services/api';
 import {
     ArrowLeft, CheckCircle2, AlertTriangle, Terminal, Copy, Clock,

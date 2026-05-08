@@ -121,7 +121,7 @@ export const DashboardLayout: React.FC = () => {
     const { places, addPlace, loadPlaces, placesLoading } = useApp();
     const { user } = useAuth();
     const displayName = user?.user_metadata?.name || user?.email?.split('@')[0] || 'there';
-    const [activeTab, setActiveTab] = useState<'overview' | 'places' | 'api' | 'observability' | 'settings'>('overview');
+    const [activeTab, setActiveTab] = useState<'overview' | 'places' | 'api' | 'observability' | 'settings' | 'pricing'>('overview');
     const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
     const [showAddModal, setShowAddModal] = useState(false);
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -177,7 +177,7 @@ export const DashboardLayout: React.FC = () => {
                                 <h1 className="text-3xl font-bold tracking-tight mb-2">Dashboard</h1>
                                 <p className="text-muted-foreground">Welcome back, {displayName}. Here's what's happening today.</p>
                             </div>
-                            <DashboardOverview places={places} />
+                            <DashboardOverview places={places as any} />
                         </div>
                     )}
 

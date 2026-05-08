@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { 
   Activity, 
   AlertTriangle, 
@@ -6,7 +6,6 @@ import {
   Terminal, 
   Zap, 
   Clock, 
-  Server,
   Code,
   Globe
 } from 'lucide-react';

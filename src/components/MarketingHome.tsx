@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
     ArrowRight, MapPin, Shield, AlertTriangle, Activity, Eye, 
-    TrendingUp, XCircle, TrendingDown, CheckCircle2, Zap, 
-    ChevronDown, Truck, BarChart3, Clock, Sun, Moon
+    XCircle, TrendingDown, CheckCircle2, Zap, 
+    Truck, BarChart3, Clock, Sun, Moon
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
@@ -407,7 +407,7 @@ export const MarketingHome: React.FC = () => {
                             { step: '01', title: 'Send us a place', desc: 'Pass a place ID or address to our API. We start collecting signals immediately.' },
                             { step: '02', title: 'We verify it', desc: 'Our engine checks foot traffic, menus, business hours, pickup data, and social signals.' },
                             { step: '03', title: 'Get a confidence score', desc: 'You get a 0-100 score in real-time. Use it to block, flag, or approve deliveries.' },
-                        ].map((item, idx) => (
+                        ].map((item) => (
                             <div key={item.step} className="flex items-start gap-6 py-8 border-b border-white/[0.06] last:border-0">
                                 <span className="text-3xl font-black text-zinc-700 shrink-0 w-12">{item.step}</span>
                                 <div>

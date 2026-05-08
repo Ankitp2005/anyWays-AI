@@ -207,7 +207,7 @@ export const LiveSignalFeed: React.FC<LiveSignalFeedProps> = ({ placeId }) => {
                 if (currentGroup.length >= 3) {
                     groups.push({ type: 'group', events: currentGroup, id: `group-${currentGroup[0].id}` });
                 } else {
-                    groups.push(...currentGroup.map(e => ({ type: 'single', event: e, id: e.id })));
+                    groups.push(...currentGroup.map(e => ({ type: 'single' as const, event: e, id: e.id })));
                 }
                 currentGroup = [evt];
             }
@@ -216,7 +216,7 @@ export const LiveSignalFeed: React.FC<LiveSignalFeedProps> = ({ placeId }) => {
         if (currentGroup.length >= 3) {
             groups.push({ type: 'group', events: currentGroup, id: `group-${currentGroup[0].id}` });
         } else {
-            groups.push(...currentGroup.map(e => ({ type: 'single', event: e, id: e.id })));
+            groups.push(...currentGroup.map(e => ({ type: 'single' as const, event: e, id: e.id })));
         }
 
         return groups;

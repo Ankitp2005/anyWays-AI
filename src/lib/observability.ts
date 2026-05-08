@@ -35,7 +35,7 @@ export interface OperationalMetadata {
 /**
  * Sanitizes sensitive data before sending to Sentry (Part 1 & 5)
  */
-const sanitizeEvent = (event: Sentry.Event): Sentry.Event => {
+const sanitizeEvent = (event: Sentry.ErrorEvent): Sentry.ErrorEvent => {
   // Deep scan and mask sensitive patterns
   const sensitiveKeys = ['apiKey', 'token', 'auth', 'password', 'secret', 'key'];
   

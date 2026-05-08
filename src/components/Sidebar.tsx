@@ -11,7 +11,6 @@ import {
     LogOut,
     ExternalLink,
     ChevronLeft,
-    ChevronRight,
     Activity,
     CreditCard,
     Sun,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useLiveSignals } from '../../hooks/useLiveSignals';
 import { cn } from '../../utils/cn';
 import { formatDistanceToNow } from 'date-fns';
