@@ -84,7 +84,16 @@ export const Register: React.FC = () => {
     // --- Registration form ---
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-50 dark:bg-neutral-900 p-4">
-            <div className="w-full max-w-md bg-white dark:bg-neutral-800 rounded-lg shadow-xl p-8">
+            <div className="w-full max-w-md bg-white dark:bg-neutral-800 rounded-lg shadow-xl p-8 relative">
+                <button 
+                    onClick={() => setView('marketing' as any)}
+                    className="absolute top-4 left-4 p-2 text-neutral-500 hover:text-neutral-800 dark:hover:text-white transition-colors rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                    title="Back to Home"
+                >
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </button>
                 <h2 className="text-2xl font-bold mb-6 text-center text-neutral-800 dark:text-white">Create Account</h2>
 
                 {error && (
