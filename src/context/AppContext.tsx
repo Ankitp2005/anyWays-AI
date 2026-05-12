@@ -70,8 +70,26 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     // --- View State ---
-    const [currentView, setView] = useState<AppView>('marketing');
+    const [currentView, setCurrentView] = useState<AppView>('marketing');
 
+    useEffect(() => {
+        // Handle browser back/forward buttons
+        const handlePopState = (event: PopStateEvent) => {
+            if (event.state && event.state.view) {
+                setCurrentView(event.state.view);
+            } else {
+                setCurrentView('marketing'); // Default fallback
+            }
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, []);
+
+    const setView = (view: AppView) => {
+        window.history.pushState({ view }, '', window.location.pathname);
+        setCurrentView(view);
+    };
     // --- Local State (Notes) ---
     const [notes, setNotes] = useState<Note[]>(() => StorageService.getNotes());
     const [tags, setTags] = useState<Tag[]>(() => StorageService.getTags());
