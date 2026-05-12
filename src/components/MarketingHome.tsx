@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { 
     ArrowRight, MapPin, Shield, AlertTriangle, Activity, Eye, 
     XCircle, TrendingDown, CheckCircle2, Zap, 
-    Truck, BarChart3, Clock, Sun, Moon
+    BarChart3, Clock, Sun, Moon
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
