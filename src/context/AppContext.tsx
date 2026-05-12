@@ -70,13 +70,24 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     // --- View State ---
-    const [currentView, setCurrentView] = useState<AppView>('marketing');
+    const [currentView, setCurrentView] = useState<AppView>(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            const view = params.get('view');
+            if (['marketing', 'dashboard', 'login', 'register', 'pricing'].includes(view as string)) {
+                return view as AppView;
+            }
+        }
+        return 'marketing';
+    });
 
     useEffect(() => {
         // Handle browser back/forward buttons
-        const handlePopState = (event: PopStateEvent) => {
-            if (event.state && event.state.view) {
-                setCurrentView(event.state.view);
+        const handlePopState = () => {
+            const params = new URLSearchParams(window.location.search);
+            const view = params.get('view') as AppView | null;
+            if (view && ['marketing', 'dashboard', 'login', 'register', 'pricing'].includes(view)) {
+                setCurrentView(view);
             } else {
                 setCurrentView('marketing'); // Default fallback
             }
@@ -87,7 +98,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }, []);
 
     const setView = (view: AppView) => {
-        window.history.pushState({ view }, '', window.location.pathname);
+        const url = new URL(window.location.href);
+        if (view === 'marketing') {
+            url.searchParams.delete('view');
+        } else {
+            url.searchParams.set('view', view);
+        }
+        window.history.pushState({ view }, '', url.toString());
         setCurrentView(view);
     };
     // --- Local State (Notes) ---
