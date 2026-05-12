@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { 
     ArrowRight, MapPin, Shield, AlertTriangle, Activity, Eye, 
     XCircle, TrendingDown, CheckCircle2, Zap, 
@@ -189,63 +190,66 @@ export const MarketingHome: React.FC = () => {
             </nav>
 
             {/* ═══ HERO ═══ */}
-            <section className="relative pt-20 pb-24 px-6 lg:px-8">
-                {/* Background glow */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
+            <section className="relative min-h-[100vh] flex flex-col justify-center px-6 lg:px-8 overflow-hidden bg-black">
+                {/* Video Background */}
+                <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-50 mix-blend-screen">
+                    <source src="https://res.cloudinary.com/dfonotyfb/video/upload/v1775585556/dds3_1_rqhg7x.mp4" type="video/mp4" />
+                </video>
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-background z-0" />
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay z-0 pointer-events-none" />
                 
-                <div className="max-w-4xl mx-auto text-center relative z-10">
+                <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    className="max-w-5xl mx-auto text-center relative z-10 pt-20"
+                >
                     {/* Badge */}
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-8">
-                        <Truck size={14} />
-                        Built for Indian Logistics
-                    </div>
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.2, duration: 0.8 }}
+                        className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/5 border border-white/10 text-zinc-300 text-xs font-semibold uppercase tracking-[0.2em] mb-10 backdrop-blur-xl shadow-2xl"
+                    >
+                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]" />
+                        Enterprise Intelligence
+                    </motion.div>
 
                     {/* Headline */}
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-6">
-                        Know if a place is real —{' '}
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-blue-400">
-                            before your driver arrives
+                    <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[1.05] mb-8 text-white drop-shadow-2xl">
+                        Operational truth.<br/>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-600">
+                            Before dispatch.
                         </span>
                     </h1>
 
                     {/* Subheadline */}
-                    <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed mb-10">
-                        Real-time confidence scoring powered by live signals like pickup activity, foot traffic, and on-ground verification.
+                    <p className="text-lg md:text-2xl text-zinc-400 max-w-3xl mx-auto leading-relaxed mb-12 font-light tracking-wide">
+                        Real-time logistics intelligence powered by live signals, foot traffic, and on-ground verification. Built for scale.
                     </p>
 
                     {/* CTAs */}
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.8 }}
+                        className="flex flex-col sm:flex-row items-center justify-center gap-6"
+                    >
                         <button
                             onClick={() => setView('register')}
-                            className="group flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-4 rounded-2xl text-lg transition-all hover:scale-105 shadow-lg shadow-emerald-500/20"
+                            className="group relative flex items-center justify-center gap-3 bg-white text-black font-semibold px-10 py-4 rounded-full text-lg transition-all duration-300 hover:scale-105 hover:bg-zinc-200 w-full sm:w-auto shadow-[0_0_40px_rgba(255,255,255,0.15)]"
                         >
-                            Start verifying places
+                            Deploy Engine
                             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                         </button>
                         <button
                             onClick={() => setView('pricing')}
-                            className="flex items-center gap-2 text-zinc-400 hover:text-white font-medium px-8 py-4 rounded-2xl border border-white/10 hover:border-white/20 transition-all"
+                            className="flex items-center justify-center gap-2 text-zinc-300 hover:text-white font-medium px-10 py-4 rounded-full border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all duration-300 backdrop-blur-md w-full sm:w-auto"
                         >
-                            View Pricing
+                            View Architecture
                         </button>
-                    </div>
-
-                    {/* Social proof */}
-                    <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-zinc-500">
-                        <div className="flex items-center gap-2">
-                            <CheckCircle2 size={16} className="text-emerald-500" />
-                            No credit card required
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <CheckCircle2 size={16} className="text-emerald-500" />
-                            10,000 free signals/month
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <CheckCircle2 size={16} className="text-emerald-500" />
-                            Works with any delivery app
-                        </div>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             </section>
 
             {/* ═══ STATS BAR ═══ */}

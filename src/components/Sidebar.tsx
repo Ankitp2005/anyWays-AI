@@ -49,11 +49,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isCol
 
     return (
         <div className={cn(
-            "flex flex-col h-full bg-secondary/5 border-r border-border transition-all duration-300 relative overflow-hidden",
+            "flex flex-col h-full bg-[#050505]/80 backdrop-blur-3xl border-r border-white/[0.05] transition-all duration-500 relative overflow-hidden z-20 shadow-2xl",
             isCollapsed ? "w-0 border-none" : "w-64"
         )}>
             {/* Header */}
-            <div className="p-4 h-16 flex items-center border-b border-border bg-background/50 backdrop-blur-sm overflow-hidden shrink-0">
+            <div className="p-4 h-16 flex items-center border-b border-white/[0.05] bg-white/[0.01] overflow-hidden shrink-0">
                 <div className="flex items-center gap-2 text-foreground font-bold text-lg tracking-tight shrink-0">
                     <div className="bg-primary text-primary-foreground p-1 rounded-md shadow-sm">
                         <MapPin size={16} />
@@ -80,10 +80,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isCol
                         onClick={() => setActiveTab(item.id as any)}
                         title={isCollapsed ? item.label : ""}
                         className={cn(
-                            "w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-all",
+                            "w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-all duration-300",
                             activeTab === item.id
-                                ? "bg-primary/10 text-primary border border-primary/20"
-                                : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                                ? "bg-white/[0.05] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+                                : "text-zinc-500 hover:bg-white/[0.02] hover:text-zinc-200"
                         )}
                     >
                         <item.icon size={18} className="shrink-0" />
@@ -105,7 +105,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isCol
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t border-border mt-auto bg-background/30 overflow-hidden">
+            <div className="p-4 border-t border-white/[0.05] mt-auto bg-white/[0.01] overflow-hidden">
                 <div className="flex items-center justify-between mb-4">
                     <button
                         onClick={() => setView('marketing')}
