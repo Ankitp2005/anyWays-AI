@@ -8,7 +8,7 @@ import ObservabilityPanel from './dashboard/ObservabilityPanel';
 import { SettingsPanel } from './SettingsPanel';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
-import { Settings, X, MapPin, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, MapPin, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { cn } from '../utils/cn';
 
