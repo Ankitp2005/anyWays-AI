@@ -123,7 +123,7 @@ export const DashboardLayout: React.FC = () => {
     const { places, addPlace, loadPlaces, placesLoading } = useApp();
     const { user } = useAuth();
     const displayName = user?.user_metadata?.name || user?.email?.split('@')[0] || 'there';
-    const [activeTab, setActiveTab] = useState<'overview' | 'places' | 'api' | 'observability' | 'settings' | 'pricing'>('overview');
+    const [activeTab, setActiveTab] = useState<'overview' | 'places' | 'api' | 'observability' | 'settings' | 'pricing' | 'documentation'>('overview');
     const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
     const [showAddModal, setShowAddModal] = useState(false);
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);

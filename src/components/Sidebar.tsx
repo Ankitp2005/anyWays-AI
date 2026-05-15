@@ -5,11 +5,9 @@ import { useTheme } from '../context/ThemeContext';
 import {
     LayoutDashboard,
     MapPin,
-    List,
     Settings,
     Key,
     LogOut,
-    ExternalLink,
     ChevronLeft,
     Activity,
     CreditCard,

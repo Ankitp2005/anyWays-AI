@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Key, MapPin, Activity, Terminal, Shield, Zap } from 'lucide-react';
+import { BookOpen, Key, MapPin, Activity, Shield, Zap } from 'lucide-react';
 import { cn } from '../utils/cn';
 
 type DocSection = 'intro' | 'auth' | 'places' | 'signals' | 'webhooks';
