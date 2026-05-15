@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { User, Mail, Moon, Sun, Shield, Save, Loader2, CreditCard, Zap, TrendingUp } from 'lucide-react';
+import { User, Mail, Moon, Sun, Shield, Save, Loader2, CreditCard, Zap, TrendingUp, Users, Plus, MoreVertical, BadgeCheck, Settings, Bell, Lock } from 'lucide-react';
 import toast from 'react-hot-toast';
 import api from '../services/api';
 
@@ -158,6 +158,52 @@ export const SettingsPanel: React.FC = () => {
                                 </button>
                             </div>
                         </div>
+                        </div>
+                    </div>
+
+                    {/* Organization & Team Section */}
+                    <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+                        <div className="border-b border-border px-6 py-4 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <Users size={18} className="text-primary" />
+                                <h2 className="font-semibold">Organization & Team</h2>
+                            </div>
+                            <button className="flex items-center gap-1 bg-primary text-primary-foreground px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
+                                <Plus size={16} />
+                                Invite Member
+                            </button>
+                        </div>
+                        <div className="p-0">
+                            <div className="flex items-center justify-between px-6 py-4 hover:bg-muted/30 transition-colors">
+                                <div className="flex items-center gap-4">
+                                    <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm border border-primary/30">
+                                        {displayName.charAt(0).toUpperCase()}
+                                    </div>
+                                    <div>
+                                        <div className="flex items-center gap-1.5">
+                                            <h3 className="text-sm font-medium">{displayName}</h3>
+                                            <BadgeCheck size={14} className="text-blue-500" />
+                                        </div>
+                                        <p className="text-xs text-muted-foreground">{email}</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <span className="text-xs font-medium px-2 py-1 bg-secondary text-secondary-foreground rounded-md">Owner</span>
+                                    <button className="text-muted-foreground hover:text-foreground transition-colors p-1">
+                                        <MoreVertical size={16} />
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            {/* Placeholder for invited members */}
+                            <div className="px-6 py-8 text-center border-t border-border bg-muted/10">
+                                <Users size={24} className="text-muted-foreground/50 mx-auto mb-2" />
+                                <h3 className="text-sm font-medium text-foreground">Build your team</h3>
+                                <p className="text-xs text-muted-foreground mt-1 max-w-sm mx-auto">
+                                    Invite developers, data scientists, and ops managers to collaborate on your anyWays workspace.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -187,6 +233,7 @@ export const SettingsPanel: React.FC = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
