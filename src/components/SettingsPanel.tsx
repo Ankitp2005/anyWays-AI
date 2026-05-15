@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { User, Mail, Moon, Sun, Shield, Save, Loader2, CreditCard, Zap, TrendingUp } from 'lucide-react';
 import toast from 'react-hot-toast';
+import api from '../services/api';
 
 export const SettingsPanel: React.FC = () => {
     const { user } = useAuth();
     const { theme, toggleTheme } = useTheme();
     const [saving, setSaving] = useState(false);
+    
+    const [usageStats, setUsageStats] = useState({ used: 0, limit: 100000 });
+    const [loadingUsage, setLoadingUsage] = useState(true);
+
+    useEffect(() => {
+        const fetchUsage = async () => {
+            try {
+                const stats = await api.apiKeys.getMonthlyUsage();
+                setUsageStats(stats);
+            } catch (error) {
+                console.error('Failed to load usage', error);
+            } finally {
+                setLoadingUsage(false);
+            }
+        };
+        fetchUsage();
+    }, []);
 
     const displayName = user?.user_metadata?.name || user?.email?.split('@')[0] || 'User';
     const email = user?.email || '';
@@ -110,16 +128,23 @@ export const SettingsPanel: React.FC = () => {
                                         <p className="text-xs text-muted-foreground">Reset on June 1, 2026</p>
                                     </div>
                                     <div className="text-right">
-                                        <span className="text-xl font-bold text-foreground">14,250</span>
-                                        <span className="text-muted-foreground text-sm"> / 100,000</span>
+                                        <span className="text-xl font-bold text-foreground">
+                                            {loadingUsage ? '...' : usageStats.used.toLocaleString()}
+                                        </span>
+                                        <span className="text-muted-foreground text-sm">
+                                            {' '} / {usageStats.limit.toLocaleString()}
+                                        </span>
                                     </div>
                                 </div>
                                 <div className="h-3 w-full bg-secondary rounded-full overflow-hidden shadow-inner">
-                                    <div className="h-full bg-gradient-to-r from-primary to-emerald-400 w-[14.25%] rounded-full shadow-md"></div>
+                                    <div 
+                                        className="h-full bg-gradient-to-r from-primary to-emerald-400 rounded-full shadow-md transition-all duration-1000"
+                                        style={{ width: `${Math.min(100, (usageStats.used / usageStats.limit) * 100)}%` }}
+                                    ></div>
                                 </div>
                                 <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1.5">
                                     <Zap size={14} className="text-amber-500" />
-                                    You are using 14.25% of your available API quota.
+                                    You are using {loadingUsage ? '...' : ((usageStats.used / usageStats.limit) * 100).toFixed(2)}% of your available API quota.
                                 </p>
                             </div>
 

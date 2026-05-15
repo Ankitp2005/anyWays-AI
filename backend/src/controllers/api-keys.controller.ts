@@ -90,3 +90,33 @@ export const revokeApiKey = async (
         next(error);
     }
 };
+
+export const getApiKeyUsage = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const userId = (req as any).user.id;
+        
+        const startOfMonth = new Date();
+        startOfMonth.setDate(1);
+        startOfMonth.setHours(0, 0, 0, 0);
+
+        const usageCount = await prisma.apiKeyUsage.count({
+            where: {
+                timestamp: { gte: startOfMonth },
+                apiKey: { userId } 
+            }
+        });
+
+        const limit = 100000; // Growth Plan default
+
+        res.status(200).json({ 
+            success: true, 
+            data: { used: usageCount, limit } 
+        });
+    } catch (error) {
+        next(error);
+    }
+};

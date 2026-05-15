@@ -127,6 +127,41 @@ const apiKeys = {
     },
 
     /**
+     * Get real-time usage metrics for the current month.
+     */
+    getMonthlyUsage: async (): Promise<{ used: number; limit: number }> => {
+        const { data: userData } = await supabase.auth.getUser();
+        if (!userData.user) throw new Error('Not authenticated');
+
+        const startOfMonth = new Date();
+        startOfMonth.setDate(1);
+        startOfMonth.setHours(0, 0, 0, 0);
+
+        // Fetch user's API keys
+        const { data: keys } = await supabase
+            .from('api_keys')
+            .select('id')
+            .eq('user_id', userData.user.id);
+
+        let used = 0;
+        const keyIds = keys?.map(k => k.id) || [];
+
+        if (keyIds.length > 0) {
+            // Count usages in the api_key_usage table
+            const { count, error } = await supabase
+                .from('api_key_usage')
+                .select('*', { count: 'exact', head: true })
+                .in('api_key_id', keyIds)
+                .gte('timestamp', startOfMonth.toISOString());
+            
+            if (error) console.error("Error fetching usage:", error);
+            used = count || 0;
+        }
+
+        return { used, limit: 100000 };
+    },
+
+    /**
      * Generate a new API key.
      *
      * Security model:
