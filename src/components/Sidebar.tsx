@@ -79,10 +79,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isCol
                         onClick={() => setActiveTab(item.id as any)}
                         title={isCollapsed ? item.label : ""}
                         className={cn(
-                            "w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-all duration-300",
+                            "w-full flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-all duration-300 relative overflow-hidden",
                             activeTab === item.id
-                                ? "bg-secondary text-foreground shadow-sm"
-                                : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
+                                ? "bg-primary/10 text-primary font-bold shadow-sm after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1 after:bg-primary"
+                                : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground font-medium"
                         )}
                     >
                         <item.icon size={18} className="shrink-0" />
@@ -98,11 +98,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isCol
                         <button 
                             onClick={() => setActiveTab('documentation')}
                             className={cn(
-                                "w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-all duration-300",
-                                activeTab === 'documentation'
-                                    ? "bg-secondary text-foreground shadow-sm"
-                                    : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
-                            )}
+                            "w-full flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-all duration-300 relative overflow-hidden",
+                            activeTab === 'documentation'
+                                ? "bg-primary/10 text-primary font-bold shadow-sm after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1 after:bg-primary"
+                                : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground font-medium"
+                        )}
                         >
                             <BookOpen size={18} className="shrink-0" />
                             <span>Documentation</span>
