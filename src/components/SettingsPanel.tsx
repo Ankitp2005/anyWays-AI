@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { User, Mail, Moon, Sun, Shield, Save, Loader2 } from 'lucide-react';
+import { User, Mail, Moon, Sun, Shield, Save, Loader2, CreditCard, Zap, TrendingUp } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export const SettingsPanel: React.FC = () => {
@@ -88,6 +88,50 @@ export const SettingsPanel: React.FC = () => {
                                     </button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+
+                    {/* Billing & Usage Section */}
+                    <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
+                        <div className="border-b border-border px-6 py-4 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <CreditCard size={18} className="text-primary" />
+                                <h2 className="font-semibold">Subscription & API Usage</h2>
+                            </div>
+                            <span className="bg-primary/10 text-primary px-2 py-1 rounded-md text-xs font-bold uppercase tracking-wider">
+                                Growth Plan
+                            </span>
+                        </div>
+                        <div className="p-6">
+                            <div className="mb-6">
+                                <div className="flex justify-between items-end mb-2">
+                                    <div>
+                                        <h3 className="text-sm font-medium">Monthly API Requests</h3>
+                                        <p className="text-xs text-muted-foreground">Reset on June 1, 2026</p>
+                                    </div>
+                                    <div className="text-right">
+                                        <span className="text-xl font-bold text-foreground">14,250</span>
+                                        <span className="text-muted-foreground text-sm"> / 100,000</span>
+                                    </div>
+                                </div>
+                                <div className="h-3 w-full bg-secondary rounded-full overflow-hidden shadow-inner">
+                                    <div className="h-full bg-gradient-to-r from-primary to-emerald-400 w-[14.25%] rounded-full shadow-md"></div>
+                                </div>
+                                <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1.5">
+                                    <Zap size={14} className="text-amber-500" />
+                                    You are using 14.25% of your available API quota.
+                                </p>
+                            </div>
+
+                            <div className="flex gap-3 pt-4 border-t border-border">
+                                <button className="px-4 py-2 bg-primary/10 text-primary border border-primary/20 rounded-lg text-sm font-medium hover:bg-primary/20 transition-colors flex items-center gap-2">
+                                    <TrendingUp size={16} />
+                                    Upgrade to Enterprise
+                                </button>
+                                <button className="px-4 py-2 border border-border rounded-lg text-sm font-medium hover:bg-secondary transition-colors">
+                                    View Invoices
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
