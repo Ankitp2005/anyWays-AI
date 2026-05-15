@@ -5,6 +5,7 @@ import { PlacesTable } from './PlacesTable';
 import { PlaceDetails } from './PlaceDetails';
 import { ApiKeysManagement } from './ApiKeysManagement';
 import ObservabilityPanel from './dashboard/ObservabilityPanel';
+import { SettingsPanel } from './SettingsPanel';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import { Settings, X, MapPin, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -226,15 +227,7 @@ export const DashboardLayout: React.FC = () => {
                     )}
 
                     {activeTab === 'settings' && (
-                        <div className="flex flex-col items-center justify-center h-[60vh] text-center animate-in fade-in zoom-in-95 duration-300">
-                            <div className="bg-secondary/50 p-6 rounded-full mb-6">
-                                <Settings size={48} className="text-muted-foreground" />
-                            </div>
-                            <h2 className="text-2xl font-bold mb-2">Platform Settings</h2>
-                            <p className="text-muted-foreground max-w-md">
-                                Configure organization details and billing.
-                            </p>
-                        </div>
+                        <SettingsPanel />
                     )}
                 </div>
             </main>
