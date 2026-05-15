@@ -138,11 +138,11 @@ export const DashboardLayout: React.FC = () => {
     }, [activeTab]);
 
     return (
-        <div className="flex h-screen w-screen bg-[#050505] text-zinc-100 overflow-hidden relative font-sans selection:bg-emerald-500/30">
+        <div className="flex h-screen w-screen bg-background text-foreground overflow-hidden relative font-sans selection:bg-primary/30">
             {/* Cinematic Background Gradients */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-[#111] z-0 pointer-events-none" />
-            <div className="absolute top-0 left-1/4 w-[800px] h-[600px] bg-emerald-500/5 rounded-full blur-[150px] mix-blend-screen pointer-events-none" />
-            <div className="absolute bottom-0 right-1/4 w-[600px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] mix-blend-screen pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/90 z-0 pointer-events-none" />
+            <div className="absolute top-0 left-1/4 w-[800px] h-[600px] bg-emerald-500/5 rounded-full blur-[150px] pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-[600px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
 
             {/* Floating Toggle Button (Always visible) */}
             <button
@@ -172,7 +172,7 @@ export const DashboardLayout: React.FC = () => {
             />
 
             <main className={cn(
-                "flex-1 overflow-y-auto relative z-10 h-full scroll-smooth transition-all duration-500 bg-white/[0.02] border-l border-white/[0.05] shadow-[inset_1px_0_0_rgba(255,255,255,0.02)] backdrop-blur-3xl",
+                "flex-1 overflow-y-auto relative z-10 h-full scroll-smooth transition-all duration-500 bg-background border-l border-border shadow-sm backdrop-blur-3xl",
                 isSidebarCollapsed ? "ml-0" : "ml-0"
             )}>
                 <div className="max-w-7xl mx-auto px-8 py-10 lg:px-12 lg:py-12">
