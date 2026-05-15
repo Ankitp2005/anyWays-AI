@@ -59,8 +59,8 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({ places }) 
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {metrics.map((metric) => (
-                    <div key={metric.label} className="bg-black/40 backdrop-blur-md border border-white/[0.05] rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:bg-white/[0.02] transition-all duration-300 relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div key={metric.label} className="bg-card backdrop-blur-md border border-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         <div className="flex justify-between items-start mb-4">
                             <div className={cn("p-2 rounded-lg", metric.bg, metric.color)}>
                                 <metric.icon size={20} />
@@ -74,8 +74,8 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({ places }) 
                             </div>
                         </div>
                         <div className="relative z-10">
-                            <p className="text-sm text-zinc-400 font-medium tracking-wide">{metric.label}</p>
-                            <h3 className="text-3xl font-black mt-2 text-white drop-shadow-md">{metric.value}</h3>
+                            <p className="text-sm text-muted-foreground font-medium tracking-wide">{metric.label}</p>
+                            <h3 className="text-3xl font-black mt-2 text-foreground">{metric.value}</h3>
                         </div>
                     </div>
                 ))}
@@ -83,7 +83,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({ places }) 
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Recent Places */}
-                <div className="bg-black/40 backdrop-blur-md border border-white/[0.05] rounded-2xl p-6 shadow-xl">
+                <div className="bg-card backdrop-blur-md border border-border rounded-2xl p-6 shadow-sm">
                     <h3 className="font-semibold mb-4 text-sm">Recent Places</h3>
                     <div className="space-y-4">
                         {places.slice(0, 5).map((place) => (
@@ -102,7 +102,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({ places }) 
                 </div>
 
                 {/* System Status */}
-                <div className="bg-black/40 backdrop-blur-md border border-white/[0.05] rounded-2xl p-6 shadow-xl">
+                <div className="bg-card backdrop-blur-md border border-border rounded-2xl p-6 shadow-sm">
                     <h3 className="font-semibold mb-4 text-sm">System Status</h3>
                     <div className="space-y-3">
                         <div className="flex items-center justify-between text-xs">
