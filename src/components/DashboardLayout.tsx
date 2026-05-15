@@ -6,6 +6,7 @@ import { PlaceDetails } from './PlaceDetails';
 import { ApiKeysManagement } from './ApiKeysManagement';
 import ObservabilityPanel from './dashboard/ObservabilityPanel';
 import { SettingsPanel } from './SettingsPanel';
+import { DocumentationPanel } from './DocumentationPanel';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import { X, MapPin, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -228,6 +229,10 @@ export const DashboardLayout: React.FC = () => {
 
                     {activeTab === 'settings' && (
                         <SettingsPanel />
+                    )}
+
+                    {activeTab === 'documentation' && (
+                        <DocumentationPanel />
                     )}
                 </div>
             </main>

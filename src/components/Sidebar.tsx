@@ -14,13 +14,14 @@ import {
     Activity,
     CreditCard,
     Sun,
-    Moon
+    Moon,
+    BookOpen
 } from 'lucide-react';
 import { cn } from '../utils/cn';
 
 interface SidebarProps {
     activeTab: string;
-    setActiveTab: (tab: 'overview' | 'places' | 'api' | 'observability' | 'pricing' | 'settings') => void;
+    setActiveTab: (tab: 'overview' | 'places' | 'api' | 'observability' | 'pricing' | 'settings' | 'documentation') => void;
     isCollapsed: boolean;
 }
 
@@ -96,10 +97,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isCol
                         <div className="mt-8 px-3 mb-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                             Resources
                         </div>
-                        <a href="#" className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md hover:bg-secondary transition-colors">
-                            <List size={18} className="shrink-0" />
-                            <span>Documentation</span> <ExternalLink size={12} className="ml-auto opacity-50" />
-                        </a>
+                        <button 
+                            onClick={() => setActiveTab('documentation')}
+                            className={cn(
+                                "w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md transition-all duration-300",
+                                activeTab === 'documentation'
+                                    ? "bg-secondary text-foreground shadow-sm"
+                                    : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
+                            )}
+                        >
+                            <BookOpen size={18} className="shrink-0" />
+                            <span>Documentation</span>
+                        </button>
                     </>
                 )}
             </div>
