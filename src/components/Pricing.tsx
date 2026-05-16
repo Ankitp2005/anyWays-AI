@@ -42,7 +42,7 @@ const PricingTier = ({
         )}>
             {popular && (
                 <span className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase">
-                    Most Popular
+                    Beta Access
                 </span>
             )}
             <div className="mb-8">
@@ -51,7 +51,7 @@ const PricingTier = ({
             </div>
             <div className="mb-8">
                 <span className="text-4xl font-bold">{price}</span>
-                {price !== "Custom" && <span className="text-muted-foreground">/mo</span>}
+                {price !== "Custom" && price !== "Waitlist" && price !== "Free (Beta)" && <span className="text-muted-foreground">/mo</span>}
             </div>
             <div className="flex-1 space-y-4 mb-8">
                 {features.map((feature, i) => (
@@ -95,15 +95,15 @@ export const Pricing: React.FC = () => {
                     <div className="mt-10 flex flex-wrap justify-center gap-8 text-sm font-medium text-muted-foreground">
                         <div className="flex items-center gap-2">
                             <Check className="text-green-500" size={18} />
-                            Improve delivery success rate
+                            Currently in Free Beta
                         </div>
                         <div className="flex items-center gap-2">
                             <Check className="text-green-500" size={18} />
-                            Validate locations in real-time
+                            No Payment Required
                         </div>
                         <div className="flex items-center gap-2">
                             <Check className="text-green-500" size={18} />
-                            Built for Indian logistics & AI
+                            Full API Access
                         </div>
                     </div>
                 </div>
@@ -112,7 +112,7 @@ export const Pricing: React.FC = () => {
                     <PricingTier 
                         name="Developer"
                         description="Perfect for testing and early-stage builds"
-                        price="₹0"
+                        price="Free (Beta)"
                         cta="Start for Free"
                         features={[
                             "10,000 signals / month",
@@ -126,8 +126,8 @@ export const Pricing: React.FC = () => {
                     <PricingTier 
                         name="Starter"
                         description="For startups validating real-world operations"
-                        price="₹999"
-                        cta="Upgrade to Starter"
+                        price="Waitlist"
+                        cta="Join Waitlist"
                         features={[
                             "25,000 signals / month",
                             "1 Advanced signal (OCR Menu)",
@@ -140,8 +140,8 @@ export const Pricing: React.FC = () => {
                     <PricingTier 
                         name="Growth"
                         description="For scaling logistics & AI platforms"
-                        price="₹4,999"
-                        cta="Start Scaling"
+                        price="Waitlist"
+                        cta="Join Waitlist"
                         popular={true}
                         features={[
                             "100,000 signals / month",
@@ -176,7 +176,7 @@ export const Pricing: React.FC = () => {
                     <h2 className="text-3xl font-bold mb-4 relative z-10">Reduce operational loss, not just API calls</h2>
                     <p className="text-lg text-muted-foreground max-w-3xl mx-auto relative z-10">
                         Even a 2–5% improvement in delivery accuracy can save <span className="text-foreground font-bold italic">lakhs every month</span>.
-                        From map data to ground truth.
+                        From map data to ground truth. Get started for free today.
                     </p>
                     <button className="mt-8 px-8 py-4 bg-foreground text-background rounded-2xl font-bold hover:scale-105 transition-transform relative z-10">
                         Get Free API Key
