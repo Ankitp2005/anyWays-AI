@@ -229,7 +229,7 @@ export const MarketingHome: React.FC = () => {
                     {/* Headline */}
                     <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[1.05] mb-8 text-foreground drop-shadow-2xl">
                         Operational truth.<br/>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-b from-foreground to-muted-foreground">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-b from-zinc-800 to-zinc-400 dark:from-zinc-100 dark:to-zinc-600">
                             Before dispatch.
                         </span>
                     </h1>
