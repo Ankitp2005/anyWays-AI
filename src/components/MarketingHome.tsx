@@ -64,8 +64,8 @@ const DemoFeed = () => {
                     <div
                         key={sig.type}
                         className={cn(
-                            "flex items-center justify-between p-3.5 rounded-xl border bg-zinc-900/80 backdrop-blur-sm transition-all duration-500",
-                            idx === 0 ? "border-white/15 shadow-lg" : "border-white/[0.06]",
+                            "flex items-center justify-between p-3.5 rounded-xl border bg-background/80 backdrop-blur-sm transition-all duration-500",
+                            idx === 0 ? "border-border shadow-lg" : "border-border/50",
                             "animate-in slide-in-from-top-2 fade-in"
                         )}
                         style={{ animationDelay: `${idx * 100}ms` }}
@@ -78,8 +78,8 @@ const DemoFeed = () => {
                                 <Icon size={14} className={isPositive ? "text-emerald-400" : "text-red-400"} />
                             </div>
                             <div>
-                                <p className="text-sm font-medium text-zinc-200">{sig.label}</p>
-                                <p className="text-[11px] text-zinc-500 font-mono flex items-center gap-1">
+                                <p className="text-sm font-medium text-foreground">{sig.label}</p>
+                                <p className="text-[11px] text-muted-foreground font-mono flex items-center gap-1">
                                     <Clock size={10} />{sig.time}
                                 </p>
                             </div>
@@ -106,8 +106,8 @@ const ProblemCard = ({ icon: Icon, title, description }: { icon: any; title: str
         <div className="p-3 rounded-xl bg-red-500/10 w-fit mb-4">
             <Icon size={24} className="text-red-400" />
         </div>
-        <h3 className="text-lg font-bold text-zinc-100 mb-2">{title}</h3>
-        <p className="text-sm text-zinc-400 leading-relaxed">{description}</p>
+        <h3 className="text-lg font-bold text-foreground mb-2">{title}</h3>
+        <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
     </div>
 );
 
@@ -121,12 +121,12 @@ const SolutionCard = ({ icon: Icon, title, description, color }: { icon: any; ti
     };
 
     return (
-        <div className={cn("group p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1", colorMap[color]?.split(' ').slice(1).join(' ') || "border-white/10")}>
+        <div className={cn("group p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1", colorMap[color]?.split(' ').slice(1).join(' ') || "border-border")}>
             <div className={cn("p-3 rounded-xl w-fit mb-4", colorMap[color]?.split(' ')[0])}>
                 <Icon size={24} className={colorMap[color]?.split(' ').pop()} />
             </div>
-            <h3 className="text-lg font-bold text-zinc-100 mb-2">{title}</h3>
-            <p className="text-sm text-zinc-400 leading-relaxed">{description}</p>
+            <h3 className="text-lg font-bold text-foreground mb-2">{title}</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
         </div>
     );
 };
@@ -135,11 +135,11 @@ const SolutionCard = ({ icon: Icon, title, description, color }: { icon: any; ti
 
 const StatCard = ({ value, suffix, label }: { value: number; suffix: string; label: string }) => (
     <div className="text-center p-6">
-        <div className="text-4xl md:text-5xl font-black text-white tracking-tighter">
+        <div className="text-4xl md:text-5xl font-black text-foreground tracking-tighter">
             <AnimatedNumber target={value} />
-            <span className="text-emerald-400">{suffix}</span>
+            <span className="text-emerald-500">{suffix}</span>
         </div>
-        <p className="text-sm text-zinc-400 mt-2 font-medium">{label}</p>
+        <p className="text-sm text-muted-foreground mt-2 font-medium">{label}</p>
     </div>
 );
 
@@ -201,12 +201,12 @@ export const MarketingHome: React.FC = () => {
             </nav>
 
             {/* ═══ HERO ═══ */}
-            <section className="relative min-h-[100vh] flex flex-col justify-center px-6 lg:px-8 overflow-hidden bg-black">
+            <section className="relative min-h-[100vh] flex flex-col justify-center px-6 lg:px-8 overflow-hidden bg-background">
                 {/* Video Background */}
-                <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-50 mix-blend-screen">
+                <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-50 mix-blend-screen dark:opacity-50 dark:mix-blend-screen mix-blend-multiply opacity-20">
                     <source src="https://res.cloudinary.com/dfonotyfb/video/upload/v1775585556/dds3_1_rqhg7x.mp4" type="video/mp4" />
                 </video>
-                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-background z-0" />
+                <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background z-0" />
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay z-0 pointer-events-none" />
                 
                 <motion.div 
@@ -220,22 +220,22 @@ export const MarketingHome: React.FC = () => {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.2, duration: 0.8 }}
-                        className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/5 border border-white/10 text-zinc-300 text-xs font-semibold uppercase tracking-[0.2em] mb-10 backdrop-blur-xl shadow-2xl"
+                        className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-secondary border border-border text-foreground text-xs font-semibold uppercase tracking-[0.2em] mb-10 backdrop-blur-xl shadow-2xl"
                     >
                         <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]" />
                         Enterprise Intelligence
                     </motion.div>
 
                     {/* Headline */}
-                    <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[1.05] mb-8 text-white drop-shadow-2xl">
+                    <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[1.05] mb-8 text-foreground drop-shadow-2xl">
                         Operational truth.<br/>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-b from-zinc-100 to-zinc-600">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-b from-foreground to-muted-foreground">
                             Before dispatch.
                         </span>
                     </h1>
 
                     {/* Subheadline */}
-                    <p className="text-lg md:text-2xl text-zinc-400 max-w-3xl mx-auto leading-relaxed mb-12 font-light tracking-wide">
+                    <p className="text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-12 font-light tracking-wide">
                         Real-time logistics intelligence powered by live signals, foot traffic, and on-ground verification. Built for scale.
                     </p>
 
@@ -248,14 +248,14 @@ export const MarketingHome: React.FC = () => {
                     >
                         <button
                             onClick={() => isAuthenticated ? setView('dashboard') : setView('register')}
-                            className="group relative flex items-center justify-center gap-3 bg-white text-black font-semibold px-10 py-4 rounded-full text-lg transition-all duration-300 hover:scale-105 hover:bg-zinc-200 w-full sm:w-auto shadow-[0_0_40px_rgba(255,255,255,0.15)]"
+                            className="group relative flex items-center justify-center gap-3 bg-foreground text-background font-semibold px-10 py-4 rounded-full text-lg transition-all duration-300 hover:scale-105 hover:bg-foreground/90 w-full sm:w-auto shadow-lg"
                         >
                             Deploy Engine
                             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                         </button>
                         <button
                             onClick={() => setView('pricing')}
-                            className="flex items-center justify-center gap-2 text-zinc-300 hover:text-white font-medium px-10 py-4 rounded-full border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all duration-300 backdrop-blur-md w-full sm:w-auto"
+                            className="flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground font-medium px-10 py-4 rounded-full border border-border hover:bg-secondary transition-all duration-300 backdrop-blur-md w-full sm:w-auto"
                         >
                             View Architecture
                         </button>
@@ -264,8 +264,8 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ STATS BAR ═══ */}
-            <section className="border-y border-white/[0.06] bg-zinc-900/30">
-                <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-white/[0.06]">
+            <section className="border-y border-border bg-secondary/30">
+                <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-border">
                     <StatCard value={23} suffix="%" label="Failed deliveries in India" />
                     <StatCard value={40} suffix="%" label="Due to wrong addresses" />
                     <StatCard value={85} suffix="₹" label="Avg. cost per failed delivery" />
@@ -304,14 +304,14 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ SOLUTION ═══ */}
-            <section id="solution" className="py-24 px-6 lg:px-8 bg-zinc-900/30 border-y border-white/[0.06]">
+            <section id="solution" className="py-24 px-6 lg:px-8 bg-secondary/30 border-y border-border">
                 <div className="max-w-6xl mx-auto">
                     <div className="text-center mb-16">
-                        <p className="text-emerald-400 text-sm font-bold uppercase tracking-widest mb-3">The Solution</p>
+                        <p className="text-emerald-500 text-sm font-bold uppercase tracking-widest mb-3">The Solution</p>
                         <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-4">
                             Verify every location before dispatch
                         </h2>
-                        <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
+                        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                             anyWays collects real-world signals from multiple sources to give you a confidence score for every place.
                         </p>
                     </div>
@@ -343,22 +343,22 @@ export const MarketingHome: React.FC = () => {
             <section id="demo" className="py-24 px-6 lg:px-8">
                 <div className="max-w-6xl mx-auto">
                     <div className="text-center mb-16">
-                        <p className="text-blue-400 text-sm font-bold uppercase tracking-widest mb-3">See It In Action</p>
+                        <p className="text-blue-500 text-sm font-bold uppercase tracking-widest mb-3">See It In Action</p>
                         <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-4">
                             Watch the score change live
                         </h2>
-                        <p className="text-lg text-zinc-400 max-w-2xl mx-auto">
+                        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                             As real-world signals come in, the confidence score updates instantly.
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                         {/* Left: Score Display */}
-                        <div className="bg-zinc-900/80 backdrop-blur-xl border border-white/[0.06] rounded-2xl p-8 flex flex-col items-center">
-                            <p className="text-sm text-zinc-500 uppercase tracking-widest font-bold mb-6">Confidence Score</p>
+                        <div className="bg-card border border-border rounded-2xl p-8 flex flex-col items-center">
+                            <p className="text-sm text-muted-foreground uppercase tracking-widest font-bold mb-6">Confidence Score</p>
                             <div className="relative w-40 h-40 mb-6">
                                 <svg width="160" height="160" className="transform -rotate-90">
-                                    <circle cx="80" cy="80" r="68" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="10" />
+                                    <circle cx="80" cy="80" r="68" fill="none" className="stroke-border" strokeWidth="10" />
                                     <circle
                                         cx="80" cy="80" r="68" fill="none"
                                         stroke="url(#demoGradient)" strokeWidth="10" strokeLinecap="round"
@@ -374,29 +374,29 @@ export const MarketingHome: React.FC = () => {
                                     </defs>
                                 </svg>
                                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span className="text-5xl font-black text-white">78</span>
-                                    <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-500 font-semibold mt-1">Score</span>
+                                    <span className="text-5xl font-black text-foreground">78</span>
+                                    <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold mt-1">Score</span>
                                 </div>
                             </div>
                             <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20">
                                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                                <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">Likely Valid</span>
+                                <span className="text-xs font-bold text-emerald-500 uppercase tracking-wider">Likely Valid</span>
                             </div>
-                            <p className="text-xs text-zinc-500 mt-4 text-center max-w-[240px]">
+                            <p className="text-xs text-muted-foreground mt-4 text-center max-w-[240px]">
                                 Score updates as signals arrive. Use this to decide if a delivery is safe.
                             </p>
                         </div>
 
                         {/* Right: Live Feed */}
-                        <div className="bg-zinc-900/80 backdrop-blur-xl border border-white/[0.06] rounded-2xl overflow-hidden">
-                            <div className="px-6 py-4 border-b border-white/[0.06] flex items-center justify-between">
+                        <div className="bg-card border border-border rounded-2xl overflow-hidden">
+                            <div className="px-6 py-4 border-b border-border flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                    <Activity size={16} className="text-blue-400" />
+                                    <Activity size={16} className="text-blue-500" />
                                     <span className="text-sm font-semibold">Live Signal Feed</span>
                                 </div>
                                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
                                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
-                                    <span className="text-[9px] font-bold text-emerald-400 uppercase tracking-widest">Live</span>
+                                    <span className="text-[9px] font-bold text-emerald-500 uppercase tracking-widest">Live</span>
                                 </div>
                             </div>
                             <div className="p-4">
@@ -408,10 +408,10 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ HOW IT WORKS ═══ */}
-            <section className="py-24 px-6 lg:px-8 bg-zinc-900/30 border-y border-white/[0.06]">
+            <section className="py-24 px-6 lg:px-8 bg-secondary/30 border-y border-border">
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-16">
-                        <p className="text-amber-400 text-sm font-bold uppercase tracking-widest mb-3">How It Works</p>
+                        <p className="text-amber-500 text-sm font-bold uppercase tracking-widest mb-3">How It Works</p>
                         <h2 className="text-4xl md:text-5xl font-black tracking-tighter">
                             Three simple steps
                         </h2>
@@ -423,11 +423,11 @@ export const MarketingHome: React.FC = () => {
                             { step: '02', title: 'We verify it', desc: 'Our engine checks foot traffic, menus, business hours, pickup data, and social signals.' },
                             { step: '03', title: 'Get a confidence score', desc: 'You get a 0-100 score in real-time. Use it to block, flag, or approve deliveries.' },
                         ].map((item) => (
-                            <div key={item.step} className="flex items-start gap-6 py-8 border-b border-white/[0.06] last:border-0">
-                                <span className="text-3xl font-black text-zinc-700 shrink-0 w-12">{item.step}</span>
+                            <div key={item.step} className="flex items-start gap-6 py-8 border-b border-border last:border-0">
+                                <span className="text-3xl font-black text-muted-foreground/30 shrink-0 w-12">{item.step}</span>
                                 <div>
-                                    <h3 className="text-xl font-bold text-zinc-100 mb-1">{item.title}</h3>
-                                    <p className="text-zinc-400">{item.desc}</p>
+                                    <h3 className="text-xl font-bold text-foreground mb-1">{item.title}</h3>
+                                    <p className="text-muted-foreground">{item.desc}</p>
                                 </div>
                             </div>
                         ))}
@@ -442,26 +442,26 @@ export const MarketingHome: React.FC = () => {
                         Trust the data, not the map
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
-                        <div className="p-6 rounded-2xl bg-zinc-900/50 border border-white/[0.06]">
+                        <div className="p-6 rounded-2xl bg-secondary/50 border border-border">
                             <div className="flex items-center gap-2 mb-2">
-                                <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />
-                                <h3 className="font-bold text-zinc-100">Updated every second</h3>
+                                <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+                                <h3 className="font-bold text-foreground">Updated every second</h3>
                             </div>
-                            <p className="text-sm text-zinc-400 ml-7">Live signals mean your verification is never stale. We continuously process data to keep you informed.</p>
+                            <p className="text-sm text-muted-foreground ml-7">Live signals mean your verification is never stale. We continuously process data to keep you informed.</p>
                         </div>
-                        <div className="p-6 rounded-2xl bg-zinc-900/50 border border-white/[0.06]">
+                        <div className="p-6 rounded-2xl bg-secondary/50 border border-border">
                             <div className="flex items-center gap-2 mb-2">
-                                <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />
-                                <h3 className="font-bold text-zinc-100">Works without manual verification</h3>
+                                <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+                                <h3 className="font-bold text-foreground">Works without manual verification</h3>
                             </div>
-                            <p className="text-sm text-zinc-400 ml-7">No more calling the customer or guessing the location. Let automated confidence scoring do the work for you.</p>
+                            <p className="text-sm text-muted-foreground ml-7">No more calling the customer or guessing the location. Let automated confidence scoring do the work for you.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* ═══ CTA ═══ */}
-            <section className="py-24 px-6 lg:px-8 border-t border-white/[0.06]">
+            <section className="py-24 px-6 lg:px-8 border-t border-border">
                 <div className="max-w-3xl mx-auto text-center">
                     <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-10">
                         Plug into your delivery system in minutes
@@ -477,17 +477,17 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ Footer ═══ */}
-            <footer className="border-t border-white/[0.06] py-8 px-6 lg:px-8">
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-zinc-500">
-                    <div className="flex items-center gap-2 font-bold text-zinc-300">
-                        <MapPin size={16} className="text-emerald-400" />
+            <footer className="border-t border-border py-8 px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2 font-bold text-foreground">
+                        <MapPin size={16} className="text-emerald-500" />
                         anyWays
                     </div>
                     <p>© 2026 anyWays. Real-time place intelligence for Indian logistics.</p>
                     <div className="flex items-center gap-6">
-                        <a href="#" className="hover:text-white transition-colors">API Docs</a>
-                        <button onClick={() => setView('pricing')} className="hover:text-white transition-colors">Pricing</button>
-                        <button onClick={() => setView('login')} className="hover:text-white transition-colors">Dashboard</button>
+                        <a href="#" className="hover:text-foreground transition-colors">API Docs</a>
+                        <button onClick={() => setView('pricing')} className="hover:text-foreground transition-colors">Pricing</button>
+                        <button onClick={() => setView('login')} className="hover:text-foreground transition-colors">Dashboard</button>
                     </div>
                 </div>
             </footer>
