@@ -147,7 +147,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
             if (session) {
                 setUser(session.user as any);
                 setIsAuthenticated(true);
-                setView('dashboard');
             } else {
                 setIsAuthenticated(false);
                 setUser(null);

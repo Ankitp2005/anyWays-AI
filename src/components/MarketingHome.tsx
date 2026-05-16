@@ -146,7 +146,7 @@ const StatCard = ({ value, suffix, label }: { value: number; suffix: string; lab
 /* ─── Main Landing Page ────────────────────────────────────────── */
 
 export const MarketingHome: React.FC = () => {
-    const { setView } = useApp();
+    const { setView, isAuthenticated } = useApp();
     const { theme, toggleTheme } = useTheme();
 
     return (
@@ -173,18 +173,29 @@ export const MarketingHome: React.FC = () => {
                         >
                             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                         </button>
-                        <button
-                            onClick={() => setView('login')}
-                            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-4 py-2"
-                        >
-                            Log in
-                        </button>
-                        <button
-                            onClick={() => setView('register')}
-                            className="text-sm font-bold bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-xl transition-all hover:scale-105"
-                        >
-                            Start Free
-                        </button>
+                        {isAuthenticated ? (
+                            <button
+                                onClick={() => setView('dashboard')}
+                                className="text-sm font-bold bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-xl transition-all hover:scale-105"
+                            >
+                                Go to Dashboard
+                            </button>
+                        ) : (
+                            <>
+                                <button
+                                    onClick={() => setView('login')}
+                                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-4 py-2"
+                                >
+                                    Log in
+                                </button>
+                                <button
+                                    onClick={() => setView('register')}
+                                    className="text-sm font-bold bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-xl transition-all hover:scale-105"
+                                >
+                                    Start Free
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
             </nav>
@@ -236,7 +247,7 @@ export const MarketingHome: React.FC = () => {
                         className="flex flex-col sm:flex-row items-center justify-center gap-6"
                     >
                         <button
-                            onClick={() => setView('register')}
+                            onClick={() => isAuthenticated ? setView('dashboard') : setView('register')}
                             className="group relative flex items-center justify-center gap-3 bg-white text-black font-semibold px-10 py-4 rounded-full text-lg transition-all duration-300 hover:scale-105 hover:bg-zinc-200 w-full sm:w-auto shadow-[0_0_40px_rgba(255,255,255,0.15)]"
                         >
                             Deploy Engine
@@ -456,7 +467,7 @@ export const MarketingHome: React.FC = () => {
                         Plug into your delivery system in minutes
                     </h2>
                     <button
-                        onClick={() => setView('register')}
+                        onClick={() => isAuthenticated ? setView('dashboard') : setView('register')}
                         className="group inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-10 py-5 rounded-2xl text-lg transition-all hover:scale-105 shadow-lg shadow-emerald-500/20"
                     >
                         Start verifying places
