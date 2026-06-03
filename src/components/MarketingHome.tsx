@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { 
     ArrowRight, MapPin, Shield, AlertTriangle, Activity, Eye, 
@@ -9,24 +9,236 @@ import { useApp } from '../context/AppContext';
 import { useTheme } from '../context/ThemeContext';
 import { cn } from '../utils/cn';
 
-/* ─── Animated Counter ─────────────────────────────────────────── */
+/* ─── Animated Counter (Deltas from previous) ───────────────────── */
 
-const AnimatedNumber = ({ target, duration = 2000 }: { target: number; duration?: number }) => {
-    const [value, setValue] = useState(0);
+const AnimatedNumber = ({ target, duration = 1000 }: { target: number; duration?: number }) => {
+    const [value, setValue] = useState(target);
+    const prevValueRef = useRef(target);
 
     useEffect(() => {
+        const startValue = prevValueRef.current;
+        const endValue = target;
+        prevValueRef.current = target;
+
+        if (startValue === endValue) return;
+
         const start = performance.now();
+        let frameId: number;
+
         const animate = (now: number) => {
             const elapsed = now - start;
             const progress = Math.min(elapsed / duration, 1);
-            const ease = 1 - Math.pow(1 - progress, 3);
-            setValue(Math.round(target * ease));
-            if (progress < 1) requestAnimationFrame(animate);
+            const ease = 1 - Math.pow(1 - progress, 3); // cubic ease out
+            setValue(Math.round(startValue + (endValue - startValue) * ease));
+            if (progress < 1) {
+                frameId = requestAnimationFrame(animate);
+            }
         };
-        requestAnimationFrame(animate);
+
+        frameId = requestAnimationFrame(animate);
+        return () => cancelAnimationFrame(frameId);
     }, [target, duration]);
 
     return <span>{value}</span>;
+};
+
+/* ─── Interactive Logistics Network Canvas ──────────────────────── */
+
+const LogisticsNetworkCanvas: React.FC = () => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        let animationFrameId: number;
+        let width = (canvas.width = window.innerWidth);
+        let height = (canvas.height = window.innerHeight);
+
+        const handleResize = () => {
+            if (!canvas) return;
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        };
+        window.addEventListener('resize', handleResize);
+
+        const nodeCount = 35;
+        const nodes: Array<{
+            x: number;
+            y: number;
+            vx: number;
+            vy: number;
+            radius: number;
+            glow: number;
+            glowDirection: number;
+        }> = [];
+
+        for (let i = 0; i < nodeCount; i++) {
+            nodes.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.15,
+                vy: (Math.random() - 0.5) * 0.15,
+                radius: Math.random() * 2 + 1,
+                glow: Math.random(),
+                glowDirection: Math.random() > 0.5 ? 1 : -1,
+            });
+        }
+
+        const mouse = { x: -1000, y: -1000, active: false };
+        const handleMouseMove = (e: MouseEvent) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+            mouse.active = true;
+        };
+        const handleMouseLeave = () => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+            mouse.active = false;
+        };
+        
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseleave', handleMouseLeave);
+
+        const signals: Array<{
+            startX: number;
+            startY: number;
+            endX: number;
+            endY: number;
+            progress: number;
+            speed: number;
+            color: string;
+        }> = [];
+
+        const spawnSignal = () => {
+            if (nodes.length < 2) return;
+            const startIdx = Math.floor(Math.random() * nodes.length);
+            const startNode = nodes[startIdx];
+            const candidateNodes = nodes.filter((n, idx) => {
+                if (idx === startIdx) return false;
+                const dist = Math.hypot(n.x - startNode.x, n.y - startNode.y);
+                return dist < 220;
+            });
+
+            if (candidateNodes.length > 0) {
+                const endNode = candidateNodes[Math.floor(Math.random() * candidateNodes.length)];
+                signals.push({
+                    startX: startNode.x,
+                    startY: startNode.y,
+                    endX: endNode.x,
+                    endY: endNode.y,
+                    progress: 0,
+                    speed: Math.random() * 0.006 + 0.003,
+                    color: Math.random() > 0.4 ? '#ff6363' : '#59d499',
+                });
+            }
+        };
+
+        for (let i = 0; i < 12; i++) {
+            spawnSignal();
+        }
+
+        const draw = () => {
+            ctx.clearRect(0, 0, width, height);
+
+            nodes.forEach(node => {
+                node.x += node.vx;
+                node.y += node.vy;
+
+                if (node.x < 0 || node.x > width) node.vx *= -1;
+                if (node.y < 0 || node.y > height) node.vy *= -1;
+
+                node.glow += 0.008 * node.glowDirection;
+                if (node.glow > 1 || node.glow < 0.2) node.glowDirection *= -1;
+
+                nodes.forEach(otherNode => {
+                    if (node === otherNode) return;
+                    const dist = Math.hypot(otherNode.x - node.x, otherNode.y - node.y);
+                    if (dist < 180) {
+                        const alpha = (1 - dist / 180) * 0.04;
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(node.x, node.y);
+                        ctx.lineTo(otherNode.x, otherNode.y);
+                        ctx.stroke();
+                    }
+                });
+
+                let extraGlow = 0;
+                if (mouse.active) {
+                    const distToMouse = Math.hypot(node.x - mouse.x, node.y - mouse.y);
+                    if (distToMouse < 150) {
+                        extraGlow = (1 - distToMouse / 150) * 0.5;
+                        node.x += (mouse.x - node.x) * 0.002;
+                        node.y += (mouse.y - node.y) * 0.002;
+                    }
+                }
+
+                ctx.fillStyle = `rgba(255, 255, 255, ${0.15 + node.glow * 0.15 + extraGlow})`;
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.radius + extraGlow * 1.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (extraGlow > 0) {
+                    ctx.shadowColor = '#ff6363';
+                    ctx.shadowBlur = extraGlow * 10;
+                    ctx.fillStyle = `rgba(255, 99, 99, ${extraGlow * 0.3})`;
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, node.radius + 3, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            });
+
+            for (let i = signals.length - 1; i >= 0; i--) {
+                const sig = signals[i];
+                sig.progress += sig.speed;
+
+                if (sig.progress >= 1) {
+                    signals.splice(i, 1);
+                    spawnSignal();
+                    continue;
+                }
+
+                const x = sig.startX + (sig.endX - sig.startX) * sig.progress;
+                const y = sig.startY + (sig.endY - sig.startY) * sig.progress;
+
+                ctx.shadowColor = sig.color;
+                ctx.shadowBlur = 8;
+                ctx.fillStyle = sig.color;
+                ctx.beginPath();
+                ctx.arc(x, y, 2.2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+
+            if (signals.length < 8 && Math.random() < 0.05) {
+                spawnSignal();
+            }
+
+            animationFrameId = requestAnimationFrame(draw);
+        };
+
+        draw();
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseleave', handleMouseLeave);
+            cancelAnimationFrame(animationFrameId);
+        };
+    }, []);
+
+    return (
+        <canvas
+            ref={canvasRef}
+            className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-15 mix-blend-screen"
+        />
+    );
 };
 
 /* ─── Fake Signal Feed Demo ────────────────────────────────────── */
@@ -39,25 +251,10 @@ const demoSignals = [
     { type: 'LOW_TRAFFIC', label: 'Low traffic observed', delta: -8, time: '15s ago', icon: TrendingDown, color: 'orange' },
 ];
 
-const DemoFeed = () => {
-    const [visibleCount, setVisibleCount] = useState(0);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setVisibleCount(prev => {
-                if (prev >= demoSignals.length) {
-                    clearInterval(interval);
-                    return prev;
-                }
-                return prev + 1;
-            });
-        }, 800);
-        return () => clearInterval(interval);
-    }, []);
-
+const DemoFeed = ({ visibleCount }: { visibleCount: number }) => {
     return (
         <div className="space-y-3">
-            {demoSignals.slice(0, visibleCount).map((sig, idx) => {
+            {demoSignals.slice(demoSignals.length - visibleCount).map((sig, idx) => {
                 const Icon = sig.icon;
                 const isPositive = sig.delta > 0;
                 return (
@@ -143,6 +340,63 @@ export const MarketingHome: React.FC = () => {
     const { setView, isAuthenticated } = useApp();
     const { theme, toggleTheme } = useTheme();
 
+    // Live Demo score loop states
+    const [demoStep, setDemoStep] = useState(0);
+    const scoresByStep = [81, 73, 48, 53, 60, 78];
+    const demoScore = scoresByStep[demoStep];
+    const [displayScore, setDisplayScore] = useState(81);
+
+    const getScoreColor = (s: number) => {
+        if (s >= 75) return '#59d499'; // Green (Mint Signal / Likely Valid)
+        if (s >= 50) return '#fb923c'; // Orange (Needs Review)
+        return '#ff6363'; // Red (Closure/Low Traffic / Flagged)
+    };
+
+    const getStatusInfo = (s: number) => {
+        if (s >= 75) return { label: 'Likely Valid', color: '#59d499' };
+        if (s >= 50) return { label: 'Needs Review', color: '#fb923c' };
+        return { label: 'Flagged / High Risk', color: '#ff6363' };
+    };
+
+    // Smoothly animate displayScore to demoScore
+    useEffect(() => {
+        const startValue = displayScore;
+        const endValue = demoScore;
+        if (startValue === endValue) return;
+
+        const duration = 1000;
+        const start = performance.now();
+        let frameId: number;
+
+        const animate = (now: number) => {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3); // cubic ease out
+            const current = Math.round(startValue + (endValue - startValue) * ease);
+            setDisplayScore(current);
+            if (progress < 1) {
+                frameId = requestAnimationFrame(animate);
+            }
+        };
+
+        frameId = requestAnimationFrame(animate);
+        return () => cancelAnimationFrame(frameId);
+    }, [demoScore]);
+
+    useEffect(() => {
+        let timer: NodeJS.Timeout;
+        const tick = () => {
+            setDemoStep(prev => {
+                const next = (prev + 1) % 6; // 0 to 5
+                const delay = next === 5 ? 6000 : 2000;
+                timer = setTimeout(tick, delay);
+                return next;
+            });
+        };
+        timer = setTimeout(tick, 2000);
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
         <div className="min-h-screen bg-[#040506] text-[#ffffff] overflow-hidden selection:bg-[#ff6363]/30 font-sans">
             
@@ -193,16 +447,14 @@ export const MarketingHome: React.FC = () => {
                     </div>
                 </div>
             </nav>
-
+ 
             {/* ═══ HERO ═══ */}
             <section className="relative min-h-[90vh] flex flex-col justify-center px-6 lg:px-8 overflow-hidden bg-[#040506]">
                 {/* Radial Glow Atmosphere */}
                 <div className="absolute inset-0 bg-[radial-gradient(84.6%_73.49%_at_50%_26.51%,rgba(4,63,150,0.35),rgba(6,18,37,0.1))] pointer-events-none z-0" />
                 
-                {/* Video Background */}
-                <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-10 mix-blend-screen pointer-events-none">
-                    <source src="https://res.cloudinary.com/dfonotyfb/video/upload/v1775585556/dds3_1_rqhg7x.mp4" type="video/mp4" />
-                </video>
+                {/* Interactive Logistics Network Background */}
+                <LogisticsNetworkCanvas />
                 
                 <motion.div 
                     initial={{ opacity: 0, y: 30 }}
@@ -362,27 +614,49 @@ export const MarketingHome: React.FC = () => {
                         {/* Left: Score Display */}
                         <div className="bg-[#07080a] border border-[#363739] rounded-[16px] p-8 flex flex-col items-center shadow-subtle-4">
                             <p className="text-[11px] text-[#6a6b6c] uppercase tracking-[0.073em] font-mono mb-6">Confidence Score</p>
-                            <div className="relative w-40 h-40 mb-6">
-                                <svg width="160" height="160">
-                                    <g transform="rotate(-90 80 80)">
-                                        <circle cx="80" cy="80" r="68" fill="none" className="stroke-[#1b1c1e]" strokeWidth="3" />
-                                        <circle
-                                            cx="80" cy="80" r="68" fill="none"
-                                            stroke="#ff6363" strokeWidth="3" strokeLinecap="round"
-                                            strokeDasharray={2 * Math.PI * 68}
-                                            strokeDashoffset={2 * Math.PI * 68 * (1 - 0.78)}
-                                            style={{ transition: 'stroke-dashoffset 2s ease-out' }}
+                            <div className="relative w-40 h-40 mb-6 flex items-center justify-center">
+                                <svg width="160" height="160" viewBox="0 0 160 160" className="overflow-visible relative z-10">
+                                    <g className="origin-center -rotate-90">
+                                        <circle 
+                                            cx="80" 
+                                            cy="80" 
+                                            r="68" 
+                                            fill="none" 
+                                            stroke="#1b1c1e" 
+                                            strokeWidth="3" 
+                                        />
+                                        <motion.circle
+                                            cx="80" 
+                                            cy="80" 
+                                            r="68" 
+                                            fill="none"
+                                            stroke={getScoreColor(displayScore)} 
+                                            strokeWidth="4" 
+                                            strokeLinecap="round"
+                                            initial={{ strokeDashoffset: 2 * Math.PI * 68 }}
+                                            animate={{ strokeDashoffset: 2 * Math.PI * 68 * (1 - displayScore / 100) }}
+                                            transition={{ duration: 1.2, ease: "easeOut" }}
+                                            style={{
+                                                strokeDasharray: 2 * Math.PI * 68,
+                                            }}
                                         />
                                     </g>
                                 </svg>
-                                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span className="text-5xl font-semibold text-[#ffffff] font-mono tracking-tight">78</span>
+                                <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
+                                    <span className="text-5xl font-semibold text-[#ffffff] font-mono tracking-tight">
+                                        {displayScore}
+                                    </span>
                                     <span className="text-[10px] uppercase tracking-[0.25em] text-[#6a6b6c] font-bold mt-1 font-mono">Score</span>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-2 px-3 py-1 rounded-[6px] bg-[#1b1c1e] border border-white/5 text-[#ffffff] shadow-subtle-2">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#59d499]" />
-                                <span className="text-[10px] font-medium uppercase tracking-[0.04em] font-mono">Likely Valid</span>
+                            <div className="flex items-center gap-2 px-3 py-1 rounded-[6px] bg-[#1b1c1e] border border-white/5 text-[#ffffff] shadow-subtle-2 transition-all duration-300">
+                                <span 
+                                    className="w-1.5 h-1.5 rounded-full transition-colors duration-500" 
+                                    style={{ backgroundColor: getStatusInfo(displayScore).color }}
+                                />
+                                <span className="text-[10px] font-medium uppercase tracking-[0.04em] font-mono">
+                                    {getStatusInfo(displayScore).label}
+                                </span>
                             </div>
                             <p className="text-xs text-[#6a6b6c] mt-4 text-center max-w-[240px] leading-relaxed">
                                 Score updates as signals arrive. Use this to decide if a delivery is safe.
@@ -402,7 +676,7 @@ export const MarketingHome: React.FC = () => {
                                 </div>
                             </div>
                             <div className="p-4 bg-transparent">
-                                <DemoFeed />
+                                <DemoFeed visibleCount={demoStep} />
                             </div>
                         </div>
                     </div>
