@@ -232,7 +232,7 @@ const ScoreRing = ({ score }: { score: number }) => {
                         strokeLinecap="round"
                         strokeDasharray={circumference}
                         strokeDashoffset={offset}
-                        className="transition-all duration-[1500ms] ease-out"
+                        className="transition-[stroke-dashoffset] duration-[1500ms] ease-out"
                     />
                 </g>
             </svg>

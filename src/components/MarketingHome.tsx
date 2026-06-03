@@ -371,7 +371,7 @@ export const MarketingHome: React.FC = () => {
                                             stroke="#ff6363" strokeWidth="3" strokeLinecap="round"
                                             strokeDasharray={2 * Math.PI * 68}
                                             strokeDashoffset={2 * Math.PI * 68 * (1 - 0.78)}
-                                            className="transition-all duration-[2s] ease-out"
+                                            className="transition-[stroke-dashoffset] duration-[2s] ease-out"
                                         />
                                     </g>
                                 </svg>
