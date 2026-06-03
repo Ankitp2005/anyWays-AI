@@ -43,55 +43,55 @@ export const SettingsPanel: React.FC = () => {
     return (
         <div className="max-w-4xl space-y-8 animate-in fade-in h-[calc(100vh-100px)] overflow-y-auto pr-4 scrollbar-thin">
             <div>
-                <h1 className="text-3xl font-black uppercase tracking-tight text-[#ffedd7] mb-2">Platform Settings</h1>
-                <p className="text-xs text-[#6c5f51]">Manage your account preferences and platform configuration.</p>
+                <h1 className="text-3xl font-black uppercase tracking-tight text-white mb-2">Platform Settings</h1>
+                <p className="text-xs text-[#9c9c9d]">Manage your account preferences and platform configuration.</p>
             </div>
 
             <div className="grid gap-8 md:grid-cols-3">
                 {/* Profile Section */}
                 <div className="md:col-span-2 space-y-6">
-                    <div className="bg-[#100904] border border-[#40372e] border-dashed rounded-xl overflow-hidden">
-                        <div className="border-b border-[#40372e] border-dashed px-6 py-4 flex items-center gap-2">
-                            <User size={18} className="text-[#dc5000]" />
-                            <h2 className="font-bold text-sm uppercase tracking-wider text-[#ffedd7]">Profile Information</h2>
+                    <div className="bg-[#07080a] border border-[#363739] rounded-[11px] overflow-hidden shadow-subtle-4">
+                        <div className="border-b border-[#363739] px-6 py-4 flex items-center gap-2">
+                            <User size={18} className="text-[#ff6363]" />
+                            <h2 className="font-bold text-sm uppercase tracking-wider text-white">Profile Information</h2>
                         </div>
                         <div className="p-6">
                             <form onSubmit={handleSaveProfile} className="space-y-4">
                                 <div className="flex items-center gap-4 mb-6">
-                                    <div className="h-16 w-16 rounded-full border border-[#ffedd7]/20 flex items-center justify-center text-[#ffedd7] font-bold text-xl bg-transparent">
+                                    <div className="h-16 w-16 rounded-full border border-[#363739] flex items-center justify-center text-white font-bold text-xl bg-[#111214] shadow-subtle-2">
                                         {displayName.charAt(0).toUpperCase()}
                                     </div>
                                     <div>
-                                        <h3 className="font-bold text-base text-[#ffedd7] uppercase tracking-wider">{displayName}</h3>
-                                        <p className="text-xs text-[#6c5f51]">Manage your personal details</p>
+                                        <h3 className="font-bold text-base text-white uppercase tracking-wider">{displayName}</h3>
+                                        <p className="text-xs text-[#9c9c9d]">Manage your personal details</p>
                                     </div>
                                 </div>
 
                                 <div className="grid gap-4 sm:grid-cols-2">
                                     <div className="space-y-1.5">
-                                        <label className="text-xs font-mono text-[#6c5f51] uppercase tracking-wider">Display Name</label>
+                                        <label className="text-[11px] font-bold font-mono text-[#9c9c9d] uppercase tracking-[0.04em]">Display Name</label>
                                         <input
                                             type="text"
                                             defaultValue={displayName}
-                                            className="w-full bg-transparent border-b border-[#ffedd7] rounded-none px-3 py-2 text-sm text-[#ffedd7] focus:outline-none focus:border-[#dc5000] placeholder-[#ffedd7]/40"
+                                            className="w-full bg-white/5 border border-white/5 rounded-[8px] px-3 py-2 text-sm text-[#6a6b6c] focus:outline-none placeholder-white/20 cursor-not-allowed"
                                             disabled // Disabled for now since it's from Google
                                             title="Name is managed by Google Auth"
                                         />
                                     </div>
                                     <div className="space-y-1.5">
-                                        <label className="text-xs font-mono text-[#6c5f51] uppercase tracking-wider flex items-center gap-2">
-                                            Email Address <Shield size={12} className="text-[#ffedd7]" />
+                                        <label className="text-[11px] font-bold font-mono text-[#9c9c9d] uppercase tracking-[0.04em] flex items-center gap-2">
+                                            Email Address <Shield size={12} className="text-[#ff6363]" />
                                         </label>
                                         <div className="relative">
-                                            <Mail size={16} className="absolute left-3 top-3 text-[#6c5f51]" />
+                                            <Mail size={16} className="absolute left-3 top-3 text-[#6a6b6c]" />
                                             <input
                                                 type="email"
                                                 value={email}
                                                 disabled
-                                                className="w-full bg-transparent border-b border-[#40372e] rounded-none pl-9 pr-3 py-2 text-sm text-[#6c5f51] cursor-not-allowed"
+                                                className="w-full bg-white/5 border border-white/5 rounded-[8px] pl-9 pr-3 py-2 text-sm text-[#6a6b6c] cursor-not-allowed"
                                             />
                                         </div>
-                                        <p className="text-[10px] font-mono text-[#6c5f51] mt-1">Email is managed by Google Auth.</p>
+                                        <p className="text-[10px] font-mono text-[#6a6b6c] mt-1">Email is managed by Google Auth.</p>
                                     </div>
                                 </div>
 
@@ -99,7 +99,7 @@ export const SettingsPanel: React.FC = () => {
                                     <button
                                         type="submit"
                                         disabled={saving}
-                                        className="bg-[#382416] text-[#ffedd7] px-5 py-2 rounded-[36px] border border-[#ffedd7]/10 hover:border-[#ffedd7]/30 transition-all font-bold text-xs flex items-center gap-2 cursor-pointer"
+                                        className="bg-[#e6e6e6] text-[#07080a] px-5 py-2 rounded-[8px] hover:opacity-90 transition-all font-bold text-xs flex items-center gap-2 cursor-pointer shadow-subtle disabled:opacity-50"
                                     >
                                         {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
                                         Save Changes
@@ -110,13 +110,13 @@ export const SettingsPanel: React.FC = () => {
                     </div>
 
                     {/* Billing & Usage Section */}
-                    <div className="bg-[#100904] border border-[#40372e] border-dashed rounded-xl overflow-hidden">
-                        <div className="border-b border-[#40372e] border-dashed px-6 py-4 flex items-center justify-between">
+                    <div className="bg-[#07080a] border border-[#363739] rounded-[11px] overflow-hidden shadow-subtle-4">
+                        <div className="border-b border-[#363739] px-6 py-4 flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                                <CreditCard size={18} className="text-[#dc5000]" />
-                                <h2 className="font-bold text-sm uppercase tracking-wider text-[#ffedd7]">Subscription & API Usage</h2>
+                                <CreditCard size={18} className="text-[#ff6363]" />
+                                <h2 className="font-bold text-sm uppercase tracking-wider text-white">Subscription & API Usage</h2>
                             </div>
-                            <span className="border border-[#ffedd7]/20 text-[#ffedd7] px-2.5 py-0.5 rounded-[22.5px] text-[10px] font-mono font-bold uppercase tracking-wider bg-transparent">
+                            <span className="bg-[#1b1c1e] text-white border border-[#363739] px-2.5 py-0.5 rounded-[6px] text-[10px] font-mono font-bold uppercase tracking-wider">
                                 Growth Plan
                             </span>
                         </div>
@@ -124,36 +124,36 @@ export const SettingsPanel: React.FC = () => {
                             <div className="mb-6">
                                 <div className="flex justify-between items-end mb-2">
                                     <div>
-                                        <h3 className="text-xs font-mono text-[#6c5f51] uppercase tracking-wider">Monthly API Requests</h3>
-                                        <p className="text-[10px] font-mono text-[#6c5f51]">Reset on June 1, 2026</p>
+                                        <h3 className="text-[11px] font-bold font-mono text-[#9c9c9d] uppercase tracking-[0.04em]">Monthly API Requests</h3>
+                                        <p className="text-[10px] font-mono text-[#6a6b6c]">Reset on June 1, 2026</p>
                                     </div>
                                     <div className="text-right">
-                                        <span className="text-lg font-black font-mono text-[#ffedd7]">
+                                        <span className="text-lg font-black font-mono text-white">
                                             {loadingUsage ? '...' : usageStats.used.toLocaleString()}
                                         </span>
-                                        <span className="text-xs font-mono text-[#6c5f51]">
+                                        <span className="text-xs font-mono text-[#6a6b6c]">
                                             {' '} / {usageStats.limit.toLocaleString()}
                                         </span>
                                     </div>
                                 </div>
-                                <div className="h-1.5 w-full bg-[#40372e] rounded-full overflow-hidden">
+                                <div className="h-1.5 w-full bg-[#111214] rounded-full overflow-hidden">
                                     <div 
-                                        className="h-full bg-[#ffedd7] rounded-full transition-all duration-1000"
+                                        className="h-full bg-white rounded-full transition-all duration-1000"
                                         style={{ width: `${Math.min(100, (usageStats.used / usageStats.limit) * 100)}%` }}
                                     ></div>
                                 </div>
-                                <p className="text-[10px] font-mono text-[#6c5f51] mt-3 flex items-center gap-1.5">
-                                    <Zap size={14} className="text-[#ffedd7]" />
+                                <p className="text-[10px] font-mono text-[#9c9c9d] mt-3 flex items-center gap-1.5">
+                                    <Zap size={14} className="text-[#ff6363]" />
                                     You are using {loadingUsage ? '...' : ((usageStats.used / usageStats.limit) * 100).toFixed(2)}% of your available API quota.
                                 </p>
                             </div>
 
-                            <div className="flex gap-3 pt-4 border-t border-[#40372e] border-dashed">
-                                <button className="px-5 py-2 bg-[#382416] text-[#ffedd7] border border-[#ffedd7]/10 hover:border-[#ffedd7]/30 rounded-[36px] text-xs font-bold transition-all flex items-center gap-2 cursor-pointer">
+                            <div className="flex gap-3 pt-4 border-t border-[#363739]">
+                                <button className="px-5 py-2 bg-[#e6e6e6] text-[#07080a] hover:opacity-90 rounded-[8px] text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-subtle">
                                     <TrendingUp size={16} />
                                     Upgrade to Enterprise
                                 </button>
-                                <button className="px-4 py-2 border border-[#ffedd7] rounded-[22.5px] text-xs font-bold hover:border-[#dc5000] transition-colors bg-transparent text-[#ffedd7] cursor-pointer">
+                                <button className="px-4 py-2 border border-[#454647] rounded-[8px] text-xs font-bold hover:text-white hover:border-white transition-colors bg-transparent text-[#9c9c9d] cursor-pointer">
                                     View Invoices
                                 </button>
                             </div>
@@ -163,24 +163,24 @@ export const SettingsPanel: React.FC = () => {
 
                 {/* Preferences Section */}
                 <div className="space-y-6">
-                    <div className="bg-[#100904] border border-[#40372e] border-dashed rounded-xl overflow-hidden">
-                        <div className="border-b border-[#40372e] border-dashed px-6 py-4">
-                            <h2 className="font-bold text-sm uppercase tracking-wider text-[#ffedd7]">Preferences</h2>
+                    <div className="bg-[#07080a] border border-[#363739] rounded-[11px] overflow-hidden shadow-subtle-4">
+                        <div className="border-b border-[#363739] px-6 py-4">
+                            <h2 className="font-bold text-sm uppercase tracking-wider text-white">Preferences</h2>
                         </div>
                         <div className="p-6 space-y-6">
                             <div>
-                                <h3 className="text-xs font-mono text-[#6c5f51] uppercase tracking-wider mb-3">Appearance</h3>
-                                <div className="flex items-center justify-between p-3 border border-[#40372e] border-dashed rounded-xl bg-transparent">
+                                <h3 className="text-[11px] font-bold font-mono text-[#9c9c9d] uppercase tracking-[0.04em] mb-3">Appearance</h3>
+                                <div className="flex items-center justify-between p-4 border border-[#363739] rounded-[8px] bg-[#111214]">
                                     <div className="flex items-center gap-3">
-                                        {theme === 'dark' ? <Moon size={18} className="text-[#ffedd7]" /> : <Sun size={18} className="text-[#ffedd7]" />}
+                                        {theme === 'dark' ? <Moon size={18} className="text-white" /> : <Sun size={18} className="text-white" />}
                                         <div>
-                                            <p className="text-xs font-bold text-[#ffedd7] uppercase tracking-wider">Theme</p>
-                                            <p className="text-[10px] font-mono text-[#6c5f51] capitalize">{theme} Mode</p>
+                                            <p className="text-xs font-bold text-white uppercase tracking-wider">Theme</p>
+                                            <p className="text-[10px] font-mono text-[#6a6b6c] capitalize">{theme} Mode</p>
                                         </div>
                                     </div>
                                     <button
                                         onClick={toggleTheme}
-                                        className="px-4 py-1.5 border border-[#ffedd7] rounded-[22.5px] text-xs font-bold hover:border-[#dc5000] transition-colors bg-transparent text-[#ffedd7] cursor-pointer"
+                                        className="px-4 py-1.5 border border-[#454647] rounded-[8px] text-xs font-bold hover:text-white hover:border-white transition-colors bg-transparent text-[#9c9c9d] cursor-pointer"
                                     >
                                         Toggle
                                     </button>

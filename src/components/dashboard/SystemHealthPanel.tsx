@@ -55,80 +55,79 @@ export const SystemHealthPanel: React.FC = () => {
 
     if (loading || !health) {
         return (
-            <div className="bg-card border border-border rounded-xl p-6 shadow-sm flex items-center justify-center h-48">
-                <span className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            <div className="bg-[#07080a] border border-[#363739] rounded-[11px] p-6 shadow-subtle-4 flex items-center justify-center h-48">
+                <span className="w-8 h-8 border-4 border-[#e6e6e6] border-t-transparent rounded-full animate-spin" />
             </div>
         );
     }
 
     const statusColors = {
-        HEALTHY: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
-        WARNING: "bg-orange-500/10 text-orange-500 border-orange-500/20",
-        DEGRADED: "bg-red-500/10 text-red-500 border-red-500/20"
+        HEALTHY: "border-white/10 text-[#ffffff] bg-[#1b1c1e] shadow-subtle-2",
+        WARNING: "border-[#ff6363]/40 text-[#ff6363] bg-[#452324]/20 shadow-subtle-2",
+        DEGRADED: "border-[#ff6363]/40 text-[#ff6363] bg-[#452324]/20 shadow-subtle-2"
     };
 
-    const StatusIcon = health.status === 'HEALTHY' ? CheckCircle : 
-                       health.status === 'WARNING' ? AlertTriangle : AlertTriangle;
+    const StatusIcon = health.status === 'HEALTHY' ? CheckCircle : AlertTriangle;
 
     return (
-        <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
+        <div className="bg-[#07080a] border border-[#363739] rounded-[11px] p-6 shadow-subtle-4">
             <div className="flex items-center justify-between mb-6">
-                <h3 className="font-bold flex items-center gap-2">
-                    <Activity size={18} className="text-primary" />
+                <h3 className="font-semibold text-xs font-mono uppercase text-[#6a6b6c] tracking-[0.04em] flex items-center gap-2">
+                    <Activity size={18} className="text-[#ff6363]" />
                     Model Health & Drift
                 </h3>
-                <div className={cn("flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border uppercase tracking-wider", statusColors[health.status])}>
-                    <StatusIcon size={14} />
+                <div className={cn("flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] text-[10px] font-bold border uppercase tracking-wider font-mono", statusColors[health.status])}>
+                    <StatusIcon size={12} />
                     {health.status}
                 </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="p-4 rounded-lg bg-secondary/30 border border-border/50">
-                    <p className="text-xs text-muted-foreground font-medium mb-1">Model Accuracy</p>
+                <div className="p-4 rounded-[8px] bg-[#111214] border border-white/5 shadow-subtle-2">
+                    <p className="text-[11px] text-[#6a6b6c] font-mono uppercase tracking-[0.04em] mb-1">Model Accuracy</p>
                     <div className="flex items-end gap-2">
-                        <h4 className="text-2xl font-black font-mono">
+                        <h4 className="text-2xl font-bold font-mono text-[#ffffff] tracking-tight">
                             {(health.accuracy * 100).toFixed(1)}%
                         </h4>
                     </div>
                 </div>
-                <div className="p-4 rounded-lg bg-secondary/30 border border-border/50">
-                    <p className="text-xs text-muted-foreground font-medium mb-1">Drift Score</p>
+                <div className="p-4 rounded-[8px] bg-[#111214] border border-white/5 shadow-subtle-2">
+                    <p className="text-[11px] text-[#6a6b6c] font-mono uppercase tracking-[0.04em] mb-1">Drift Score</p>
                     <div className="flex items-end gap-2">
-                        <h4 className={cn("text-2xl font-black font-mono", 
-                            health.drift_score > 0.15 ? "text-orange-500" : "text-emerald-500"
+                        <h4 className={cn("text-2xl font-bold font-mono tracking-tight", 
+                            health.drift_score > 0.15 ? "text-[#ff6363]" : "text-[#ffffff]"
                         )}>
                             {health.drift_score.toFixed(3)}
                         </h4>
-                        {health.drift_score > 0.15 ? <TrendingUp size={16} className="text-orange-500 mb-1" /> : <TrendingDown size={16} className="text-emerald-500 mb-1" />}
+                        {health.drift_score > 0.15 ? <TrendingUp size={16} className="text-[#ff6363] mb-1 shrink-0" /> : <TrendingDown size={16} className="text-[#59d499] mb-1 shrink-0" />}
                     </div>
                 </div>
             </div>
 
             {health.alerts && health.alerts.length > 0 ? (
                 <div className="space-y-2">
-                    <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">Active Alerts</p>
+                    <p className="text-[10px] font-bold text-[#6a6b6c] uppercase tracking-wider mb-2 font-mono">Active Alerts</p>
                     {health.alerts.map(alert => (
-                        <div key={alert.id} className="flex items-start gap-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400">
+                        <div key={alert.id} className="flex items-start gap-3 p-3 rounded-[8px] bg-[#452324]/20 border border-[#ff6363]/30 text-[#ff6363]">
                             <AlertTriangle size={16} className="mt-0.5 shrink-0" />
                             <div>
-                                <h5 className="text-xs font-bold uppercase tracking-wider">{alert.alert_type}</h5>
+                                <h5 className="text-[11px] font-bold uppercase tracking-wider font-mono">{alert.alert_type}</h5>
                                 <p className="text-xs opacity-90 mt-0.5">{alert.message}</p>
                             </div>
                         </div>
                     ))}
                 </div>
             ) : (
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400">
-                    <CheckCircle size={16} />
-                    <span className="text-sm font-medium">No active anomalies detected.</span>
+                <div className="flex items-center gap-2 p-3 rounded-[8px] bg-[#1b1c1e] border border-white/5 text-[#ffffff] shadow-subtle-2">
+                    <CheckCircle size={16} className="text-[#59d499]" />
+                    <span className="text-xs font-medium">No active anomalies detected.</span>
                 </div>
             )}
 
-            <div className="mt-4 flex items-center justify-between text-[10px] text-muted-foreground">
+            <div className="mt-4 flex items-center justify-between text-[10px] text-[#6a6b6c] font-mono">
                 <span className="flex items-center gap-1">
                     <Info size={12} />
-                    Confidence: <span className="font-bold">{health.confidence}</span>
+                    Confidence: <span className="font-bold text-[#ffffff]">{health.confidence}</span>
                 </span>
                 <span>Updated: {new Date(health.last_updated).toLocaleString()}</span>
             </div>

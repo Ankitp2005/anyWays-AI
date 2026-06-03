@@ -64,31 +64,31 @@ const DemoFeed = () => {
                     <div
                         key={sig.type}
                         className={cn(
-                            "flex items-center justify-between p-3.5 rounded-xl border bg-background/80 backdrop-blur-sm transition-all duration-500",
-                            idx === 0 ? "border-border shadow-lg" : "border-border/50",
+                            "flex items-center justify-between p-3.5 rounded-[11px] border bg-[#111214] transition-all duration-500",
+                            idx === 0 ? "border-[#454647] shadow-subtle" : "border-[#1b1c1e]/50",
                             "animate-in slide-in-from-top-2 fade-in"
                         )}
                         style={{ animationDelay: `${idx * 100}ms` }}
                     >
                         <div className="flex items-center gap-3">
                             <div className={cn(
-                                "p-2 rounded-lg border",
-                                isPositive ? "bg-emerald-500/10 border-emerald-500/20" : "bg-red-500/10 border-red-500/20"
+                                "p-2 rounded-[8px] border bg-transparent",
+                                isPositive ? "border-white/10 text-white" : "border-[#ff6363]/40 text-[#ff6363]"
                             )}>
-                                <Icon size={14} className={isPositive ? "text-emerald-400" : "text-red-400"} />
+                                <Icon size={14} />
                             </div>
                             <div>
-                                <p className="text-sm font-medium text-foreground">{sig.label}</p>
-                                <p className="text-[11px] text-muted-foreground font-mono flex items-center gap-1">
+                                <p className="text-sm font-medium text-[#ffffff]">{sig.label}</p>
+                                <p className="text-[11px] text-[#6a6b6c] font-mono flex items-center gap-1">
                                     <Clock size={10} />{sig.time}
                                 </p>
                             </div>
                         </div>
                         <span className={cn(
-                            "text-xs font-bold px-2.5 py-1 rounded-full border",
+                            "text-xs font-bold px-2.5 py-1 rounded-[22.5px] border bg-transparent",
                             isPositive
-                                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                                : "bg-red-500/10 text-red-400 border-red-500/20"
+                                ? "text-white border-white/10"
+                                : "text-[#ff6363] border-[#ff6363]/30"
                         )}>
                             {isPositive ? '+' : ''}{sig.delta}
                         </span>
@@ -102,12 +102,12 @@ const DemoFeed = () => {
 /* ─── Problem Card ─────────────────────────────────────────────── */
 
 const ProblemCard = ({ icon: Icon, title, description }: { icon: any; title: string; description: string }) => (
-    <div className="p-6 rounded-xl border border-[#40372e] border-dashed bg-transparent transition-all duration-300">
-        <div className="p-3 rounded-lg border border-[#ffedd7]/20 w-fit mb-4 text-[#ffedd7]">
+    <div className="p-6 rounded-[16px] border border-[#363739] border-dashed bg-[#07080a] transition-all duration-300 shadow-subtle-4">
+        <div className="p-3 rounded-[8px] border border-white/5 bg-[#1b1c1e] w-fit mb-4 text-[#ffffff]">
             <Icon size={24} />
         </div>
-        <h3 className="text-lg font-bold text-[#ffedd7] mb-2">{title}</h3>
-        <p className="text-sm text-[#6c5f51] leading-relaxed">{description}</p>
+        <h3 className="text-lg font-bold text-[#ffffff] mb-2 uppercase tracking-wide">{title}</h3>
+        <p className="text-sm text-[#6a6b6c] leading-relaxed">{description}</p>
     </div>
 );
 
@@ -115,12 +115,12 @@ const ProblemCard = ({ icon: Icon, title, description }: { icon: any; title: str
 
 const SolutionCard = ({ icon: Icon, title, description }: { icon: any; title: string; description: string; color: string }) => {
     return (
-        <div className="p-6 rounded-xl border border-[#40372e] border-dashed bg-transparent transition-all duration-300">
-            <div className="p-3 rounded-lg border border-[#dc5000]/30 text-[#dc5000] w-fit mb-4">
+        <div className="p-6 rounded-[16px] border border-[#363739] border-dashed bg-[#07080a] transition-all duration-300 shadow-subtle-4">
+            <div className="p-3 rounded-[8px] border border-[#ff6363]/20 text-[#ff6363] bg-[#452324]/20 w-fit mb-4">
                 <Icon size={24} />
             </div>
-            <h3 className="text-lg font-bold text-[#ffedd7] mb-2">{title}</h3>
-            <p className="text-sm text-[#6c5f51] leading-relaxed">{description}</p>
+            <h3 className="text-lg font-bold text-[#ffffff] mb-2 uppercase tracking-wide">{title}</h3>
+            <p className="text-sm text-[#6a6b6c] leading-relaxed">{description}</p>
         </div>
     );
 };
@@ -129,11 +129,11 @@ const SolutionCard = ({ icon: Icon, title, description }: { icon: any; title: st
 
 const StatCard = ({ value, suffix, label }: { value: number; suffix: string; label: string }) => (
     <div className="text-center p-6 bg-transparent">
-        <div className="text-4xl md:text-5xl font-black text-[#ffedd7] tracking-tighter">
+        <div className="text-4xl md:text-5xl font-black text-[#ffffff] tracking-tighter">
             <AnimatedNumber target={value} />
-            <span className="text-[#dc5000]">{suffix}</span>
+            <span className="text-[#ff6363]">{suffix}</span>
         </div>
-        <p className="text-xs text-[#6c5f51] mt-2 font-mono uppercase tracking-wider">{label}</p>
+        <p className="text-[10px] text-[#6a6b6c] mt-2 font-mono uppercase tracking-wider">{label}</p>
     </div>
 );
 
@@ -144,47 +144,47 @@ export const MarketingHome: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
 
     return (
-        <div className="min-h-screen bg-[#100904] text-[#ffedd7] overflow-hidden selection:bg-[#dc5000]/30 font-sans">
+        <div className="min-h-screen bg-[#040506] text-[#ffffff] overflow-hidden selection:bg-[#ff6363]/30 font-sans">
             
             {/* ═══ Navigation ═══ */}
-            <nav className="sticky top-0 z-50 bg-[#100904] border-b border-[#40372e]">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
-                    <div className="flex items-center gap-2 text-base font-bold tracking-tight text-[#ffedd7]">
-                        <MapPin size={18} className="text-[#ffedd7] stroke-[1.5]" />
+            <nav className="sticky top-4 z-50 max-w-[740px] mx-auto px-4">
+                <div className="bg-[#07080a] border border-[#1b1c1e] shadow-subtle-4 rounded-[11px] px-6 flex items-center justify-between h-[52px]">
+                    <div className="flex items-center gap-2 text-sm font-semibold tracking-tight text-[#ffffff]">
+                        <MapPin size={16} className="text-[#ff6363] stroke-[1.5]" />
                         anyWays
                     </div>
-                    <div className="hidden md:flex items-center gap-6 text-xs uppercase tracking-wider text-[#ffedd7]">
-                        <a href="#problem" className="hover:text-[#dc5000] transition-colors">Problem</a>
-                        <a href="#solution" className="hover:text-[#dc5000] transition-colors">Solution</a>
-                        <a href="#demo" className="hover:text-[#dc5000] transition-colors">Demo</a>
-                        <button onClick={() => setView('pricing')} className="hover:text-[#dc5000] transition-colors">Pricing</button>
+                    <div className="hidden md:flex items-center gap-6 text-[13px] text-[#9c9c9d]">
+                        <a href="#problem" className="hover:text-[#ffffff] transition-colors duration-200">Problem</a>
+                        <a href="#solution" className="hover:text-[#ffffff] transition-colors duration-200">Solution</a>
+                        <a href="#demo" className="hover:text-[#ffffff] transition-colors duration-200">Demo</a>
+                        <button onClick={() => setView('pricing')} className="hover:text-[#ffffff] transition-colors duration-200">Pricing</button>
                     </div>
                     <div className="flex items-center gap-3">
                         <button
                             onClick={toggleTheme}
-                            className="p-2 text-[#ffedd7]/60 hover:text-[#ffedd7] hover:bg-[#382416]/50 rounded-xl transition-all"
+                            className="p-1.5 text-[#9c9c9d] hover:text-[#ffffff] hover:bg-white/5 rounded-[8px] transition-all duration-200"
                             title={`Switch theme`}
                         >
-                            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                            {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
                         </button>
                         {isAuthenticated ? (
                             <button
                                 onClick={() => setView('dashboard')}
-                                className="text-xs font-bold bg-[#382416] text-[#ffedd7] border border-[#ffedd7]/10 hover:border-[#ffedd7]/30 px-5 py-2 rounded-[36px] transition-all hover:opacity-90"
+                                className="text-xs font-medium bg-[#e6e6e6] text-[#2f3031] px-3.5 py-1.5 rounded-[8px] transition-all hover:opacity-90 font-sans"
                             >
-                                Go to Dashboard
+                                Dashboard
                             </button>
                         ) : (
                             <>
                                 <button
                                     onClick={() => setView('login')}
-                                    className="text-xs font-medium text-[#ffedd7]/80 hover:text-[#ffedd7] transition-colors px-4 py-2"
+                                    className="text-xs font-medium text-[#9c9c9d] hover:text-[#ffffff] transition-colors duration-200 px-2 py-1"
                                 >
                                     Log in
                                 </button>
                                 <button
                                     onClick={() => setView('register')}
-                                    className="text-xs font-bold bg-[#382416] text-[#ffedd7] border border-[#ffedd7]/10 hover:border-[#ffedd7]/30 px-5 py-2 rounded-[36px] transition-all hover:opacity-90"
+                                    className="text-xs font-bold bg-[#e6e6e6] text-[#2f3031] px-3.5 py-1.5 rounded-[8px] transition-all hover:opacity-90 font-sans"
                                 >
                                     Start Free
                                 </button>
@@ -195,59 +195,62 @@ export const MarketingHome: React.FC = () => {
             </nav>
 
             {/* ═══ HERO ═══ */}
-            <section className="relative min-h-[100vh] flex flex-col justify-center px-6 lg:px-8 overflow-hidden bg-[#100904]">
+            <section className="relative min-h-[90vh] flex flex-col justify-center px-6 lg:px-8 overflow-hidden bg-[#040506]">
+                {/* Radial Glow Atmosphere */}
+                <div className="absolute inset-0 bg-[radial-gradient(84.6%_73.49%_at_50%_26.51%,rgba(4,63,150,0.35),rgba(6,18,37,0.1))] pointer-events-none z-0" />
+                
                 {/* Video Background */}
-                <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-20 mix-blend-screen pointer-events-none">
+                <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-10 mix-blend-screen pointer-events-none">
                     <source src="https://res.cloudinary.com/dfonotyfb/video/upload/v1775585556/dds3_1_rqhg7x.mp4" type="video/mp4" />
                 </video>
                 
                 <motion.div 
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                    className="max-w-5xl mx-auto text-center relative z-10 pt-20"
+                    transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+                    className="max-w-5xl mx-auto text-center relative z-10 pt-16"
                 >
                     {/* Badge */}
                     <motion.div 
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.2, duration: 0.8 }}
-                        className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[#ffedd7]/30 text-[#ffedd7] text-[10px] font-mono uppercase tracking-[0.2em] mb-10 bg-transparent"
+                        transition={{ delay: 0.1, duration: 0.4 }}
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-[6px] border border-white/5 text-[#ffffff] text-[11px] font-medium tracking-[0.04em] mb-8 bg-[#1b1c1e] shadow-subtle-2"
                     >
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#dc5000]" />
-                        Enterprise Intelligence
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#ff6363]" />
+                        <span className="font-mono">v1.104.14 — India Dispatch</span>
                     </motion.div>
 
                     {/* Headline */}
-                    <h1 className="text-4xl md:text-[51px] font-black tracking-tight leading-[0.9] mb-8 text-[#ffedd7] uppercase">
+                    <h1 className="text-4xl md:text-[64px] font-semibold tracking-[-0.13em] leading-[1] mb-6 text-[#ffffff] uppercase font-sans">
                         Operational truth.<br/>
-                        <span className="text-[#6c5f51]">
+                        <span className="text-[#6a6b6c]">
                             Before dispatch.
                         </span>
                     </h1>
 
                     {/* Subheadline */}
-                    <p className="text-sm md:text-[18px] text-[#ffedd7] max-w-3xl mx-auto leading-[1.2] mb-12 font-medium">
+                    <p className="text-sm md:text-[18px] text-[#9c9c9d] max-w-3xl mx-auto leading-[1.4] mb-10 font-normal">
                         Real-time logistics intelligence powered by live signals, foot traffic, and on-ground verification. Built for scale.
                     </p>
 
                     {/* CTAs */}
                     <motion.div 
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4, duration: 0.8 }}
-                        className="flex flex-col sm:flex-row items-center justify-center gap-6"
+                        transition={{ delay: 0.2, duration: 0.4 }}
+                        className="flex flex-col sm:flex-row items-center justify-center gap-4"
                     >
                         <button
                             onClick={() => isAuthenticated ? setView('dashboard') : setView('register')}
-                            className="flex items-center justify-center gap-2 border border-[#dc5000] text-[#dc5000] hover:bg-[#dc5000]/10 font-bold px-8 py-3 rounded-[9999px] text-sm transition-all duration-300 w-full sm:w-auto bg-transparent"
+                            className="flex items-center justify-center gap-2 bg-[#e6e6e6] text-[#2f3031] hover:opacity-90 font-bold px-6 py-2.5 rounded-[8px] text-sm transition-all duration-200 w-full sm:w-auto font-sans"
                         >
                             Deploy Engine
-                            <ArrowRight size={16} />
+                            <ArrowRight size={14} />
                         </button>
                         <button
                             onClick={() => setView('pricing')}
-                            className="flex items-center justify-center gap-2 text-[#ffedd7] hover:text-[#dc5000] hover:border-[#dc5000] font-medium px-8 py-3 rounded-[22.5px] border border-[#ffedd7] transition-all duration-300 w-full sm:w-auto bg-transparent"
+                            className="flex items-center justify-center gap-2 text-[#9c9c9d] hover:text-[#ffffff] hover:border-white/40 font-medium px-6 py-2.5 rounded-[8px] border border-[#454647] bg-transparent transition-all duration-200 w-full sm:w-auto font-sans"
                         >
                             View Architecture
                         </button>
@@ -255,17 +258,17 @@ export const MarketingHome: React.FC = () => {
                 </motion.div>
 
                 {/* Sticky scroll prompt */}
-                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-80 animate-pulse text-[10px] font-mono uppercase text-[#ffedd7] tracking-widest pointer-events-none">
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-60 text-[10px] font-mono uppercase text-[#9c9c9d] tracking-widest pointer-events-none">
                     <span>Scroll to continue</span>
-                    <svg className="w-4 h-4 animate-bounce text-[#ffedd7]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3.5 h-3.5 animate-bounce text-[#9c9c9d]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                     </svg>
                 </div>
             </section>
 
             {/* ═══ STATS BAR ═══ */}
-            <section className="border-y border-[#40372e] border-dashed bg-transparent">
-                <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-[#40372e] divide-dashed">
+            <section className="border-y border-[#1b1c1e] bg-[#07080a] shadow-subtle-4">
+                <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-[#1b1c1e]">
                     <StatCard value={23} suffix="%" label="Failed deliveries in India" />
                     <StatCard value={40} suffix="%" label="Due to wrong addresses" />
                     <StatCard value={85} suffix="₹" label="Avg. cost per failed delivery" />
@@ -274,11 +277,11 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ PROBLEM ═══ */}
-            <section id="problem" className="py-24 px-6 lg:px-8 bg-[#100904]">
+            <section id="problem" className="py-20 px-6 lg:px-8 bg-[#040506]">
                 <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-16">
-                        <p className="text-[#dc5000] text-xs font-mono uppercase tracking-[0.2em] mb-3">The Problem</p>
-                        <h2 className="text-3xl md:text-[41px] font-black text-[#ffedd7] leading-[1] mb-4 uppercase">
+                    <div className="text-center mb-12">
+                        <p className="text-[#ff6363] text-xs font-mono uppercase tracking-[0.2em] mb-2">The Problem</p>
+                        <h2 className="text-3xl md:text-[32px] font-semibold text-[#ffffff] tracking-[-0.06em] leading-[1.2] mb-4 uppercase">
                             30% of delivery failures happen because locations are wrong, closed, or inactive.
                         </h2>
                     </div>
@@ -304,14 +307,17 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ SOLUTION ═══ */}
-            <section id="solution" className="py-24 px-6 lg:px-8 bg-[#100904] border-y border-[#40372e] border-dashed">
-                <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-16">
-                        <p className="text-[#dc5000] text-xs font-mono uppercase tracking-[0.2em] mb-3">The Solution</p>
-                        <h2 className="text-3xl md:text-[41px] font-black text-[#ffedd7] leading-[1] mb-4 uppercase">
+            <section id="solution" className="py-20 px-6 lg:px-8 bg-[#040506] border-y border-[#1b1c1e] relative">
+                {/* Purple Atmosphere Glow */}
+                <div className="absolute inset-0 bg-[radial-gradient(86.88%_75.47%_at_50%_24.53%,rgba(82,48,145,0.15),rgba(26,11,51,0.02))] pointer-events-none z-0" />
+                
+                <div className="max-w-6xl mx-auto relative z-10">
+                    <div className="text-center mb-12">
+                        <p className="text-[#ff6363] text-xs font-mono uppercase tracking-[0.2em] mb-2">The Solution</p>
+                        <h2 className="text-3xl md:text-[32px] font-semibold text-[#ffffff] tracking-[-0.06em] leading-[1.2] mb-4 uppercase">
                             Verify every location before dispatch
                         </h2>
-                        <p className="text-sm text-[#6c5f51] max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-sm text-[#9c9c9d] max-w-2xl mx-auto leading-relaxed">
                             anyWays collects real-world signals from multiple sources to give you a confidence score for every place.
                         </p>
                     </div>
@@ -340,57 +346,57 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ DEMO ═══ */}
-            <section id="demo" className="py-24 px-6 lg:px-8 bg-[#100904]">
+            <section id="demo" className="py-20 px-6 lg:px-8 bg-[#040506]">
                 <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-16">
-                        <p className="text-[#dc5000] text-xs font-mono uppercase tracking-[0.2em] mb-3">See It In Action</p>
-                        <h2 className="text-3xl md:text-[41px] font-black text-[#ffedd7] leading-[1] mb-4 uppercase">
+                    <div className="text-center mb-12">
+                        <p className="text-[#9c9c9d] text-xs font-mono uppercase tracking-[0.2em] mb-2">See It In Action</p>
+                        <h2 className="text-3xl md:text-[32px] font-semibold text-[#ffffff] tracking-[-0.06em] leading-[1.2] mb-4 uppercase">
                             Watch the score change live
                         </h2>
-                        <p className="text-sm text-[#6c5f51] max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-sm text-[#6a6b6c] max-w-2xl mx-auto leading-relaxed">
                             As real-world signals come in, the confidence score updates instantly.
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                         {/* Left: Score Display */}
-                        <div className="bg-[#100904] border border-[#40372e] border-dashed rounded-xl p-8 flex flex-col items-center">
-                            <p className="text-[10px] text-[#6c5f51] uppercase tracking-[0.2em] font-mono mb-6">Confidence Score</p>
+                        <div className="bg-[#07080a] border border-[#363739] rounded-[16px] p-8 flex flex-col items-center shadow-subtle-4">
+                            <p className="text-[11px] text-[#6a6b6c] uppercase tracking-[0.073em] font-mono mb-6">Confidence Score</p>
                             <div className="relative w-40 h-40 mb-6">
                                 <svg width="160" height="160" className="transform -rotate-90">
-                                    <circle cx="80" cy="80" r="68" fill="none" className="stroke-[#40372e]" strokeWidth="2" />
+                                    <circle cx="80" cy="80" r="68" fill="none" className="stroke-[#1b1c1e]" strokeWidth="3" />
                                     <circle
                                         cx="80" cy="80" r="68" fill="none"
-                                        stroke="#dc5000" strokeWidth="2" strokeLinecap="round"
+                                        stroke="#ff6363" strokeWidth="3" strokeLinecap="round"
                                         strokeDasharray={2 * Math.PI * 68}
                                         strokeDashoffset={2 * Math.PI * 68 * (1 - 0.78)}
                                         className="transition-all duration-[2s] ease-out"
                                     />
                                 </svg>
                                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span className="text-5xl font-black text-[#ffedd7] font-mono">78</span>
-                                    <span className="text-[10px] uppercase tracking-[0.25em] text-[#6c5f51] font-bold mt-1 font-mono">Score</span>
+                                    <span className="text-5xl font-semibold text-[#ffffff] font-mono tracking-tight">78</span>
+                                    <span className="text-[10px] uppercase tracking-[0.25em] text-[#6a6b6c] font-bold mt-1 font-mono">Score</span>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#382416] border border-[#ffedd7]/20 text-[#ffedd7]">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#dc5000]" />
-                                <span className="text-[10px] font-bold uppercase tracking-widest font-mono">Likely Valid</span>
+                            <div className="flex items-center gap-2 px-3 py-1 rounded-[6px] bg-[#1b1c1e] border border-white/5 text-[#ffffff] shadow-subtle-2">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#59d499]" />
+                                <span className="text-[10px] font-medium uppercase tracking-[0.04em] font-mono">Likely Valid</span>
                             </div>
-                            <p className="text-xs text-[#6c5f51] mt-4 text-center max-w-[240px] leading-relaxed">
+                            <p className="text-xs text-[#6a6b6c] mt-4 text-center max-w-[240px] leading-relaxed">
                                 Score updates as signals arrive. Use this to decide if a delivery is safe.
                             </p>
                         </div>
 
                         {/* Right: Live Feed */}
-                        <div className="bg-[#100904] border border-[#40372e] border-dashed rounded-xl overflow-hidden">
-                            <div className="px-6 py-4 border-b border-[#40372e] border-dashed flex items-center justify-between">
-                                <div className="flex items-center gap-2 text-[#ffedd7]">
-                                    <Activity size={16} />
+                        <div className="bg-[#07080a] border border-[#363739] rounded-[16px] overflow-hidden shadow-subtle-4">
+                            <div className="px-6 py-4 border-b border-[#1b1c1e] flex items-center justify-between">
+                                <div className="flex items-center gap-2 text-[#ffffff]">
+                                    <Activity size={16} className="text-[#ff6363]" />
                                     <span className="text-xs font-bold uppercase tracking-wider font-mono">Live Signal Feed</span>
                                 </div>
-                                <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#382416] border border-[#ffedd7]/20">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-[#dc5000] animate-pulse" />
-                                    <span className="text-[9px] font-bold text-[#ffedd7] uppercase tracking-widest font-mono">Live</span>
+                                <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-[6px] bg-[#1b1c1e] border border-white/5 shadow-subtle-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#ff6363] animate-pulse" />
+                                    <span className="text-[9px] font-bold text-[#ffffff] uppercase tracking-widest font-mono">Live</span>
                                 </div>
                             </div>
                             <div className="p-4 bg-transparent">
@@ -402,11 +408,11 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ HOW IT WORKS ═══ */}
-            <section className="py-24 px-6 lg:px-8 bg-[#100904] border-y border-[#40372e] border-dashed">
+            <section className="py-20 px-6 lg:px-8 bg-[#040506] border-y border-[#1b1c1e]">
                 <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-16">
-                        <p className="text-[#dc5000] text-xs font-mono uppercase tracking-[0.2em] mb-3">How It Works</p>
-                        <h2 className="text-3xl md:text-[41px] font-black text-[#ffedd7] leading-[1] uppercase">
+                    <div className="text-center mb-12">
+                        <p className="text-[#ff6363] text-xs font-mono uppercase tracking-[0.2em] mb-2">How It Works</p>
+                        <h2 className="text-3xl md:text-[32px] font-semibold text-[#ffffff] tracking-[-0.06em] leading-[1.2] uppercase">
                             Three simple steps
                         </h2>
                     </div>
@@ -417,11 +423,11 @@ export const MarketingHome: React.FC = () => {
                             { step: '02', title: 'We verify it', desc: 'Our engine checks foot traffic, menus, business hours, pickup data, and social signals.' },
                             { step: '03', title: 'Get a confidence score', desc: 'You get a 0-100 score in real-time. Use it to block, flag, or approve deliveries.' },
                         ].map((item) => (
-                            <div key={item.step} className="flex items-start gap-6 py-8 border-b border-[#40372e] border-dashed last:border-0">
-                                <span className="text-2xl font-black text-[#dc5000]/60 shrink-0 w-12 font-mono">{item.step}</span>
+                            <div key={item.step} className="flex items-start gap-6 py-6 border-b border-[#1b1c1e] last:border-0">
+                                <span className="text-xl font-bold text-[#ff6363]/60 shrink-0 w-12 font-mono">{item.step}</span>
                                 <div>
-                                    <h3 className="text-lg font-bold text-[#ffedd7] mb-1">{item.title}</h3>
-                                    <p className="text-sm text-[#6c5f51] leading-relaxed">{item.desc}</p>
+                                    <h3 className="text-base font-semibold text-[#ffffff] mb-1">{item.title}</h3>
+                                    <p className="text-sm text-[#6a6b6c] leading-relaxed">{item.desc}</p>
                                 </div>
                             </div>
                         ))}
@@ -430,58 +436,58 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ TRUST ═══ */}
-            <section className="py-24 px-6 lg:px-8 bg-[#100904]">
+            <section className="py-20 px-6 lg:px-8 bg-[#040506]">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-3xl md:text-[41px] font-black text-[#ffedd7] leading-[1] mb-12 uppercase">
+                    <h2 className="text-3xl md:text-[32px] font-semibold text-[#ffffff] tracking-[-0.06em] leading-[1.2] mb-10 uppercase">
                         Trust the data, not the map
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
-                        <div className="p-6 rounded-xl bg-transparent border border-[#40372e] border-dashed">
+                        <div className="p-6 rounded-[11px] bg-[#07080a] border border-[#363739] shadow-subtle-4">
                             <div className="flex items-center gap-2 mb-2">
-                                <CheckCircle2 size={16} className="text-[#dc5000] shrink-0" />
-                                <h3 className="font-bold text-[#ffedd7] text-sm">Updated every second</h3>
+                                <CheckCircle2 size={16} className="text-[#ff6363] shrink-0" />
+                                <h3 className="font-bold text-[#ffffff] text-sm">Updated every second</h3>
                             </div>
-                            <p className="text-xs text-[#6c5f51] ml-6 leading-relaxed">Live signals mean your verification is never stale. We continuously process data to keep you informed.</p>
+                            <p className="text-xs text-[#6a6b6c] ml-6 leading-relaxed">Live signals mean your verification is never stale. We continuously process data to keep you informed.</p>
                         </div>
-                        <div className="p-6 rounded-xl bg-transparent border border-[#40372e] border-dashed">
+                        <div className="p-6 rounded-[11px] bg-[#07080a] border border-[#363739] shadow-subtle-4">
                             <div className="flex items-center gap-2 mb-2">
-                                <CheckCircle2 size={16} className="text-[#dc5000] shrink-0" />
-                                <h3 className="font-bold text-[#ffedd7] text-sm">Works without manual verification</h3>
+                                <CheckCircle2 size={16} className="text-[#ff6363] shrink-0" />
+                                <h3 className="font-bold text-[#ffffff] text-sm">Works without manual verification</h3>
                             </div>
-                            <p className="text-xs text-[#6c5f51] ml-6 leading-relaxed">No more calling the customer or guessing the location. Let automated confidence scoring do the work for you.</p>
+                            <p className="text-xs text-[#6a6b6c] ml-6 leading-relaxed">No more calling the customer or guessing the location. Let automated confidence scoring do the work for you.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* ═══ CTA ═══ */}
-            <section className="py-24 px-6 lg:px-8 border-t border-[#40372e] border-dashed bg-[#100904]">
+            <section className="py-20 px-6 lg:px-8 border-t border-[#1b1c1e] bg-[#040506]">
                 <div className="max-w-3xl mx-auto text-center">
-                    <h2 className="text-3xl md:text-[41px] font-black text-[#ffedd7] leading-[1] mb-10 uppercase">
+                    <h2 className="text-3xl md:text-[32px] font-semibold text-[#ffffff] tracking-[-0.06em] leading-[1.2] mb-8 uppercase">
                         Plug into your delivery system in minutes
                     </h2>
                     <button
                         onClick={() => isAuthenticated ? setView('dashboard') : setView('register')}
-                        className="inline-flex items-center gap-2 bg-[#382416] text-[#ffedd7] border border-[#ffedd7]/10 hover:border-[#ffedd7]/30 hover:opacity-90 font-bold px-10 py-5 rounded-[36px] transition-all text-lg"
+                        className="inline-flex items-center gap-2 bg-[#e6e6e6] text-[#2f3031] hover:opacity-90 font-bold px-8 py-3.5 rounded-[8px] transition-all duration-200 text-base font-sans shadow-subtle"
                     >
                         Start verifying places
-                        <ArrowRight size={20} />
+                        <ArrowRight size={18} />
                     </button>
                 </div>
             </section>
 
             {/* ═══ Footer ═══ */}
-            <footer className="border-t border-[#40372e] border-dashed py-8 px-6 lg:px-8 bg-[#100904]">
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#6c5f51]">
-                    <div className="flex items-center gap-2 font-bold text-[#ffedd7] text-sm">
-                        <MapPin size={16} className="text-[#ffedd7] stroke-[1.5]" />
+            <footer className="border-t border-[#1b1c1e] py-8 px-6 lg:px-8 bg-[#040506]">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#6a6b6c]">
+                    <div className="flex items-center gap-2 font-bold text-[#ffffff] text-sm">
+                        <MapPin size={16} className="text-[#ff6363] stroke-[1.5]" />
                         anyWays
                     </div>
                     <p>© 2026 anyWays. Real-time place intelligence for Indian logistics.</p>
-                    <div className="flex items-center gap-6 font-mono text-[10px]">
-                        <a href="#" className="hover:text-[#dc5000] transition-colors">API Docs</a>
-                        <button onClick={() => setView('pricing')} className="hover:text-[#dc5000] transition-colors">Pricing</button>
-                        <button onClick={() => setView('login')} className="hover:text-[#dc5000] transition-colors">Dashboard</button>
+                    <div className="flex items-center gap-6 font-mono text-[10px] text-[#9c9c9d]">
+                        <a href="#" className="hover:text-[#ffffff] transition-colors duration-200">API Docs</a>
+                        <button onClick={() => setView('pricing')} className="hover:text-[#ffffff] transition-colors duration-200">Pricing</button>
+                        <button onClick={() => setView('login')} className="hover:text-[#ffffff] transition-colors duration-200">Dashboard</button>
                     </div>
                 </div>
             </footer>

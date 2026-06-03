@@ -59,20 +59,20 @@ export const Register: React.FC = () => {
     // --- Confirmation pending state ---
     if (confirmationSent) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-screen bg-[#100904] text-[#ffedd7] p-4 selection:bg-[#dc5000]/30 font-sans">
-                <div className="w-full max-w-md bg-[#100904] border border-[#40372e] rounded-xl p-8 text-center">
-                    <div className="w-16 h-16 bg-[#382416]/50 border border-[#40372e] rounded-full flex items-center justify-center mx-auto mb-4 text-[#ffedd7]">
+            <div className="flex flex-col items-center justify-center min-h-screen bg-[#040506] text-[#ffffff] p-4 selection:bg-[#ff6363]/30 font-sans">
+                <div className="w-full max-w-md bg-[#07080a] border border-[#363739] rounded-[11px] p-8 text-center shadow-subtle-4">
+                    <div className="w-16 h-16 bg-transparent border border-white/10 rounded-full flex items-center justify-center mx-auto mb-4 text-[#ffffff]">
                         <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                     </div>
-                    <h2 className="text-2xl font-black mb-2 text-[#ffedd7] tracking-tight">Check your email</h2>
-                    <p className="text-xs text-[#6c5f51] mb-6">
+                    <h2 className="text-2xl font-black mb-2 text-[#ffffff] tracking-tight uppercase">Check your email</h2>
+                    <p className="text-xs text-[#6a6b6c] mb-6">
                         We sent a confirmation link to <strong>{email}</strong>. Click it to activate your account.
                     </p>
                     <button
                         onClick={() => setView('login' as any)}
-                        className="text-[#ffedd7] hover:text-[#dc5000] font-bold underline decoration-[#dc5000] transition-colors text-xs"
+                        className="text-[#ffffff] hover:text-[#ff6363] font-bold underline decoration-[#ff6363] transition-all text-xs bg-transparent border-none p-0 cursor-pointer"
                     >
                         Back to login
                     </button>
@@ -83,28 +83,28 @@ export const Register: React.FC = () => {
 
     // --- Registration form ---
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-[#100904] text-[#ffedd7] p-4 selection:bg-[#dc5000]/30 font-sans">
-            <div className="w-full max-w-md bg-[#100904] border border-[#40372e] rounded-xl p-8 relative">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-[#040506] text-[#ffffff] p-4 selection:bg-[#ff6363]/30 font-sans">
+            <div className="w-full max-w-md bg-[#07080a] border border-[#363739] rounded-[11px] p-8 relative shadow-subtle-4">
                 <button 
                     onClick={() => setView('marketing' as any)}
-                    className="absolute top-4 left-4 p-2 text-[#ffedd7]/60 hover:text-[#ffedd7] hover:bg-[#382416]/50 transition-colors rounded-full"
+                    className="absolute top-4 left-4 p-2 text-[#9c9c9d] hover:text-[#ffffff] hover:bg-[#1b1c1e] transition-all rounded-full cursor-pointer"
                     title="Back to Home"
                 >
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                 </button>
-                <h2 className="text-2xl font-black mb-6 text-center text-[#ffedd7] tracking-tight">Create Account</h2>
+                <h2 className="text-2xl font-black mb-6 text-center text-[#ffffff] tracking-tight uppercase">Create Account</h2>
 
                 {error && (
-                    <div className="mb-4 p-3 bg-red-950/40 border border-red-900 text-red-400 rounded-lg text-xs font-mono" role="alert">
+                    <div className="mb-4 p-3 bg-[#452324] border border-[#ff6363]/40 text-[#ff6363] rounded-[8px] text-xs font-mono" role="alert">
                         {error}
                     </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#6c5f51] mb-1.5">
+                        <label className="block text-xs font-mono tracking-wider text-[#9c9c9d] mb-1.5 uppercase">
                             Name
                         </label>
                         <input
@@ -114,12 +114,12 @@ export const Register: React.FC = () => {
                             autoComplete="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full bg-transparent text-[#ffedd7] placeholder-[#ffedd7]/40 border-b border-[#ffedd7]/40 focus:border-[#dc5000] rounded-none py-2 px-0 focus:outline-none transition-colors text-sm"
+                            className="w-full bg-white/5 border border-white/5 text-white placeholder-[#9c9c9d]/40 rounded-[8px] py-2 px-3 focus:border-[#454647] focus:outline-none transition-all text-sm"
                             placeholder="John Doe"
                         />
                     </div>
                     <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#6c5f51] mb-1.5">
+                        <label className="block text-xs font-mono tracking-wider text-[#9c9c9d] mb-1.5 uppercase">
                             Email
                         </label>
                         <input
@@ -129,12 +129,12 @@ export const Register: React.FC = () => {
                             autoComplete="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full bg-transparent text-[#ffedd7] placeholder-[#ffedd7]/40 border-b border-[#ffedd7]/40 focus:border-[#dc5000] rounded-none py-2 px-0 focus:outline-none transition-colors text-sm"
+                            className="w-full bg-white/5 border border-white/5 text-white placeholder-[#9c9c9d]/40 rounded-[8px] py-2 px-3 focus:border-[#454647] focus:outline-none transition-all text-sm"
                             placeholder="you@example.com"
                         />
                     </div>
                     <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#6c5f51] mb-1.5">
+                        <label className="block text-xs font-mono tracking-wider text-[#9c9c9d] mb-1.5 uppercase">
                             Password
                         </label>
                         <input
@@ -145,32 +145,32 @@ export const Register: React.FC = () => {
                             minLength={8}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full bg-transparent text-[#ffedd7] placeholder-[#ffedd7]/40 border-b border-[#ffedd7]/40 focus:border-[#dc5000] rounded-none py-2 px-0 focus:outline-none transition-colors text-sm"
+                            className="w-full bg-white/5 border border-white/5 text-white placeholder-[#9c9c9d]/40 rounded-[8px] py-2 px-3 focus:border-[#454647] focus:outline-none transition-all text-sm"
                             placeholder="••••••••"
                         />
-                        <p className="text-[10px] text-[#6c5f51] mt-1 font-mono">Min 8 chars, 1 uppercase, 1 number.</p>
+                        <p className="text-[10px] text-[#6a6b6c] mt-1 font-mono">Min 8 chars, 1 uppercase, 1 number.</p>
                     </div>
                     <button
                         id="register-submit"
                         type="submit"
                         disabled={loading}
-                        className="w-full py-3 px-4 bg-[#382416] text-[#ffedd7] border border-[#ffedd7]/10 hover:border-[#ffedd7]/30 font-bold rounded-[36px] transition-all disabled:opacity-50 text-sm hover:opacity-90"
+                        className="w-full py-2.5 px-4 bg-[#e6e6e6] text-[#2f3031] font-semibold rounded-[8px] transition-all disabled:opacity-50 text-sm hover:opacity-90 cursor-pointer"
                     >
                         {loading ? 'Creating Account...' : 'Sign Up'}
                     </button>
                 </form>
 
                 <div className="mt-6 flex items-center justify-center">
-                    <div className="w-full border-t border-[#40372e]"></div>
-                    <span className="px-3 text-xs text-[#6c5f51] font-mono bg-[#100904]">OR</span>
-                    <div className="w-full border-t border-[#40372e]"></div>
+                    <div className="w-full border-t border-[#363739]"></div>
+                    <span className="px-3 text-xs text-[#6a6b6c] font-mono bg-[#07080a]">OR</span>
+                    <div className="w-full border-t border-[#363739]"></div>
                 </div>
 
                 <button
                     type="button"
                     onClick={handleGoogleLogin}
                     disabled={loading}
-                    className="mt-6 w-full flex items-center justify-center gap-2 py-3 px-4 border border-[#ffedd7] rounded-[22.5px] hover:border-[#dc5000] bg-transparent text-[#ffedd7] hover:text-[#ffedd7] font-medium transition-all disabled:opacity-50 text-sm"
+                    className="mt-6 w-full flex items-center justify-center gap-2 py-2.5 px-4 border border-[#454647] rounded-[8px] hover:border-white/20 bg-transparent text-[#e6e6e6] font-semibold transition-all disabled:opacity-50 text-sm cursor-pointer"
                 >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
                         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -181,11 +181,11 @@ export const Register: React.FC = () => {
                     Continue with Google
                 </button>
 
-                <div className="mt-6 text-center text-xs text-[#6c5f51]">
+                <div className="mt-6 text-center text-xs text-[#6a6b6c]">
                     Already have an account?{' '}
                     <button
                         onClick={() => setView('login' as any)}
-                        className="text-[#ffedd7] hover:text-[#dc5000] font-bold underline decoration-[#dc5000] transition-colors"
+                        className="text-[#ffffff] hover:text-[#ff6363] font-bold underline decoration-[#ff6363] transition-all cursor-pointer bg-transparent border-none p-0"
                     >
                         Log in
                     </button>
