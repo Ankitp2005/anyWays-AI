@@ -462,16 +462,7 @@ export const MarketingHome: React.FC = () => {
                     transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
                     className="max-w-5xl mx-auto text-center relative z-10 pt-16"
                 >
-                    {/* Badge */}
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.1, duration: 0.4 }}
-                        className="inline-flex items-center gap-2 px-3 py-1 rounded-[6px] border border-white/5 text-[#ffffff] text-[11px] font-medium tracking-[0.04em] mb-8 bg-[#1b1c1e] shadow-subtle-2"
-                    >
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#ff6363]" />
-                        <span className="font-mono">v1.104.14 — India Dispatch</span>
-                    </motion.div>
+
 
                     {/* Headline */}
                     <h1 className="text-4xl md:text-[64px] font-semibold tracking-[-0.13em] leading-[1] mb-6 text-[#ffffff] uppercase font-sans">
