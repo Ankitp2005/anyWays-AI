@@ -48,7 +48,7 @@ export const DocumentationPanel: React.FC = () => {
             </div>
 
             {/* Right Content Area */}
-            <div className="flex-1 overflow-y-auto pr-4 scrollbar-thin">
+            <div className="flex-1 min-w-0 overflow-y-auto pr-4 scrollbar-thin">
                 <div className="bg-[#07080a] border border-[#363739] rounded-[11px] p-8 shadow-subtle-4">
                     {activeSection === 'intro' && (
                         <div className="space-y-6">
