@@ -77,24 +77,25 @@ export const Pricing: React.FC<{ embedded?: boolean }> = ({ embedded = false }) 
                 </button>
             )}
             <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-20 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <h1 className="text-4xl md:text-[64px] font-semibold text-[#ffffff] leading-[1] tracking-[-0.13em] mb-6 uppercase">
-                        Real-Time Place Intelligence
+                <div className="text-center mb-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <p className="text-[#ff6363] text-xs font-mono uppercase tracking-[0.2em] mb-3">Pricing</p>
+                    <h1 className="text-2xl md:text-4xl font-semibold text-[#ffffff] leading-tight tracking-tight mb-4">
+                        Simple, transparent pricing
                     </h1>
-                    <p className="text-sm text-[#9c9c9d] max-w-2xl mx-auto leading-[1.4] font-normal mb-10">
-                        Reduce failed deliveries, verify locations, and make smarter decisions using live ground-truth signals.
+                    <p className="text-sm text-[#6a6b6c] max-w-xl mx-auto leading-relaxed">
+                        Reduce failed deliveries and verify locations at scale. Start free, scale as you grow.
                     </p>
-                    <div className="mt-10 flex flex-wrap justify-center gap-8 text-xs font-mono text-[#6a6b6c]">
+                    <div className="mt-6 flex flex-wrap justify-center gap-6 text-xs font-mono text-[#6a6b6c]">
                         <div className="flex items-center gap-2">
-                            <Check className="text-[#ff6363]" size={14} />
+                            <Check className="text-[#ff6363]" size={12} />
                             Currently in Free Beta
                         </div>
                         <div className="flex items-center gap-2">
-                            <Check className="text-[#ff6363]" size={14} />
+                            <Check className="text-[#ff6363]" size={12} />
                             No Payment Required
                         </div>
                         <div className="flex items-center gap-2">
-                            <Check className="text-[#ff6363]" size={14} />
+                            <Check className="text-[#ff6363]" size={12} />
                             Full API Access
                         </div>
                     </div>
