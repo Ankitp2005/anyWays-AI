@@ -41,57 +41,57 @@ export const SettingsPanel: React.FC = () => {
     };
 
     return (
-        <div className="max-w-4xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="max-w-4xl space-y-8 animate-in fade-in h-[calc(100vh-100px)] overflow-y-auto pr-4 scrollbar-thin">
             <div>
-                <h1 className="text-3xl font-bold tracking-tight mb-2">Platform Settings</h1>
-                <p className="text-muted-foreground">Manage your account preferences and platform configuration.</p>
+                <h1 className="text-3xl font-black uppercase tracking-tight text-[#ffedd7] mb-2">Platform Settings</h1>
+                <p className="text-xs text-[#6c5f51]">Manage your account preferences and platform configuration.</p>
             </div>
 
             <div className="grid gap-8 md:grid-cols-3">
                 {/* Profile Section */}
                 <div className="md:col-span-2 space-y-6">
-                    <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-                        <div className="border-b border-border px-6 py-4 flex items-center gap-2">
-                            <User size={18} className="text-primary" />
-                            <h2 className="font-semibold">Profile Information</h2>
+                    <div className="bg-[#100904] border border-[#40372e] border-dashed rounded-xl overflow-hidden">
+                        <div className="border-b border-[#40372e] border-dashed px-6 py-4 flex items-center gap-2">
+                            <User size={18} className="text-[#dc5000]" />
+                            <h2 className="font-bold text-sm uppercase tracking-wider text-[#ffedd7]">Profile Information</h2>
                         </div>
                         <div className="p-6">
                             <form onSubmit={handleSaveProfile} className="space-y-4">
                                 <div className="flex items-center gap-4 mb-6">
-                                    <div className="h-16 w-16 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xl border border-primary/30">
+                                    <div className="h-16 w-16 rounded-full border border-[#ffedd7]/20 flex items-center justify-center text-[#ffedd7] font-bold text-xl bg-transparent">
                                         {displayName.charAt(0).toUpperCase()}
                                     </div>
                                     <div>
-                                        <h3 className="font-medium text-lg">{displayName}</h3>
-                                        <p className="text-sm text-muted-foreground">Manage your personal details</p>
+                                        <h3 className="font-bold text-base text-[#ffedd7] uppercase tracking-wider">{displayName}</h3>
+                                        <p className="text-xs text-[#6c5f51]">Manage your personal details</p>
                                     </div>
                                 </div>
 
                                 <div className="grid gap-4 sm:grid-cols-2">
                                     <div className="space-y-1.5">
-                                        <label className="text-sm font-medium">Display Name</label>
+                                        <label className="text-xs font-mono text-[#6c5f51] uppercase tracking-wider">Display Name</label>
                                         <input
                                             type="text"
                                             defaultValue={displayName}
-                                            className="w-full bg-background border border-input rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                            className="w-full bg-transparent border-b border-[#ffedd7] rounded-none px-3 py-2 text-sm text-[#ffedd7] focus:outline-none focus:border-[#dc5000] placeholder-[#ffedd7]/40"
                                             disabled // Disabled for now since it's from Google
                                             title="Name is managed by Google Auth"
                                         />
                                     </div>
                                     <div className="space-y-1.5">
-                                        <label className="text-sm font-medium flex items-center gap-2">
-                                            Email Address <Shield size={12} className="text-emerald-500" />
+                                        <label className="text-xs font-mono text-[#6c5f51] uppercase tracking-wider flex items-center gap-2">
+                                            Email Address <Shield size={12} className="text-[#ffedd7]" />
                                         </label>
                                         <div className="relative">
-                                            <Mail size={16} className="absolute left-3 top-2.5 text-muted-foreground" />
+                                            <Mail size={16} className="absolute left-3 top-3 text-[#6c5f51]" />
                                             <input
                                                 type="email"
                                                 value={email}
                                                 disabled
-                                                className="w-full bg-secondary/50 border border-border rounded-lg pl-9 pr-3 py-2 text-sm text-muted-foreground cursor-not-allowed"
+                                                className="w-full bg-transparent border-b border-[#40372e] rounded-none pl-9 pr-3 py-2 text-sm text-[#6c5f51] cursor-not-allowed"
                                             />
                                         </div>
-                                        <p className="text-xs text-muted-foreground mt-1">Email is managed by Google Auth.</p>
+                                        <p className="text-[10px] font-mono text-[#6c5f51] mt-1">Email is managed by Google Auth.</p>
                                     </div>
                                 </div>
 
@@ -99,7 +99,7 @@ export const SettingsPanel: React.FC = () => {
                                     <button
                                         type="submit"
                                         disabled={saving}
-                                        className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors flex items-center gap-2"
+                                        className="bg-[#382416] text-[#ffedd7] px-5 py-2 rounded-[36px] border border-[#ffedd7]/10 hover:border-[#ffedd7]/30 transition-all font-bold text-xs flex items-center gap-2 cursor-pointer"
                                     >
                                         {saving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
                                         Save Changes
@@ -110,13 +110,13 @@ export const SettingsPanel: React.FC = () => {
                     </div>
 
                     {/* Billing & Usage Section */}
-                    <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-                        <div className="border-b border-border px-6 py-4 flex items-center justify-between">
+                    <div className="bg-[#100904] border border-[#40372e] border-dashed rounded-xl overflow-hidden">
+                        <div className="border-b border-[#40372e] border-dashed px-6 py-4 flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                                <CreditCard size={18} className="text-primary" />
-                                <h2 className="font-semibold">Subscription & API Usage</h2>
+                                <CreditCard size={18} className="text-[#dc5000]" />
+                                <h2 className="font-bold text-sm uppercase tracking-wider text-[#ffedd7]">Subscription & API Usage</h2>
                             </div>
-                            <span className="bg-primary/10 text-primary px-2 py-1 rounded-md text-xs font-bold uppercase tracking-wider">
+                            <span className="border border-[#ffedd7]/20 text-[#ffedd7] px-2.5 py-0.5 rounded-[22.5px] text-[10px] font-mono font-bold uppercase tracking-wider bg-transparent">
                                 Growth Plan
                             </span>
                         </div>
@@ -124,36 +124,36 @@ export const SettingsPanel: React.FC = () => {
                             <div className="mb-6">
                                 <div className="flex justify-between items-end mb-2">
                                     <div>
-                                        <h3 className="text-sm font-medium">Monthly API Requests</h3>
-                                        <p className="text-xs text-muted-foreground">Reset on June 1, 2026</p>
+                                        <h3 className="text-xs font-mono text-[#6c5f51] uppercase tracking-wider">Monthly API Requests</h3>
+                                        <p className="text-[10px] font-mono text-[#6c5f51]">Reset on June 1, 2026</p>
                                     </div>
                                     <div className="text-right">
-                                        <span className="text-xl font-bold text-foreground">
+                                        <span className="text-lg font-black font-mono text-[#ffedd7]">
                                             {loadingUsage ? '...' : usageStats.used.toLocaleString()}
                                         </span>
-                                        <span className="text-muted-foreground text-sm">
+                                        <span className="text-xs font-mono text-[#6c5f51]">
                                             {' '} / {usageStats.limit.toLocaleString()}
                                         </span>
                                     </div>
                                 </div>
-                                <div className="h-3 w-full bg-secondary rounded-full overflow-hidden shadow-inner">
+                                <div className="h-1.5 w-full bg-[#40372e] rounded-full overflow-hidden">
                                     <div 
-                                        className="h-full bg-gradient-to-r from-primary to-emerald-400 rounded-full shadow-md transition-all duration-1000"
+                                        className="h-full bg-[#ffedd7] rounded-full transition-all duration-1000"
                                         style={{ width: `${Math.min(100, (usageStats.used / usageStats.limit) * 100)}%` }}
                                     ></div>
                                 </div>
-                                <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1.5">
-                                    <Zap size={14} className="text-amber-500" />
+                                <p className="text-[10px] font-mono text-[#6c5f51] mt-3 flex items-center gap-1.5">
+                                    <Zap size={14} className="text-[#ffedd7]" />
                                     You are using {loadingUsage ? '...' : ((usageStats.used / usageStats.limit) * 100).toFixed(2)}% of your available API quota.
                                 </p>
                             </div>
 
-                            <div className="flex gap-3 pt-4 border-t border-border">
-                                <button className="px-4 py-2 bg-primary/10 text-primary border border-primary/20 rounded-lg text-sm font-medium hover:bg-primary/20 transition-colors flex items-center gap-2">
+                            <div className="flex gap-3 pt-4 border-t border-[#40372e] border-dashed">
+                                <button className="px-5 py-2 bg-[#382416] text-[#ffedd7] border border-[#ffedd7]/10 hover:border-[#ffedd7]/30 rounded-[36px] text-xs font-bold transition-all flex items-center gap-2 cursor-pointer">
                                     <TrendingUp size={16} />
                                     Upgrade to Enterprise
                                 </button>
-                                <button className="px-4 py-2 border border-border rounded-lg text-sm font-medium hover:bg-secondary transition-colors">
+                                <button className="px-4 py-2 border border-[#ffedd7] rounded-[22.5px] text-xs font-bold hover:border-[#dc5000] transition-colors bg-transparent text-[#ffedd7] cursor-pointer">
                                     View Invoices
                                 </button>
                             </div>
@@ -163,24 +163,24 @@ export const SettingsPanel: React.FC = () => {
 
                 {/* Preferences Section */}
                 <div className="space-y-6">
-                    <div className="bg-card border border-border rounded-xl shadow-sm overflow-hidden">
-                        <div className="border-b border-border px-6 py-4">
-                            <h2 className="font-semibold">Preferences</h2>
+                    <div className="bg-[#100904] border border-[#40372e] border-dashed rounded-xl overflow-hidden">
+                        <div className="border-b border-[#40372e] border-dashed px-6 py-4">
+                            <h2 className="font-bold text-sm uppercase tracking-wider text-[#ffedd7]">Preferences</h2>
                         </div>
                         <div className="p-6 space-y-6">
                             <div>
-                                <h3 className="text-sm font-medium mb-3">Appearance</h3>
-                                <div className="flex items-center justify-between p-3 border border-border rounded-lg bg-background">
+                                <h3 className="text-xs font-mono text-[#6c5f51] uppercase tracking-wider mb-3">Appearance</h3>
+                                <div className="flex items-center justify-between p-3 border border-[#40372e] border-dashed rounded-xl bg-transparent">
                                     <div className="flex items-center gap-3">
-                                        {theme === 'dark' ? <Moon size={18} className="text-blue-400" /> : <Sun size={18} className="text-amber-500" />}
+                                        {theme === 'dark' ? <Moon size={18} className="text-[#ffedd7]" /> : <Sun size={18} className="text-[#ffedd7]" />}
                                         <div>
-                                            <p className="text-sm font-medium">Theme</p>
-                                            <p className="text-xs text-muted-foreground capitalize">{theme} Mode</p>
+                                            <p className="text-xs font-bold text-[#ffedd7] uppercase tracking-wider">Theme</p>
+                                            <p className="text-[10px] font-mono text-[#6c5f51] capitalize">{theme} Mode</p>
                                         </div>
                                     </div>
                                     <button
                                         onClick={toggleTheme}
-                                        className="bg-secondary hover:bg-secondary/80 text-secondary-foreground px-3 py-1.5 rounded-md text-xs font-medium transition-colors border border-border"
+                                        className="px-4 py-1.5 border border-[#ffedd7] rounded-[22.5px] text-xs font-bold hover:border-[#dc5000] transition-colors bg-transparent text-[#ffedd7] cursor-pointer"
                                     >
                                         Toggle
                                     </button>

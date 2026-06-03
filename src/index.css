@@ -1,68 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
+@theme {
+  /* Colors */
+  --color-studio-black: #100904;
+  --color-warm-cream: #ffedd7;
+  --color-cork-shadow: #40372e;
+  --color-dark-cork: #382416;
+  --color-burnt-sienna: #dc5000;
+  --color-grey-brown: #6c5f51;
+  --color-forest-grid: #445231;
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-halyard-display-variable: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-arial: 'Arial', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Spacing */
+  --spacing-6: 6px;
+  --spacing-8: 8px;
+  --spacing-9: 9px;
+  --spacing-10: 10px;
+  --spacing-12: 12px;
+  --spacing-14: 14px;
+  --spacing-18: 18px;
+  --spacing-24: 24px;
+  --spacing-31: 31px;
+  --spacing-41: 41px;
+  --spacing-45: 45px;
+  --spacing-68: 68px;
+  --spacing-204: 204px;
+
+  /* Border Radius */
+  --radius-xl: 12px;
+  --radius-2xl: 22.5px;
+  --radius-3xl: 36px;
+}
+
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+  :root, .dark {
+    --background: 25 60% 4%; /* #100904 */
+    --foreground: 33 100% 92%; /* #ffedd7 */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 25 60% 4%; /* #100904 */
+    --card-foreground: 33 100% 92%; /* #ffedd7 */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 25 60% 4%; /* #100904 */
+    --popover-foreground: 33 100% 92%; /* #ffedd7 */
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 25 44% 15%; /* #382416 (Dark Cork) */
+    --primary-foreground: 33 100% 92%; /* #ffedd7 */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 30 16% 22%; /* #40372e (Cork Shadow) */
+    --secondary-foreground: 33 100% 92%; /* #ffedd7 */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 31 14% 37%; /* #6c5f51 (Grey Brown) */
+    --muted-foreground: 31 14% 37%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 22 100% 43%; /* #dc5000 (Burnt Sienna) */
+    --accent-foreground: 33 100% 92%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 22 100% 43%; /* #dc5000 (Burnt Sienna) */
+    --destructive-foreground: 33 100% 92%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 30 16% 22%; /* #40372e (Cork Shadow) */
+    --input: 30 16% 22%;
+    --ring: 22 100% 43%; /* #dc5000 */
 
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --radius: 0px;
   }
 }
+
 
 @layer base {
   * {

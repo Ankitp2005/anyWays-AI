@@ -58,28 +58,28 @@ export const Login: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-50 dark:bg-neutral-900 p-4">
-            <div className="w-full max-w-md bg-white dark:bg-neutral-800 rounded-lg shadow-xl p-8 relative">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-[#100904] text-[#ffedd7] p-4 selection:bg-[#dc5000]/30 font-sans">
+            <div className="w-full max-w-md bg-[#100904] border border-[#40372e] rounded-xl p-8 relative">
                 <button 
                     onClick={() => setView('marketing' as any)}
-                    className="absolute top-4 left-4 p-2 text-neutral-500 hover:text-neutral-800 dark:hover:text-white transition-colors rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                    className="absolute top-4 left-4 p-2 text-[#ffedd7]/60 hover:text-[#ffedd7] hover:bg-[#382416]/50 transition-colors rounded-full"
                     title="Back to Home"
                 >
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                 </button>
-                <h2 className="text-2xl font-bold mb-6 text-center text-neutral-800 dark:text-white">Welcome Back</h2>
+                <h2 className="text-2xl font-black mb-6 text-center text-[#ffedd7] tracking-tight">Welcome Back</h2>
 
                 {error && (
-                    <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm" role="alert">
+                    <div className="mb-4 p-3 bg-red-950/40 border border-red-900 text-red-400 rounded-lg text-xs font-mono" role="alert">
                         {error}
                     </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#6c5f51] mb-1.5">
                             Email
                         </label>
                         <input
@@ -89,11 +89,12 @@ export const Login: React.FC = () => {
                             autoComplete="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full bg-transparent text-[#ffedd7] placeholder-[#ffedd7]/40 border-b border-[#ffedd7]/40 focus:border-[#dc5000] rounded-none py-2 px-0 focus:outline-none transition-colors text-sm"
+                            placeholder="you@example.com"
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#6c5f51] mb-1.5">
                             Password
                         </label>
                         <input
@@ -103,30 +104,31 @@ export const Login: React.FC = () => {
                             autoComplete="current-password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-4 py-2 rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full bg-transparent text-[#ffedd7] placeholder-[#ffedd7]/40 border-b border-[#ffedd7]/40 focus:border-[#dc5000] rounded-none py-2 px-0 focus:outline-none transition-colors text-sm"
+                            placeholder="••••••••"
                         />
                     </div>
                     <button
                         id="login-submit"
                         type="submit"
                         disabled={loading}
-                        className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50"
+                        className="w-full py-3 px-4 bg-[#382416] text-[#ffedd7] border border-[#ffedd7]/10 hover:border-[#ffedd7]/30 font-bold rounded-[36px] transition-all disabled:opacity-50 text-sm hover:opacity-90"
                     >
                         {loading ? 'Logging in...' : 'Login'}
                     </button>
                 </form>
 
-                <div className="mt-4 flex items-center justify-center">
-                    <div className="w-full border-t border-neutral-300 dark:border-neutral-600"></div>
-                    <span className="px-3 text-sm text-neutral-500 bg-white dark:bg-neutral-800">OR</span>
-                    <div className="w-full border-t border-neutral-300 dark:border-neutral-600"></div>
+                <div className="mt-6 flex items-center justify-center">
+                    <div className="w-full border-t border-[#40372e]"></div>
+                    <span className="px-3 text-xs text-[#6c5f51] font-mono bg-[#100904]">OR</span>
+                    <div className="w-full border-t border-[#40372e]"></div>
                 </div>
 
                 <button
                     type="button"
                     onClick={handleGoogleLogin}
                     disabled={loading}
-                    className="mt-4 w-full flex items-center justify-center gap-2 py-3 px-4 border border-neutral-300 dark:border-neutral-600 rounded-lg hover:bg-neutral-50 dark:hover:bg-neutral-700 transition-colors disabled:opacity-50 text-neutral-700 dark:text-neutral-200 font-medium bg-white dark:bg-neutral-800"
+                    className="mt-6 w-full flex items-center justify-center gap-2 py-3 px-4 border border-[#ffedd7] rounded-[22.5px] hover:border-[#dc5000] bg-transparent text-[#ffedd7] hover:text-[#ffedd7] font-medium transition-all disabled:opacity-50 text-sm"
                 >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
                         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -137,11 +139,11 @@ export const Login: React.FC = () => {
                     Continue with Google
                 </button>
 
-                <div className="mt-6 text-center text-sm text-neutral-600 dark:text-neutral-400">
+                <div className="mt-6 text-center text-xs text-[#6c5f51]">
                     Don't have an account?{' '}
                     <button
                         onClick={() => setView('register' as any)}
-                        className="text-blue-600 dark:text-blue-400 hover:underline"
+                        className="text-[#ffedd7] hover:text-[#dc5000] font-bold underline decoration-[#dc5000] transition-colors"
                     >
                         Sign up
                     </button>

@@ -42,52 +42,52 @@ const AddPlaceModal: React.FC<{ onClose: () => void; onSave: (data: any) => Prom
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+            <div className="absolute inset-0 bg-black/80" onClick={onClose} />
 
             {/* Modal */}
-            <div className="relative bg-card border border-border rounded-2xl shadow-2xl w-full max-w-md animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex items-center justify-between px-6 py-4 border-b border-border">
+            <div className="relative bg-[#100904] border border-[#ffedd7] rounded-xl w-full max-w-md animate-in fade-in duration-200">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-[#40372e] border-dashed">
                     <div className="flex items-center gap-2">
-                        <div className="bg-primary/10 text-primary p-1.5 rounded-lg">
+                        <div className="border border-[#ffedd7]/20 text-[#ffedd7] p-1.5 rounded-lg">
                             <MapPin size={16} />
                         </div>
-                        <h2 className="text-lg font-semibold">Add New Place</h2>
+                        <h2 className="text-base font-bold text-[#ffedd7]">Add New Place</h2>
                     </div>
-                    <button onClick={onClose} className="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-md hover:bg-secondary">
+                    <button onClick={onClose} className="text-[#6c5f51] hover:text-[#ffedd7] transition-colors p-1 hover:bg-[#382416]/30 rounded-lg">
                         <X size={18} />
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                <form onSubmit={handleSubmit} className="p-6 space-y-6">
                     <div>
-                        <label className="block text-sm font-medium mb-1.5">Place Name <span className="text-destructive">*</span></label>
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#6c5f51] mb-1.5">Place Name <span className="text-[#dc5000]">*</span></label>
                         <input
                             type="text"
                             value={name}
                             onChange={e => setName(e.target.value)}
                             placeholder="e.g. Rayat Bahra University"
                             autoFocus
-                            className="w-full bg-background border border-input rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                            className="w-full bg-transparent text-[#ffedd7] placeholder-[#ffedd7]/40 border-b border-[#ffedd7] rounded-none py-2 px-0 focus:outline-none focus:border-[#dc5000] transition-colors text-sm"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium mb-1.5">Address <span className="text-muted-foreground text-xs font-normal">(optional)</span></label>
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#6c5f51] mb-1.5">Address <span className="text-[#6c5f51] text-xs font-normal font-mono">(optional)</span></label>
                         <input
                             type="text"
                             value={address}
                             onChange={e => setAddress(e.target.value)}
                             placeholder="e.g. Rupnagar, Punjab, India"
-                            className="w-full bg-background border border-input rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                            className="w-full bg-transparent text-[#ffedd7] placeholder-[#ffedd7]/40 border-b border-[#ffedd7] rounded-none py-2 px-0 focus:outline-none focus:border-[#dc5000] transition-colors text-sm"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium mb-1.5">Initial Status</label>
+                        <label className="block text-xs font-semibold uppercase tracking-wider text-[#6c5f51] mb-1.5">Initial Status</label>
                         <select
                             value={status}
                             onChange={e => setStatus(e.target.value as any)}
-                            className="w-full bg-background border border-input rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                            className="w-full bg-[#100904] text-[#ffedd7] border border-[#40372e] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[#dc5000] transition-colors"
                         >
                             <option value="OPEN">Open</option>
                             <option value="CLOSED">Closed</option>
@@ -100,14 +100,14 @@ const AddPlaceModal: React.FC<{ onClose: () => void; onSave: (data: any) => Prom
                         <button
                             type="button"
                             onClick={onClose}
-                            className="flex-1 px-4 py-2 border border-border rounded-lg text-sm font-medium hover:bg-secondary transition-colors"
+                            className="flex-1 px-4 py-2 border border-[#ffedd7] rounded-[22.5px] text-xs font-bold hover:border-[#dc5000] transition-colors bg-transparent text-[#ffedd7]"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
                             disabled={saving}
-                            className="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                            className="flex-1 px-4 py-2 bg-[#382416] text-[#ffedd7] border border-[#ffedd7]/10 hover:border-[#ffedd7]/30 rounded-[36px] text-xs font-bold hover:opacity-90 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                         >
                             {saving ? <><Loader2 size={14} className="animate-spin" /> Saving...</> : 'Add Place'}
                         </button>
@@ -139,17 +139,14 @@ export const DashboardLayout: React.FC = () => {
     }, [activeTab]);
 
     return (
-        <div className="flex h-screen w-screen bg-background text-foreground overflow-hidden relative font-sans selection:bg-primary/30">
-            {/* Cinematic Background Gradients */}
-            <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/90 z-0 pointer-events-none" />
-            <div className="absolute top-0 left-1/4 w-[800px] h-[600px] bg-emerald-500/5 rounded-full blur-[150px] pointer-events-none" />
-            <div className="absolute bottom-0 right-1/4 w-[600px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="flex h-screen w-screen bg-[#100904] text-[#ffedd7] overflow-hidden relative font-sans selection:bg-[#dc5000]/30">
+            {/* Flat canvas, no background gradients/blurs */}
 
             {/* Floating Toggle Button (Always visible) */}
             <button
                 onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
                 className={cn(
-                    "fixed z-[100] top-4 transition-all duration-300 p-2 bg-background border border-border rounded-lg shadow-sm hover:bg-secondary text-muted-foreground hover:text-foreground",
+                    "fixed z-[100] top-4 transition-all duration-300 p-2 bg-[#100904] border border-[#ffedd7]/30 rounded-lg hover:border-[#ffedd7] hover:bg-[#382416]/50 text-[#ffedd7] cursor-pointer",
                     isSidebarCollapsed ? "left-4" : "left-[240px]"
                 )}
                 title={isSidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
@@ -173,7 +170,7 @@ export const DashboardLayout: React.FC = () => {
             />
 
             <main className={cn(
-                "flex-1 overflow-y-auto relative z-10 h-full scroll-smooth transition-all duration-500 bg-background border-l border-border shadow-sm backdrop-blur-3xl",
+                "flex-1 overflow-y-auto relative z-10 h-full scroll-smooth transition-all duration-500 bg-[#100904] border-l border-[#40372e] border-dashed",
                 isSidebarCollapsed ? "ml-0" : "ml-0"
             )}>
                 <div className="max-w-7xl mx-auto px-8 py-10 lg:px-12 lg:py-12">

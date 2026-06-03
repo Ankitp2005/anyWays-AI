@@ -102,31 +102,25 @@ const DemoFeed = () => {
 /* ─── Problem Card ─────────────────────────────────────────────── */
 
 const ProblemCard = ({ icon: Icon, title, description }: { icon: any; title: string; description: string }) => (
-    <div className="group p-6 rounded-2xl bg-red-500/5 border border-red-500/10 hover:border-red-500/20 transition-all duration-300 hover:-translate-y-1">
-        <div className="p-3 rounded-xl bg-red-500/10 w-fit mb-4">
-            <Icon size={24} className="text-red-400" />
+    <div className="p-6 rounded-xl border border-[#40372e] border-dashed bg-transparent transition-all duration-300">
+        <div className="p-3 rounded-lg border border-[#ffedd7]/20 w-fit mb-4 text-[#ffedd7]">
+            <Icon size={24} />
         </div>
-        <h3 className="text-lg font-bold text-foreground mb-2">{title}</h3>
-        <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+        <h3 className="text-lg font-bold text-[#ffedd7] mb-2">{title}</h3>
+        <p className="text-sm text-[#6c5f51] leading-relaxed">{description}</p>
     </div>
 );
 
 /* ─── Solution Card ────────────────────────────────────────────── */
 
-const SolutionCard = ({ icon: Icon, title, description, color }: { icon: any; title: string; description: string; color: string }) => {
-    const colorMap: Record<string, string> = {
-        emerald: "bg-emerald-500/10 border-emerald-500/10 hover:border-emerald-500/20 text-emerald-400",
-        blue: "bg-blue-500/10 border-blue-500/10 hover:border-blue-500/20 text-blue-400",
-        violet: "bg-violet-500/10 border-violet-500/10 hover:border-violet-500/20 text-violet-400",
-    };
-
+const SolutionCard = ({ icon: Icon, title, description }: { icon: any; title: string; description: string; color: string }) => {
     return (
-        <div className={cn("group p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1", colorMap[color]?.split(' ').slice(1).join(' ') || "border-border")}>
-            <div className={cn("p-3 rounded-xl w-fit mb-4", colorMap[color]?.split(' ')[0])}>
-                <Icon size={24} className={colorMap[color]?.split(' ').pop()} />
+        <div className="p-6 rounded-xl border border-[#40372e] border-dashed bg-transparent transition-all duration-300">
+            <div className="p-3 rounded-lg border border-[#dc5000]/30 text-[#dc5000] w-fit mb-4">
+                <Icon size={24} />
             </div>
-            <h3 className="text-lg font-bold text-foreground mb-2">{title}</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
+            <h3 className="text-lg font-bold text-[#ffedd7] mb-2">{title}</h3>
+            <p className="text-sm text-[#6c5f51] leading-relaxed">{description}</p>
         </div>
     );
 };
@@ -134,12 +128,12 @@ const SolutionCard = ({ icon: Icon, title, description, color }: { icon: any; ti
 /* ─── Stat Card ────────────────────────────────────────────────── */
 
 const StatCard = ({ value, suffix, label }: { value: number; suffix: string; label: string }) => (
-    <div className="text-center p-6">
-        <div className="text-4xl md:text-5xl font-black text-foreground tracking-tighter">
+    <div className="text-center p-6 bg-transparent">
+        <div className="text-4xl md:text-5xl font-black text-[#ffedd7] tracking-tighter">
             <AnimatedNumber target={value} />
-            <span className="text-emerald-500">{suffix}</span>
+            <span className="text-[#dc5000]">{suffix}</span>
         </div>
-        <p className="text-sm text-muted-foreground mt-2 font-medium">{label}</p>
+        <p className="text-xs text-[#6c5f51] mt-2 font-mono uppercase tracking-wider">{label}</p>
     </div>
 );
 
@@ -150,33 +144,33 @@ export const MarketingHome: React.FC = () => {
     const { theme, toggleTheme } = useTheme();
 
     return (
-        <div className="min-h-screen bg-background text-foreground overflow-hidden transition-colors duration-300">
+        <div className="min-h-screen bg-[#100904] text-[#ffedd7] overflow-hidden selection:bg-[#dc5000]/30 font-sans">
             
             {/* ═══ Navigation ═══ */}
-            <nav className="sticky top-0 z-50 backdrop-blur-xl bg-background/80 border-b border-border">
+            <nav className="sticky top-0 z-50 bg-[#100904] border-b border-[#40372e]">
                 <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-16">
-                    <div className="flex items-center gap-2 text-xl font-bold tracking-tight text-foreground">
-                        <MapPin size={20} className="text-emerald-500" />
+                    <div className="flex items-center gap-2 text-base font-bold tracking-tight text-[#ffedd7]">
+                        <MapPin size={18} className="text-[#ffedd7] stroke-[1.5]" />
                         anyWays
                     </div>
-                    <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
-                        <a href="#problem" className="hover:text-foreground transition-colors">Problem</a>
-                        <a href="#solution" className="hover:text-foreground transition-colors">Solution</a>
-                        <a href="#demo" className="hover:text-foreground transition-colors">Demo</a>
-                        <button onClick={() => setView('pricing')} className="hover:text-foreground transition-colors">Pricing</button>
+                    <div className="hidden md:flex items-center gap-6 text-xs uppercase tracking-wider text-[#ffedd7]">
+                        <a href="#problem" className="hover:text-[#dc5000] transition-colors">Problem</a>
+                        <a href="#solution" className="hover:text-[#dc5000] transition-colors">Solution</a>
+                        <a href="#demo" className="hover:text-[#dc5000] transition-colors">Demo</a>
+                        <button onClick={() => setView('pricing')} className="hover:text-[#dc5000] transition-colors">Pricing</button>
                     </div>
                     <div className="flex items-center gap-3">
                         <button
                             onClick={toggleTheme}
-                            className="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-xl transition-all"
-                            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                            className="p-2 text-[#ffedd7]/60 hover:text-[#ffedd7] hover:bg-[#382416]/50 rounded-xl transition-all"
+                            title={`Switch theme`}
                         >
-                            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
                         </button>
                         {isAuthenticated ? (
                             <button
                                 onClick={() => setView('dashboard')}
-                                className="text-sm font-bold bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-xl transition-all hover:scale-105"
+                                className="text-xs font-bold bg-[#382416] text-[#ffedd7] border border-[#ffedd7]/10 hover:border-[#ffedd7]/30 px-5 py-2 rounded-[36px] transition-all hover:opacity-90"
                             >
                                 Go to Dashboard
                             </button>
@@ -184,13 +178,13 @@ export const MarketingHome: React.FC = () => {
                             <>
                                 <button
                                     onClick={() => setView('login')}
-                                    className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-4 py-2"
+                                    className="text-xs font-medium text-[#ffedd7]/80 hover:text-[#ffedd7] transition-colors px-4 py-2"
                                 >
                                     Log in
                                 </button>
                                 <button
                                     onClick={() => setView('register')}
-                                    className="text-sm font-bold bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-xl transition-all hover:scale-105"
+                                    className="text-xs font-bold bg-[#382416] text-[#ffedd7] border border-[#ffedd7]/10 hover:border-[#ffedd7]/30 px-5 py-2 rounded-[36px] transition-all hover:opacity-90"
                                 >
                                     Start Free
                                 </button>
@@ -201,13 +195,11 @@ export const MarketingHome: React.FC = () => {
             </nav>
 
             {/* ═══ HERO ═══ */}
-            <section className="relative min-h-[100vh] flex flex-col justify-center px-6 lg:px-8 overflow-hidden bg-background">
+            <section className="relative min-h-[100vh] flex flex-col justify-center px-6 lg:px-8 overflow-hidden bg-[#100904]">
                 {/* Video Background */}
-                <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-50 mix-blend-screen dark:opacity-50 dark:mix-blend-screen mix-blend-multiply opacity-20">
+                <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-20 mix-blend-screen pointer-events-none">
                     <source src="https://res.cloudinary.com/dfonotyfb/video/upload/v1775585556/dds3_1_rqhg7x.mp4" type="video/mp4" />
                 </video>
-                <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/60 to-background z-0" />
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay z-0 pointer-events-none" />
                 
                 <motion.div 
                     initial={{ opacity: 0, y: 30 }}
@@ -220,22 +212,22 @@ export const MarketingHome: React.FC = () => {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.2, duration: 0.8 }}
-                        className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-secondary border border-border text-foreground text-xs font-semibold uppercase tracking-[0.2em] mb-10 backdrop-blur-xl shadow-2xl"
+                        className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[#ffedd7]/30 text-[#ffedd7] text-[10px] font-mono uppercase tracking-[0.2em] mb-10 bg-transparent"
                     >
-                        <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#dc5000]" />
                         Enterprise Intelligence
                     </motion.div>
 
                     {/* Headline */}
-                    <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-[1.05] mb-8 text-foreground drop-shadow-2xl">
+                    <h1 className="text-4xl md:text-[51px] font-black tracking-tight leading-[0.9] mb-8 text-[#ffedd7] uppercase">
                         Operational truth.<br/>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-b from-zinc-800 to-zinc-400 dark:from-zinc-100 dark:to-zinc-600">
+                        <span className="text-[#6c5f51]">
                             Before dispatch.
                         </span>
                     </h1>
 
                     {/* Subheadline */}
-                    <p className="text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-12 font-light tracking-wide">
+                    <p className="text-sm md:text-[18px] text-[#ffedd7] max-w-3xl mx-auto leading-[1.2] mb-12 font-medium">
                         Real-time logistics intelligence powered by live signals, foot traffic, and on-ground verification. Built for scale.
                     </p>
 
@@ -248,24 +240,32 @@ export const MarketingHome: React.FC = () => {
                     >
                         <button
                             onClick={() => isAuthenticated ? setView('dashboard') : setView('register')}
-                            className="group relative flex items-center justify-center gap-3 bg-foreground text-background font-semibold px-10 py-4 rounded-full text-lg transition-all duration-300 hover:scale-105 hover:bg-foreground/90 w-full sm:w-auto shadow-lg"
+                            className="flex items-center justify-center gap-2 border border-[#dc5000] text-[#dc5000] hover:bg-[#dc5000]/10 font-bold px-8 py-3 rounded-[9999px] text-sm transition-all duration-300 w-full sm:w-auto bg-transparent"
                         >
                             Deploy Engine
-                            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                            <ArrowRight size={16} />
                         </button>
                         <button
                             onClick={() => setView('pricing')}
-                            className="flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground font-medium px-10 py-4 rounded-full border border-border hover:bg-secondary transition-all duration-300 backdrop-blur-md w-full sm:w-auto"
+                            className="flex items-center justify-center gap-2 text-[#ffedd7] hover:text-[#dc5000] hover:border-[#dc5000] font-medium px-8 py-3 rounded-[22.5px] border border-[#ffedd7] transition-all duration-300 w-full sm:w-auto bg-transparent"
                         >
                             View Architecture
                         </button>
                     </motion.div>
                 </motion.div>
+
+                {/* Sticky scroll prompt */}
+                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-80 animate-pulse text-[10px] font-mono uppercase text-[#ffedd7] tracking-widest pointer-events-none">
+                    <span>Scroll to continue</span>
+                    <svg className="w-4 h-4 animate-bounce text-[#ffedd7]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                </div>
             </section>
 
             {/* ═══ STATS BAR ═══ */}
-            <section className="border-y border-border bg-secondary/30">
-                <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-border">
+            <section className="border-y border-[#40372e] border-dashed bg-transparent">
+                <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-[#40372e] divide-dashed">
                     <StatCard value={23} suffix="%" label="Failed deliveries in India" />
                     <StatCard value={40} suffix="%" label="Due to wrong addresses" />
                     <StatCard value={85} suffix="₹" label="Avg. cost per failed delivery" />
@@ -274,11 +274,11 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ PROBLEM ═══ */}
-            <section id="problem" className="py-24 px-6 lg:px-8">
+            <section id="problem" className="py-24 px-6 lg:px-8 bg-[#100904]">
                 <div className="max-w-6xl mx-auto">
                     <div className="text-center mb-16">
-                        <p className="text-red-400 text-sm font-bold uppercase tracking-widest mb-3">The Problem</p>
-                        <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-4">
+                        <p className="text-[#dc5000] text-xs font-mono uppercase tracking-[0.2em] mb-3">The Problem</p>
+                        <h2 className="text-3xl md:text-[41px] font-black text-[#ffedd7] leading-[1] mb-4 uppercase">
                             30% of delivery failures happen because locations are wrong, closed, or inactive.
                         </h2>
                     </div>
@@ -304,14 +304,14 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ SOLUTION ═══ */}
-            <section id="solution" className="py-24 px-6 lg:px-8 bg-secondary/30 border-y border-border">
+            <section id="solution" className="py-24 px-6 lg:px-8 bg-[#100904] border-y border-[#40372e] border-dashed">
                 <div className="max-w-6xl mx-auto">
                     <div className="text-center mb-16">
-                        <p className="text-emerald-500 text-sm font-bold uppercase tracking-widest mb-3">The Solution</p>
-                        <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-4">
+                        <p className="text-[#dc5000] text-xs font-mono uppercase tracking-[0.2em] mb-3">The Solution</p>
+                        <h2 className="text-3xl md:text-[41px] font-black text-[#ffedd7] leading-[1] mb-4 uppercase">
                             Verify every location before dispatch
                         </h2>
-                        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                        <p className="text-sm text-[#6c5f51] max-w-2xl mx-auto leading-relaxed">
                             anyWays collects real-world signals from multiple sources to give you a confidence score for every place.
                         </p>
                     </div>
@@ -340,66 +340,60 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ DEMO ═══ */}
-            <section id="demo" className="py-24 px-6 lg:px-8">
+            <section id="demo" className="py-24 px-6 lg:px-8 bg-[#100904]">
                 <div className="max-w-6xl mx-auto">
                     <div className="text-center mb-16">
-                        <p className="text-blue-500 text-sm font-bold uppercase tracking-widest mb-3">See It In Action</p>
-                        <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-4">
+                        <p className="text-[#dc5000] text-xs font-mono uppercase tracking-[0.2em] mb-3">See It In Action</p>
+                        <h2 className="text-3xl md:text-[41px] font-black text-[#ffedd7] leading-[1] mb-4 uppercase">
                             Watch the score change live
                         </h2>
-                        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                        <p className="text-sm text-[#6c5f51] max-w-2xl mx-auto leading-relaxed">
                             As real-world signals come in, the confidence score updates instantly.
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                         {/* Left: Score Display */}
-                        <div className="bg-card border border-border rounded-2xl p-8 flex flex-col items-center">
-                            <p className="text-sm text-muted-foreground uppercase tracking-widest font-bold mb-6">Confidence Score</p>
+                        <div className="bg-[#100904] border border-[#40372e] border-dashed rounded-xl p-8 flex flex-col items-center">
+                            <p className="text-[10px] text-[#6c5f51] uppercase tracking-[0.2em] font-mono mb-6">Confidence Score</p>
                             <div className="relative w-40 h-40 mb-6">
                                 <svg width="160" height="160" className="transform -rotate-90">
-                                    <circle cx="80" cy="80" r="68" fill="none" className="stroke-border" strokeWidth="10" />
+                                    <circle cx="80" cy="80" r="68" fill="none" className="stroke-[#40372e]" strokeWidth="2" />
                                     <circle
                                         cx="80" cy="80" r="68" fill="none"
-                                        stroke="url(#demoGradient)" strokeWidth="10" strokeLinecap="round"
+                                        stroke="#dc5000" strokeWidth="2" strokeLinecap="round"
                                         strokeDasharray={2 * Math.PI * 68}
                                         strokeDashoffset={2 * Math.PI * 68 * (1 - 0.78)}
                                         className="transition-all duration-[2s] ease-out"
                                     />
-                                    <defs>
-                                        <linearGradient id="demoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" stopColor="#34d399" />
-                                            <stop offset="100%" stopColor="#6ee7b7" />
-                                        </linearGradient>
-                                    </defs>
                                 </svg>
                                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                    <span className="text-5xl font-black text-foreground">78</span>
-                                    <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold mt-1">Score</span>
+                                    <span className="text-5xl font-black text-[#ffedd7] font-mono">78</span>
+                                    <span className="text-[10px] uppercase tracking-[0.25em] text-[#6c5f51] font-bold mt-1 font-mono">Score</span>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-                                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                                <span className="text-xs font-bold text-emerald-500 uppercase tracking-wider">Likely Valid</span>
+                            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#382416] border border-[#ffedd7]/20 text-[#ffedd7]">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#dc5000]" />
+                                <span className="text-[10px] font-bold uppercase tracking-widest font-mono">Likely Valid</span>
                             </div>
-                            <p className="text-xs text-muted-foreground mt-4 text-center max-w-[240px]">
+                            <p className="text-xs text-[#6c5f51] mt-4 text-center max-w-[240px] leading-relaxed">
                                 Score updates as signals arrive. Use this to decide if a delivery is safe.
                             </p>
                         </div>
 
                         {/* Right: Live Feed */}
-                        <div className="bg-card border border-border rounded-2xl overflow-hidden">
-                            <div className="px-6 py-4 border-b border-border flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <Activity size={16} className="text-blue-500" />
-                                    <span className="text-sm font-semibold">Live Signal Feed</span>
+                        <div className="bg-[#100904] border border-[#40372e] border-dashed rounded-xl overflow-hidden">
+                            <div className="px-6 py-4 border-b border-[#40372e] border-dashed flex items-center justify-between">
+                                <div className="flex items-center gap-2 text-[#ffedd7]">
+                                    <Activity size={16} />
+                                    <span className="text-xs font-bold uppercase tracking-wider font-mono">Live Signal Feed</span>
                                 </div>
-                                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
-                                    <span className="text-[9px] font-bold text-emerald-500 uppercase tracking-widest">Live</span>
+                                <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#382416] border border-[#ffedd7]/20">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#dc5000] animate-pulse" />
+                                    <span className="text-[9px] font-bold text-[#ffedd7] uppercase tracking-widest font-mono">Live</span>
                                 </div>
                             </div>
-                            <div className="p-4">
+                            <div className="p-4 bg-transparent">
                                 <DemoFeed />
                             </div>
                         </div>
@@ -408,11 +402,11 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ HOW IT WORKS ═══ */}
-            <section className="py-24 px-6 lg:px-8 bg-secondary/30 border-y border-border">
+            <section className="py-24 px-6 lg:px-8 bg-[#100904] border-y border-[#40372e] border-dashed">
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center mb-16">
-                        <p className="text-amber-500 text-sm font-bold uppercase tracking-widest mb-3">How It Works</p>
-                        <h2 className="text-4xl md:text-5xl font-black tracking-tighter">
+                        <p className="text-[#dc5000] text-xs font-mono uppercase tracking-[0.2em] mb-3">How It Works</p>
+                        <h2 className="text-3xl md:text-[41px] font-black text-[#ffedd7] leading-[1] uppercase">
                             Three simple steps
                         </h2>
                     </div>
@@ -423,11 +417,11 @@ export const MarketingHome: React.FC = () => {
                             { step: '02', title: 'We verify it', desc: 'Our engine checks foot traffic, menus, business hours, pickup data, and social signals.' },
                             { step: '03', title: 'Get a confidence score', desc: 'You get a 0-100 score in real-time. Use it to block, flag, or approve deliveries.' },
                         ].map((item) => (
-                            <div key={item.step} className="flex items-start gap-6 py-8 border-b border-border last:border-0">
-                                <span className="text-3xl font-black text-muted-foreground/30 shrink-0 w-12">{item.step}</span>
+                            <div key={item.step} className="flex items-start gap-6 py-8 border-b border-[#40372e] border-dashed last:border-0">
+                                <span className="text-2xl font-black text-[#dc5000]/60 shrink-0 w-12 font-mono">{item.step}</span>
                                 <div>
-                                    <h3 className="text-xl font-bold text-foreground mb-1">{item.title}</h3>
-                                    <p className="text-muted-foreground">{item.desc}</p>
+                                    <h3 className="text-lg font-bold text-[#ffedd7] mb-1">{item.title}</h3>
+                                    <p className="text-sm text-[#6c5f51] leading-relaxed">{item.desc}</p>
                                 </div>
                             </div>
                         ))}
@@ -436,58 +430,58 @@ export const MarketingHome: React.FC = () => {
             </section>
 
             {/* ═══ TRUST ═══ */}
-            <section className="py-24 px-6 lg:px-8">
+            <section className="py-24 px-6 lg:px-8 bg-[#100904]">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-12">
+                    <h2 className="text-3xl md:text-[41px] font-black text-[#ffedd7] leading-[1] mb-12 uppercase">
                         Trust the data, not the map
                     </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
-                        <div className="p-6 rounded-2xl bg-secondary/50 border border-border">
+                        <div className="p-6 rounded-xl bg-transparent border border-[#40372e] border-dashed">
                             <div className="flex items-center gap-2 mb-2">
-                                <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
-                                <h3 className="font-bold text-foreground">Updated every second</h3>
+                                <CheckCircle2 size={16} className="text-[#dc5000] shrink-0" />
+                                <h3 className="font-bold text-[#ffedd7] text-sm">Updated every second</h3>
                             </div>
-                            <p className="text-sm text-muted-foreground ml-7">Live signals mean your verification is never stale. We continuously process data to keep you informed.</p>
+                            <p className="text-xs text-[#6c5f51] ml-6 leading-relaxed">Live signals mean your verification is never stale. We continuously process data to keep you informed.</p>
                         </div>
-                        <div className="p-6 rounded-2xl bg-secondary/50 border border-border">
+                        <div className="p-6 rounded-xl bg-transparent border border-[#40372e] border-dashed">
                             <div className="flex items-center gap-2 mb-2">
-                                <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
-                                <h3 className="font-bold text-foreground">Works without manual verification</h3>
+                                <CheckCircle2 size={16} className="text-[#dc5000] shrink-0" />
+                                <h3 className="font-bold text-[#ffedd7] text-sm">Works without manual verification</h3>
                             </div>
-                            <p className="text-sm text-muted-foreground ml-7">No more calling the customer or guessing the location. Let automated confidence scoring do the work for you.</p>
+                            <p className="text-xs text-[#6c5f51] ml-6 leading-relaxed">No more calling the customer or guessing the location. Let automated confidence scoring do the work for you.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* ═══ CTA ═══ */}
-            <section className="py-24 px-6 lg:px-8 border-t border-border">
+            <section className="py-24 px-6 lg:px-8 border-t border-[#40372e] border-dashed bg-[#100904]">
                 <div className="max-w-3xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-10">
+                    <h2 className="text-3xl md:text-[41px] font-black text-[#ffedd7] leading-[1] mb-10 uppercase">
                         Plug into your delivery system in minutes
                     </h2>
                     <button
                         onClick={() => isAuthenticated ? setView('dashboard') : setView('register')}
-                        className="group inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-10 py-5 rounded-2xl text-lg transition-all hover:scale-105 shadow-lg shadow-emerald-500/20"
+                        className="inline-flex items-center gap-2 bg-[#382416] text-[#ffedd7] border border-[#ffedd7]/10 hover:border-[#ffedd7]/30 hover:opacity-90 font-bold px-10 py-5 rounded-[36px] transition-all text-lg"
                     >
                         Start verifying places
-                        <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight size={20} />
                     </button>
                 </div>
             </section>
 
             {/* ═══ Footer ═══ */}
-            <footer className="border-t border-border py-8 px-6 lg:px-8">
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2 font-bold text-foreground">
-                        <MapPin size={16} className="text-emerald-500" />
+            <footer className="border-t border-[#40372e] border-dashed py-8 px-6 lg:px-8 bg-[#100904]">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#6c5f51]">
+                    <div className="flex items-center gap-2 font-bold text-[#ffedd7] text-sm">
+                        <MapPin size={16} className="text-[#ffedd7] stroke-[1.5]" />
                         anyWays
                     </div>
                     <p>© 2026 anyWays. Real-time place intelligence for Indian logistics.</p>
-                    <div className="flex items-center gap-6">
-                        <a href="#" className="hover:text-foreground transition-colors">API Docs</a>
-                        <button onClick={() => setView('pricing')} className="hover:text-foreground transition-colors">Pricing</button>
-                        <button onClick={() => setView('login')} className="hover:text-foreground transition-colors">Dashboard</button>
+                    <div className="flex items-center gap-6 font-mono text-[10px]">
+                        <a href="#" className="hover:text-[#dc5000] transition-colors">API Docs</a>
+                        <button onClick={() => setView('pricing')} className="hover:text-[#dc5000] transition-colors">Pricing</button>
+                        <button onClick={() => setView('login')} className="hover:text-[#dc5000] transition-colors">Dashboard</button>
                     </div>
                 </div>
             </footer>
