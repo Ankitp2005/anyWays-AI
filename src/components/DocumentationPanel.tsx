@@ -16,10 +16,10 @@ export const DocumentationPanel: React.FC = () => {
     ];
 
     return (
-        <div className="animate-in fade-in h-[calc(100vh-100px)] flex flex-col md:flex-row gap-8">
+        <div className="animate-in fade-in h-[calc(100vh-120px)] grid grid-cols-1 md:grid-cols-[256px_1fr] gap-8">
             
             {/* Left Sidebar Navigation */}
-            <div className="w-full md:w-64 shrink-0 flex flex-col gap-2">
+            <div className="w-full flex flex-col gap-2">
                 <div className="mb-4">
                     <h1 className="text-2xl font-semibold tracking-tight text-[#ffffff]">API Reference</h1>
                     <p className="text-xs text-[#6a6b6c] mt-1">Integrate anyWays intelligence into your logistics platform.</p>
@@ -48,7 +48,7 @@ export const DocumentationPanel: React.FC = () => {
             </div>
 
             {/* Right Content Area */}
-            <div className="flex-1 min-w-0 overflow-y-auto pr-4 scrollbar-thin">
+            <div className="overflow-y-auto pr-4 scrollbar-thin">
                 <div className="bg-[#07080a] border border-[#363739] rounded-[11px] p-8 shadow-subtle-4">
                     {activeSection === 'intro' && (
                         <div className="space-y-6">
