@@ -7,6 +7,7 @@ import { ApiKeysManagement } from './ApiKeysManagement';
 import ObservabilityPanel from './dashboard/ObservabilityPanel';
 import { SettingsPanel } from './SettingsPanel';
 import { DocumentationPanel } from './DocumentationPanel';
+import { Pricing } from './Pricing';
 import { useApp } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 import { X, MapPin, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -228,6 +229,12 @@ export const DashboardLayout: React.FC = () => {
 
                     {activeTab === 'settings' && (
                         <SettingsPanel />
+                    )}
+
+                    {activeTab === 'pricing' && (
+                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            <Pricing embedded />
+                        </div>
                     )}
 
                     {activeTab === 'documentation' && (

@@ -59,18 +59,23 @@ const PricingTier = ({
     );
 };
 
-export const Pricing: React.FC = () => {
+export const Pricing: React.FC<{ embedded?: boolean }> = ({ embedded = false }) => {
     const { setView } = useApp();
 
     return (
-        <div className="min-h-screen bg-[#040506] text-[#ffffff] py-24 px-6 relative font-sans selection:bg-[#ff6363]/30">
-            <button 
-                onClick={() => setView('marketing')}
-                className="absolute top-8 left-8 flex items-center gap-2 text-xs font-mono text-[#9c9c9d] hover:text-[#ffffff] transition-colors"
-            >
-                <ChevronLeft size={14} />
-                Back to Home
-            </button>
+        <div className={embedded
+            ? "text-[#ffffff] font-sans selection:bg-[#ff6363]/30"
+            : "min-h-screen bg-[#040506] text-[#ffffff] py-24 px-6 relative font-sans selection:bg-[#ff6363]/30"
+        }>
+            {!embedded && (
+                <button 
+                    onClick={() => setView('marketing')}
+                    className="absolute top-8 left-8 flex items-center gap-2 text-xs font-mono text-[#9c9c9d] hover:text-[#ffffff] transition-colors"
+                >
+                    <ChevronLeft size={14} />
+                    Back to Home
+                </button>
+            )}
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-20 animate-in fade-in slide-in-from-bottom-4 duration-500">
                     <h1 className="text-4xl md:text-[64px] font-semibold text-[#ffffff] leading-[1] tracking-[-0.13em] mb-6 uppercase">
