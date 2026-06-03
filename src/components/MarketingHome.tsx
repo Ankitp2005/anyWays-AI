@@ -384,7 +384,7 @@ export const MarketingHome: React.FC = () => {
     }, [demoScore]);
 
     useEffect(() => {
-        let timer: NodeJS.Timeout;
+        let timer: ReturnType<typeof setTimeout>;
         const tick = () => {
             setDemoStep(prev => {
                 const next = (prev + 1) % 6; // 0 to 5
