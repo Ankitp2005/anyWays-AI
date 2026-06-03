@@ -363,15 +363,17 @@ export const MarketingHome: React.FC = () => {
                         <div className="bg-[#07080a] border border-[#363739] rounded-[16px] p-8 flex flex-col items-center shadow-subtle-4">
                             <p className="text-[11px] text-[#6a6b6c] uppercase tracking-[0.073em] font-mono mb-6">Confidence Score</p>
                             <div className="relative w-40 h-40 mb-6">
-                                <svg width="160" height="160" className="transform -rotate-90">
-                                    <circle cx="80" cy="80" r="68" fill="none" className="stroke-[#1b1c1e]" strokeWidth="3" />
-                                    <circle
-                                        cx="80" cy="80" r="68" fill="none"
-                                        stroke="#ff6363" strokeWidth="3" strokeLinecap="round"
-                                        strokeDasharray={2 * Math.PI * 68}
-                                        strokeDashoffset={2 * Math.PI * 68 * (1 - 0.78)}
-                                        className="transition-all duration-[2s] ease-out"
-                                    />
+                                <svg width="160" height="160">
+                                    <g transform="rotate(-90 80 80)">
+                                        <circle cx="80" cy="80" r="68" fill="none" className="stroke-[#1b1c1e]" strokeWidth="3" />
+                                        <circle
+                                            cx="80" cy="80" r="68" fill="none"
+                                            stroke="#ff6363" strokeWidth="3" strokeLinecap="round"
+                                            strokeDasharray={2 * Math.PI * 68}
+                                            strokeDashoffset={2 * Math.PI * 68 * (1 - 0.78)}
+                                            className="transition-all duration-[2s] ease-out"
+                                        />
+                                    </g>
                                 </svg>
                                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                                     <span className="text-5xl font-semibold text-[#ffffff] font-mono tracking-tight">78</span>

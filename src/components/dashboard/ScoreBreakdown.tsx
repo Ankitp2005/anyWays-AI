@@ -197,7 +197,7 @@ const ScoreRing = ({ score }: { score: number }) => {
                 style={{ backgroundColor: colors.glow }}
             />
 
-            <svg width="140" height="140" className="transform -rotate-90 relative z-10">
+            <svg width="140" height="140" className="relative z-10">
                 <defs>
                     <linearGradient id="scoreGradientHigh" x1="0%" y1="0%" x2="100%" y2="100%">
                         <stop offset="0%" stopColor="#34d399" />
@@ -213,26 +213,28 @@ const ScoreRing = ({ score }: { score: number }) => {
                     </linearGradient>
                 </defs>
 
-                {/* Track */}
-                <circle
-                    cx="70" cy="70" r={radius}
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="8"
-                    className="text-white/5"
-                />
+                <g transform="rotate(-90 70 70)">
+                    {/* Track */}
+                    <circle
+                        cx="70" cy="70" r={radius}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="8"
+                        className="text-white/5"
+                    />
 
-                {/* Progress */}
-                <circle
-                    cx="70" cy="70" r={radius}
-                    fill="none"
-                    stroke={colors.stroke}
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={offset}
-                    className="transition-all duration-[1500ms] ease-out"
-                />
+                    {/* Progress */}
+                    <circle
+                        cx="70" cy="70" r={radius}
+                        fill="none"
+                        stroke={colors.stroke}
+                        strokeWidth="8"
+                        strokeLinecap="round"
+                        strokeDasharray={circumference}
+                        strokeDashoffset={offset}
+                        className="transition-all duration-[1500ms] ease-out"
+                    />
+                </g>
             </svg>
 
             {/* Center label */}
