@@ -57,85 +57,70 @@ const LogisticsNetworkCanvas: React.FC = () => {
         let width = (canvas.width = window.innerWidth);
         let height = (canvas.height = window.innerHeight);
 
-        const handleResize = () => {
-            if (!canvas) return;
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        };
-        window.addEventListener('resize', handleResize);
-
-        // Define Streak structure
-        interface Streak {
-            x: number;
-            y: number;
-            length: number;
+        // Define Streak/Beam structure
+        interface Beam {
+            d: number; // perpendicular lane offset
             width: number;
+            length: number;
+            p: number; // progress along the lane
             speed: number;
+            opacity: number;
             color: { r: number; g: number; b: number };
             pulse: number;
             pulseSpeed: number;
         }
 
-        const streakCount = 20;
-        const streaks: Streak[] = [];
+        const beams: Beam[] = [];
+        const laneCount = 11; // odd number of lanes centered around 0 (-5 to 5)
 
-        const resetStreak = (s: Streak, spawnOffset = false) => {
-            s.length = 150 + Math.random() * 300;
-            s.width = 1.5 + Math.random() * 3.0;
-            s.speed = 0.5 + Math.random() * 1.5;
+        const initBeams = () => {
+            beams.length = 0;
+            const scale = Math.max(0.7, Math.min(width, 1600) / 1100);
+            // Spacing is slightly smaller than width to allow subtle overlapping / tight alignment
+            const spacing = 60 * scale;
+            const maxRange = Math.hypot(width, height) * 0.85;
+            const halfLanes = Math.floor(laneCount / 2);
 
-            // 80% red/orange, 20% cyan/blue
-            const isRed = Math.random() < 0.8;
-            if (isRed) {
-                // Orange-red spectrum (e.g. Ember Red)
-                s.color = {
-                    r: 255,
-                    g: Math.floor(65 + Math.random() * 65), // 65 to 130
-                    b: Math.floor(60 + Math.random() * 20),  // 60 to 80
-                };
-            } else {
-                // Sky Signal Blue/Cyan
-                s.color = {
-                    r: 14,
-                    g: Math.floor(150 + Math.random() * 50), // 150 to 200
-                    b: 245,
-                };
-            }
+            for (let i = -halfLanes; i <= halfLanes; i++) {
+                const laneDistFromCenter = Math.abs(i);
+                
+                // Center lanes are longer and thicker
+                const widthVal = (70 + Math.random() * 30 - laneDistFromCenter * 5) * scale;
+                const lengthVal = (750 - laneDistFromCenter * 70) * (0.9 + Math.random() * 0.25) * scale;
+                const speedVal = 0.15 + Math.random() * 0.35; // slow cinematic glide
+                
+                // Opacity falls off away from the center lanes
+                const laneOpacity = (1.0 - laneDistFromCenter / 7) * (0.75 + Math.random() * 0.25);
+                
+                // Color spectrum (varying shades of warm orange-red / red)
+                const isOrange = Math.random() < 0.45;
+                const colorVal = isOrange
+                    ? { r: 255, g: Math.floor(80 + Math.random() * 60), b: 15 } // Warm Orange
+                    : { r: 245, g: Math.floor(20 + Math.random() * 25), b: 35 };  // Ember Red
 
-            s.pulse = Math.random() * Math.PI * 2;
-            s.pulseSpeed = 0.005 + Math.random() * 0.015;
-
-            if (spawnOffset) {
-                // Initialize randomly across the full canvas area plus offscreen margins
-                s.x = Math.random() * (width + s.length * 1.5);
-                s.y = Math.random() * (height + s.length * 1.5) - s.length;
-            } else {
-                // When resetting off-screen, spawn on the top-right / top edge to enter naturally
-                if (Math.random() > 0.5) {
-                    s.x = Math.random() * width + width * 0.2;
-                    s.y = -s.length;
-                } else {
-                    s.x = width + s.length;
-                    s.y = Math.random() * height - s.length;
-                }
+                beams.push({
+                    d: i * spacing,
+                    width: Math.max(25, widthVal),
+                    length: Math.max(200, lengthVal),
+                    p: (Math.random() - 0.5) * maxRange * 1.5, // scatter initially along the lanes
+                    speed: speedVal,
+                    opacity: Math.max(0.2, laneOpacity),
+                    color: colorVal,
+                    pulse: Math.random() * Math.PI * 2,
+                    pulseSpeed: 0.002 + Math.random() * 0.005,
+                });
             }
         };
 
-        // Initialize streaks
-        for (let i = 0; i < streakCount; i++) {
-            const s: Streak = {
-                x: 0,
-                y: 0,
-                length: 0,
-                width: 0,
-                speed: 0,
-                color: { r: 0, g: 0, b: 0 },
-                pulse: 0,
-                pulseSpeed: 0,
-            };
-            resetStreak(s, true);
-            streaks.push(s);
-        }
+        initBeams();
+
+        const handleResize = () => {
+            if (!canvas) return;
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initBeams();
+        };
+        window.addEventListener('resize', handleResize);
 
         const mouse = { x: -1000, y: -1000, active: false };
         const handleMouseMove = (e: MouseEvent) => {
@@ -169,86 +154,126 @@ const LogisticsNetworkCanvas: React.FC = () => {
         };
 
         const draw = () => {
-            // Clear canvas fully
             ctx.clearRect(0, 0, width, height);
 
-            streaks.forEach(s => {
+            const cx = width / 2;
+            const cy = height / 2;
+            const maxRange = Math.hypot(width, height) * 0.65;
+
+            // 1. Draw central ambient glow backdrop (creates the warm background atmosphere)
+            const ambientGrad = ctx.createRadialGradient(
+                cx, cy, 0,
+                cx, cy, Math.min(width, height) * 0.65
+            );
+            ambientGrad.addColorStop(0, 'rgba(245, 35, 35, 0.32)'); // Center deep red-orange glow
+            ambientGrad.addColorStop(0.35, 'rgba(245, 60, 35, 0.15)');
+            ambientGrad.addColorStop(0.7, 'rgba(255, 110, 30, 0.04)');
+            ambientGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            
+            ctx.fillStyle = ambientGrad;
+            ctx.beginPath();
+            ctx.arc(cx, cy, Math.min(width, height) * 0.65, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 2. Update and draw diagonal volumetric beams
+            beams.forEach(s => {
+                // Update position (glide slowly down and left)
+                s.p += s.speed;
+
+                // Wrap around when it moves completely off screen along the lane
+                if (s.p - s.length / 2 > maxRange) {
+                    s.p = -maxRange - s.length / 2;
+                }
+
+                // Calculate beam segment endpoints at 135 degrees slanted down-left
                 const dx = -s.length * 0.7071;
                 const dy = s.length * 0.7071;
 
-                const x1 = s.x;
-                const y1 = s.y;
-                const x2 = s.x + dx;
-                const y2 = s.y + dy;
+                // Center of this beam on its lane
+                const bx = cx + 0.7071 * s.d - 0.7071 * s.p;
+                const by = cy + 0.7071 * s.d + 0.7071 * s.p;
 
+                const x1 = bx - dx / 2;
+                const y1 = by - dy / 2;
+                const x2 = bx + dx / 2;
+                const y2 = by + dy / 2;
+
+                // Determine if mouse is nearby to trigger hover glow & expansion
                 let mouseEffect = 0;
                 if (mouse.active) {
                     const dist = getDistanceToSegment(mouse.x, mouse.y, x1, y1, x2, y2);
-                    if (dist < 180) {
-                        mouseEffect = 1 - dist / 180;
+                    if (dist < 160) {
+                        mouseEffect = 1 - dist / 160;
                     }
                 }
 
-                // Update position (glide down and left)
-                const speedMultiplier = 1 + mouseEffect * 1.5;
-                s.x -= s.speed * speedMultiplier * 0.7071;
-                s.y += s.speed * speedMultiplier * 0.7071;
-
-                // Pulsate phase
+                // Pulsate opacity slightly
                 s.pulse += s.pulseSpeed;
-                const baseOpacity = (0.28 + Math.sin(s.pulse) * 0.08) * (s.speed / 1.5 + 0.5) + mouseEffect * 0.35;
+                const baseOpacity = Math.min(1.0, s.opacity + Math.sin(s.pulse) * 0.06 + mouseEffect * 0.25);
+                const currentWidth = s.width * (1 + mouseEffect * 0.15);
 
-                // Draw layered glows (simulating blur for high performance)
-                // Layer 1: Outer wide glow
-                ctx.strokeStyle = `rgba(${s.color.r}, ${s.color.g}, ${s.color.b}, ${baseOpacity * 0.04})`;
-                ctx.lineWidth = s.width * 18;
+                // Compute linear gradient along the segment to fade the beam tips
+                const grad = ctx.createLinearGradient(x1, y1, x2, y2);
+                grad.addColorStop(0, `rgba(${s.color.r}, ${s.color.g}, ${s.color.b}, 0)`);
+                grad.addColorStop(0.15, `rgba(${s.color.r}, ${s.color.g}, ${s.color.b}, ${baseOpacity * 0.45})`);
+                grad.addColorStop(0.5, `rgba(${s.color.r}, ${s.color.g}, ${s.color.b}, ${baseOpacity})`);
+                grad.addColorStop(0.85, `rgba(${s.color.r}, ${s.color.g}, ${s.color.b}, ${baseOpacity * 0.45})`);
+                grad.addColorStop(1, `rgba(${s.color.r}, ${s.color.g}, ${s.color.b}, 0)`);
+
+                // Layered rendering for volumetric bloom glow
                 ctx.lineCap = 'round';
+                ctx.strokeStyle = grad;
+
+                // Layer A: Wide outer soft bloom
+                ctx.globalAlpha = 0.15;
+                ctx.lineWidth = currentWidth * 2.2;
                 ctx.beginPath();
                 ctx.moveTo(x1, y1);
                 ctx.lineTo(x2, y2);
                 ctx.stroke();
 
-                // Layer 2: Mid-range glow
-                ctx.strokeStyle = `rgba(${s.color.r}, ${s.color.g}, ${s.color.b}, ${baseOpacity * 0.12})`;
-                ctx.lineWidth = s.width * 7;
+                // Layer B: Mid-core soft bloom
+                ctx.globalAlpha = 0.38;
+                ctx.lineWidth = currentWidth * 1.35;
                 ctx.beginPath();
                 ctx.moveTo(x1, y1);
                 ctx.lineTo(x2, y2);
                 ctx.stroke();
 
-                // Layer 3: Intense inner glow
-                ctx.strokeStyle = `rgba(${s.color.r}, ${s.color.g}, ${s.color.b}, ${baseOpacity * 0.28})`;
-                ctx.lineWidth = s.width * 2.8;
+                // Layer C: Solid beam body
+                ctx.globalAlpha = 0.78;
+                ctx.lineWidth = currentWidth * 0.85;
                 ctx.beginPath();
                 ctx.moveTo(x1, y1);
                 ctx.lineTo(x2, y2);
                 ctx.stroke();
 
-                // Layer 4: Hot-white center core
-                ctx.strokeStyle = `rgba(255, 255, 255, ${baseOpacity * 0.55})`;
-                ctx.lineWidth = s.width * 0.7;
+                // Layer D: Bright hot core
+                ctx.globalAlpha = 0.95;
+                ctx.lineWidth = currentWidth * 0.35;
+                const coreGrad = ctx.createLinearGradient(x1, y1, x2, y2);
+                coreGrad.addColorStop(0, 'rgba(255, 245, 230, 0)');
+                coreGrad.addColorStop(0.5, `rgba(255, 255, 255, ${baseOpacity * 0.98})`);
+                coreGrad.addColorStop(1, 'rgba(255, 245, 230, 0)');
+                ctx.strokeStyle = coreGrad;
                 ctx.beginPath();
                 ctx.moveTo(x1, y1);
                 ctx.lineTo(x2, y2);
                 ctx.stroke();
 
-                // If trailing end goes off-screen, reset it
-                // Since x is decreasing and y is increasing:
-                // s.x is the trailing end x-coord, s.y is the trailing end y-coord.
-                if (s.x < -s.length || s.y > height + s.length) {
-                    resetStreak(s, false);
-                }
+                // Restore alpha
+                ctx.globalAlpha = 1.0;
             });
 
-            // Apply global radial gradient mask to fade edges
+            // 3. Apply global radial mask to fade edges and center the composition
             ctx.save();
             const maskGrad = ctx.createRadialGradient(
-                width / 2, height / 2, 0,
-                width / 2, height / 2, Math.max(width, height) * 0.45
+                cx, cy, Math.min(width, height) * 0.15,
+                cx, cy, Math.min(width, height) * 0.7
             );
             maskGrad.addColorStop(0, 'rgba(0, 0, 0, 1.0)');
-            maskGrad.addColorStop(0.3, 'rgba(0, 0, 0, 0.9)');
-            maskGrad.addColorStop(0.7, 'rgba(0, 0, 0, 0.25)');
+            maskGrad.addColorStop(0.55, 'rgba(0, 0, 0, 0.95)');
+            maskGrad.addColorStop(0.85, 'rgba(0, 0, 0, 0.45)');
             maskGrad.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
 
             ctx.fillStyle = maskGrad;
@@ -272,7 +297,7 @@ const LogisticsNetworkCanvas: React.FC = () => {
     return (
         <canvas
             ref={canvasRef}
-            className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-60 mix-blend-screen"
+            className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-90 mix-blend-screen"
         />
     );
 };
