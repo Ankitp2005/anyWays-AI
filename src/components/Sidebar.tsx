@@ -49,7 +49,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isCol
     return (
         <div className={cn(
             "flex flex-col h-full bg-[#07080a] border-r border-[#1b1c1e] transition-all duration-300 relative overflow-hidden z-20 shrink-0",
-            isCollapsed ? "w-0 border-none" : "w-64"
+            isCollapsed ? "w-0 border-none" : "w-64 min-w-[256px]"
         )}>
             {/* Header */}
             <div className="p-4 h-16 flex items-center border-b border-[#1b1c1e] bg-transparent overflow-hidden shrink-0">

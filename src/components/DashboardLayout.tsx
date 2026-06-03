@@ -170,10 +170,12 @@ export const DashboardLayout: React.FC = () => {
             />
 
             <main className={cn(
-                "flex-1 overflow-y-auto relative z-10 h-full scroll-smooth transition-all duration-300 bg-[#040506] border-l border-[#1b1c1e]",
-                isSidebarCollapsed ? "ml-0" : "ml-0"
+                "flex-1 overflow-y-auto relative z-10 h-full scroll-smooth transition-all duration-300 bg-[#040506] border-l border-[#1b1c1e]"
             )}>
-                <div className="max-w-7xl mx-auto px-8 py-10 lg:px-12 lg:py-12">
+                <div className={cn(
+                    "max-w-7xl mx-auto px-8 py-10 lg:px-12 lg:py-12 transition-all duration-300",
+                    isSidebarCollapsed ? "pl-16 lg:pl-20" : ""
+                )}>
 
                     {activeTab === 'overview' && (
                         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
