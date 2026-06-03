@@ -64,27 +64,77 @@ const LogisticsNetworkCanvas: React.FC = () => {
         };
         window.addEventListener('resize', handleResize);
 
-        const nodeCount = 35;
-        const nodes: Array<{
+        // Define Streak structure
+        interface Streak {
             x: number;
             y: number;
-            vx: number;
-            vy: number;
-            radius: number;
-            glow: number;
-            glowDirection: number;
-        }> = [];
+            length: number;
+            width: number;
+            speed: number;
+            color: { r: number; g: number; b: number };
+            pulse: number;
+            pulseSpeed: number;
+        }
 
-        for (let i = 0; i < nodeCount; i++) {
-            nodes.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.15,
-                vy: (Math.random() - 0.5) * 0.15,
-                radius: Math.random() * 2 + 1,
-                glow: Math.random(),
-                glowDirection: Math.random() > 0.5 ? 1 : -1,
-            });
+        const streakCount = 20;
+        const streaks: Streak[] = [];
+
+        const resetStreak = (s: Streak, spawnOffset = false) => {
+            s.length = 150 + Math.random() * 300;
+            s.width = 1.5 + Math.random() * 3.0;
+            s.speed = 0.5 + Math.random() * 1.5;
+
+            // 80% red/orange, 20% cyan/blue
+            const isRed = Math.random() < 0.8;
+            if (isRed) {
+                // Orange-red spectrum (e.g. Ember Red)
+                s.color = {
+                    r: 255,
+                    g: Math.floor(65 + Math.random() * 65), // 65 to 130
+                    b: Math.floor(60 + Math.random() * 20),  // 60 to 80
+                };
+            } else {
+                // Sky Signal Blue/Cyan
+                s.color = {
+                    r: 14,
+                    g: Math.floor(150 + Math.random() * 50), // 150 to 200
+                    b: 245,
+                };
+            }
+
+            s.pulse = Math.random() * Math.PI * 2;
+            s.pulseSpeed = 0.005 + Math.random() * 0.015;
+
+            if (spawnOffset) {
+                // Initialize randomly across the full canvas area plus offscreen margins
+                s.x = Math.random() * (width + s.length * 1.5);
+                s.y = Math.random() * (height + s.length * 1.5) - s.length;
+            } else {
+                // When resetting off-screen, spawn on the top-right / top edge to enter naturally
+                if (Math.random() > 0.5) {
+                    s.x = Math.random() * width + width * 0.2;
+                    s.y = -s.length;
+                } else {
+                    s.x = width + s.length;
+                    s.y = Math.random() * height - s.length;
+                }
+            }
+        };
+
+        // Initialize streaks
+        for (let i = 0; i < streakCount; i++) {
+            const s: Streak = {
+                x: 0,
+                y: 0,
+                length: 0,
+                width: 0,
+                speed: 0,
+                color: { r: 0, g: 0, b: 0 },
+                pulse: 0,
+                pulseSpeed: 0,
+            };
+            resetStreak(s, true);
+            streaks.push(s);
         }
 
         const mouse = { x: -1000, y: -1000, active: false };
@@ -99,126 +149,112 @@ const LogisticsNetworkCanvas: React.FC = () => {
             mouse.y = -1000;
             mouse.active = false;
         };
-        
+
         window.addEventListener('mousemove', handleMouseMove);
         window.addEventListener('mouseleave', handleMouseLeave);
 
-        const signals: Array<{
-            startX: number;
-            startY: number;
-            endX: number;
-            endY: number;
-            progress: number;
-            speed: number;
-            color: string;
-        }> = [];
+        // Distance from point to line segment formula
+        const getDistanceToSegment = (px: number, py: number, x1: number, y1: number, x2: number, y2: number) => {
+            const dx = x2 - x1;
+            const dy = y2 - y1;
+            const lenSq = dx * dx + dy * dy;
+            if (lenSq === 0) return Math.hypot(px - x1, py - y1);
 
-        const spawnSignal = () => {
-            if (nodes.length < 2) return;
-            const startIdx = Math.floor(Math.random() * nodes.length);
-            const startNode = nodes[startIdx];
-            const candidateNodes = nodes.filter((n, idx) => {
-                if (idx === startIdx) return false;
-                const dist = Math.hypot(n.x - startNode.x, n.y - startNode.y);
-                return dist < 220;
-            });
+            let t = ((px - x1) * dx + (py - y1) * dy) / lenSq;
+            t = Math.max(0, Math.min(1, t));
 
-            if (candidateNodes.length > 0) {
-                const endNode = candidateNodes[Math.floor(Math.random() * candidateNodes.length)];
-                signals.push({
-                    startX: startNode.x,
-                    startY: startNode.y,
-                    endX: endNode.x,
-                    endY: endNode.y,
-                    progress: 0,
-                    speed: Math.random() * 0.006 + 0.003,
-                    color: Math.random() > 0.4 ? '#ff6363' : '#59d499',
-                });
-            }
+            const projX = x1 + t * dx;
+            const projY = y1 + t * dy;
+            return Math.hypot(px - projX, py - projY);
         };
 
-        for (let i = 0; i < 12; i++) {
-            spawnSignal();
-        }
-
         const draw = () => {
+            // Clear canvas fully
             ctx.clearRect(0, 0, width, height);
 
-            nodes.forEach(node => {
-                node.x += node.vx;
-                node.y += node.vy;
+            streaks.forEach(s => {
+                const dx = -s.length * 0.7071;
+                const dy = s.length * 0.7071;
 
-                if (node.x < 0 || node.x > width) node.vx *= -1;
-                if (node.y < 0 || node.y > height) node.vy *= -1;
+                const x1 = s.x;
+                const y1 = s.y;
+                const x2 = s.x + dx;
+                const y2 = s.y + dy;
 
-                node.glow += 0.008 * node.glowDirection;
-                if (node.glow > 1 || node.glow < 0.2) node.glowDirection *= -1;
-
-                nodes.forEach(otherNode => {
-                    if (node === otherNode) return;
-                    const dist = Math.hypot(otherNode.x - node.x, otherNode.y - node.y);
-                    if (dist < 180) {
-                        const alpha = (1 - dist / 180) * 0.04;
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.beginPath();
-                        ctx.moveTo(node.x, node.y);
-                        ctx.lineTo(otherNode.x, otherNode.y);
-                        ctx.stroke();
-                    }
-                });
-
-                let extraGlow = 0;
+                let mouseEffect = 0;
                 if (mouse.active) {
-                    const distToMouse = Math.hypot(node.x - mouse.x, node.y - mouse.y);
-                    if (distToMouse < 150) {
-                        extraGlow = (1 - distToMouse / 150) * 0.5;
-                        node.x += (mouse.x - node.x) * 0.002;
-                        node.y += (mouse.y - node.y) * 0.002;
+                    const dist = getDistanceToSegment(mouse.x, mouse.y, x1, y1, x2, y2);
+                    if (dist < 180) {
+                        mouseEffect = 1 - dist / 180;
                     }
                 }
 
-                ctx.fillStyle = `rgba(255, 255, 255, ${0.15 + node.glow * 0.15 + extraGlow})`;
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, node.radius + extraGlow * 1.5, 0, Math.PI * 2);
-                ctx.fill();
+                // Update position (glide down and left)
+                const speedMultiplier = 1 + mouseEffect * 1.5;
+                s.x -= s.speed * speedMultiplier * 0.7071;
+                s.y += s.speed * speedMultiplier * 0.7071;
 
-                if (extraGlow > 0) {
-                    ctx.shadowColor = '#ff6363';
-                    ctx.shadowBlur = extraGlow * 10;
-                    ctx.fillStyle = `rgba(255, 99, 99, ${extraGlow * 0.3})`;
-                    ctx.beginPath();
-                    ctx.arc(node.x, node.y, node.radius + 3, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
+                // Pulsate phase
+                s.pulse += s.pulseSpeed;
+                const baseOpacity = (0.28 + Math.sin(s.pulse) * 0.08) * (s.speed / 1.5 + 0.5) + mouseEffect * 0.35;
+
+                // Draw layered glows (simulating blur for high performance)
+                // Layer 1: Outer wide glow
+                ctx.strokeStyle = `rgba(${s.color.r}, ${s.color.g}, ${s.color.b}, ${baseOpacity * 0.04})`;
+                ctx.lineWidth = s.width * 18;
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+
+                // Layer 2: Mid-range glow
+                ctx.strokeStyle = `rgba(${s.color.r}, ${s.color.g}, ${s.color.b}, ${baseOpacity * 0.12})`;
+                ctx.lineWidth = s.width * 7;
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+
+                // Layer 3: Intense inner glow
+                ctx.strokeStyle = `rgba(${s.color.r}, ${s.color.g}, ${s.color.b}, ${baseOpacity * 0.28})`;
+                ctx.lineWidth = s.width * 2.8;
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+
+                // Layer 4: Hot-white center core
+                ctx.strokeStyle = `rgba(255, 255, 255, ${baseOpacity * 0.55})`;
+                ctx.lineWidth = s.width * 0.7;
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+
+                // If trailing end goes off-screen, reset it
+                // Since x is decreasing and y is increasing:
+                // s.x is the trailing end x-coord, s.y is the trailing end y-coord.
+                if (s.x < -s.length || s.y > height + s.length) {
+                    resetStreak(s, false);
                 }
             });
 
-            for (let i = signals.length - 1; i >= 0; i--) {
-                const sig = signals[i];
-                sig.progress += sig.speed;
+            // Apply global radial gradient mask to fade edges
+            ctx.save();
+            const maskGrad = ctx.createRadialGradient(
+                width / 2, height / 2, 0,
+                width / 2, height / 2, Math.max(width, height) * 0.45
+            );
+            maskGrad.addColorStop(0, 'rgba(0, 0, 0, 1.0)');
+            maskGrad.addColorStop(0.3, 'rgba(0, 0, 0, 0.9)');
+            maskGrad.addColorStop(0.7, 'rgba(0, 0, 0, 0.25)');
+            maskGrad.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
 
-                if (sig.progress >= 1) {
-                    signals.splice(i, 1);
-                    spawnSignal();
-                    continue;
-                }
-
-                const x = sig.startX + (sig.endX - sig.startX) * sig.progress;
-                const y = sig.startY + (sig.endY - sig.startY) * sig.progress;
-
-                ctx.shadowColor = sig.color;
-                ctx.shadowBlur = 8;
-                ctx.fillStyle = sig.color;
-                ctx.beginPath();
-                ctx.arc(x, y, 2.2, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 0;
-            }
-
-            if (signals.length < 8 && Math.random() < 0.05) {
-                spawnSignal();
-            }
+            ctx.fillStyle = maskGrad;
+            ctx.globalCompositeOperation = 'destination-in';
+            ctx.fillRect(0, 0, width, height);
+            ctx.restore();
 
             animationFrameId = requestAnimationFrame(draw);
         };
@@ -236,7 +272,7 @@ const LogisticsNetworkCanvas: React.FC = () => {
     return (
         <canvas
             ref={canvasRef}
-            className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-15 mix-blend-screen"
+            className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-60 mix-blend-screen"
         />
     );
 };
