@@ -589,7 +589,7 @@ export const PlaceDetails: React.FC<PlaceDetailsProps> = ({ placeId, onBack }) =
                         icon={<Activity size={16} />}
                         defaultOpen={true}
                     >
-                        <div className="p-0 bg-transparent">
+                        <div className="p-0 bg-transparent h-[360px]">
                             <SafeModule height="h-[360px]" name="Timeline">
                                 <ConfidenceTimeline placeId={place.id} />
                             </SafeModule>
@@ -612,7 +612,7 @@ export const PlaceDetails: React.FC<PlaceDetailsProps> = ({ placeId, onBack }) =
                         }
                         defaultOpen={true}
                     >
-                        <div className="p-0 bg-transparent">
+                        <div className="p-0 bg-transparent h-[300px]">
                             <SafeModule height="h-[300px]" name="Live Feed">
                                 <LiveSignalFeed placeId={place.id} />
                             </SafeModule>

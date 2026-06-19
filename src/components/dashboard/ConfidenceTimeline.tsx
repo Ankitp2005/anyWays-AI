@@ -14,7 +14,7 @@ const CustomTooltip = ({ active, payload }: any) => {
         const evt = payload[0].payload as SignalEvent;
         const isPositive = evt.confidence_delta >= 0;
         return (
-            <div className="bg-card border border-border p-3 rounded-lg shadow-xl text-sm font-sans z-50">
+            <div className="bg-[#111214] border border-[#363739] p-3 rounded-lg shadow-xl text-sm font-sans z-50">
                 <p className="font-bold text-foreground mb-1">
                     {evt.signal_type} 
                     <span className={cn("ml-1", isPositive ? 'text-green-500' : 'text-red-500')}>
@@ -46,7 +46,7 @@ const CustomDot = (props: any) => {
     else if (payload.score_after >= 40) fill = '#eab308'; // yellow
 
     return (
-        <circle cx={cx} cy={cy} r={4} stroke={fill} strokeWidth={2} fill="var(--card)" />
+        <circle cx={cx} cy={cy} r={4} stroke={fill} strokeWidth={2} fill="#07080a" />
     );
 };
 
@@ -65,7 +65,7 @@ export const ConfidenceTimeline: React.FC<ConfidenceTimelineProps> = ({ placeId 
     }), [data, timeframe]);
 
     return (
-        <div className="bg-card border border-border rounded-xl p-6 shadow-sm flex flex-col h-full">
+        <div className="bg-[#07080a] border border-[#363739] rounded-xl p-6 shadow-sm flex flex-col h-full">
             {/* Header */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
                 <h3 className="font-semibold text-foreground">Confidence Timeline</h3>
@@ -92,15 +92,15 @@ export const ConfidenceTimeline: React.FC<ConfidenceTimelineProps> = ({ placeId 
             {/* Chart Container */}
             <div className="h-[300px] w-full relative">
                 {loading ? (
-                    <div className="absolute inset-0 flex items-center justify-center bg-card/50 z-10">
+                    <div className="absolute inset-0 flex items-center justify-center bg-[#07080a]/50 z-10">
                         <div className="animate-pulse flex flex-col items-center">
                             <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4" />
-                            <p className="text-sm text-muted-foreground">Loading timeline...</p>
+                            <p className="text-sm text-[#6a6b6c]">Loading timeline...</p>
                         </div>
                     </div>
                 ) : chartData.length === 0 ? (
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <p className="text-sm text-muted-foreground italic">No signal events in this timeframe.</p>
+                        <p className="text-sm text-[#6a6b6c] italic">No signal events in this timeframe.</p>
                     </div>
                 ) : (
                     <ResponsiveContainer width="100%" height="100%">
@@ -125,7 +125,7 @@ export const ConfidenceTimeline: React.FC<ConfidenceTimelineProps> = ({ placeId 
                             
                             <XAxis 
                                 dataKey="timeLabel" 
-                                stroke="var(--muted-foreground)" 
+                                stroke="#6a6b6c" 
                                 fontSize={11} 
                                 tickLine={false} 
                                 axisLine={false} 
@@ -134,14 +134,14 @@ export const ConfidenceTimeline: React.FC<ConfidenceTimelineProps> = ({ placeId 
                             
                             <YAxis 
                                 domain={[0, 100]} 
-                                stroke="var(--muted-foreground)" 
+                                stroke="#6a6b6c" 
                                 fontSize={11} 
                                 tickLine={false} 
                                 axisLine={false} 
                                 ticks={[0, 25, 50, 75, 100]}
                             />
                             
-                            <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'var(--border)', strokeWidth: 1, strokeDasharray: '4 4' }} />
+                            <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#363739', strokeWidth: 1, strokeDasharray: '4 4' }} />
                             
                             <Line 
                                 type="monotone" 
@@ -149,7 +149,7 @@ export const ConfidenceTimeline: React.FC<ConfidenceTimelineProps> = ({ placeId 
                                 stroke="url(#scoreGradient)" 
                                 strokeWidth={3}
                                 dot={<CustomDot />}
-                                activeDot={{ r: 6, strokeWidth: 0, fill: 'var(--foreground)' }}
+                                activeDot={{ r: 6, strokeWidth: 0, fill: '#ffffff' }}
                                 animationDuration={1000}
                                 isAnimationActive={true}
                             />

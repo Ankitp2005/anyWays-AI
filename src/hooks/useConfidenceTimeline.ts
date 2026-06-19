@@ -19,12 +19,15 @@ export function useConfidenceTimeline(placeId: string, timeframe: Timeframe) {
                 let sorted = [...(history as SignalEvent[])].reverse();
 
                 // Filter by timeframe
-                const now = new Date().getTime();
+                const latestTime = sorted.length > 0 
+                    ? new Date(sorted[sorted.length - 1].created_at).getTime() 
+                    : new Date().getTime();
+
                 let cutoffHours = 24;
                 if (timeframe === '7d') cutoffHours = 24 * 7;
                 if (timeframe === '30d') cutoffHours = 24 * 30;
                 
-                const cutoffTime = now - (cutoffHours * 60 * 60 * 1000);
+                const cutoffTime = latestTime - (cutoffHours * 60 * 60 * 1000);
 
                 sorted = sorted.filter(evt => new Date(evt.created_at).getTime() >= cutoffTime);
 
