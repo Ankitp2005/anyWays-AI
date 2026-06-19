@@ -553,7 +553,7 @@ export const MarketingHome: React.FC = () => {
                             <ArrowRight size={14} />
                         </button>
                         <button
-                            onClick={() => setView('pricing')}
+                            onClick={() => setView('architecture')}
                             className="flex items-center justify-center gap-2 text-[#9c9c9d] hover:text-[#ffffff] hover:border-white/40 font-medium px-6 py-2.5 rounded-[8px] border border-[#454647] bg-transparent transition-all duration-200 w-full sm:w-auto font-sans"
                         >
                             View Architecture

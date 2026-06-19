@@ -7,6 +7,7 @@ import { Login } from './components/Login';
 import { Register } from './components/Register';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Pricing } from './components/Pricing';
+import { Architecture } from './components/Architecture';
 
 const App: React.FC = () => {
   const { currentView, setView } = useApp();
@@ -51,6 +52,7 @@ const App: React.FC = () => {
   // Marketing view — public
   if (currentView === 'marketing') return <MarketingHome />;
   if (currentView === 'pricing')   return <Pricing />;
+  if (currentView === 'architecture') return <Architecture />;
 
   // Dashboard — protected: ProtectedRoute handles the unauthenticated fallback
   return (

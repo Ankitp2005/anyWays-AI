@@ -8,7 +8,7 @@ import { User, Place, ApiKey, CreatePlaceDTO, UpdatePlaceDTO } from '../services
 import { supabase } from '../lib/supabaseClient';
 
 
-type AppView = 'marketing' | 'dashboard' | 'login' | 'register' | 'pricing';
+type AppView = 'marketing' | 'dashboard' | 'login' | 'register' | 'pricing' | 'architecture';
 
 interface AppContextType {
     // View State
@@ -74,7 +74,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         if (typeof window !== 'undefined') {
             const params = new URLSearchParams(window.location.search);
             const view = params.get('view');
-            if (['marketing', 'dashboard', 'login', 'register', 'pricing'].includes(view as string)) {
+            if (['marketing', 'dashboard', 'login', 'register', 'pricing', 'architecture'].includes(view as string)) {
                 return view as AppView;
             }
         }
@@ -86,7 +86,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         const handlePopState = () => {
             const params = new URLSearchParams(window.location.search);
             const view = params.get('view') as AppView | null;
-            if (view && ['marketing', 'dashboard', 'login', 'register', 'pricing'].includes(view)) {
+            if (view && ['marketing', 'dashboard', 'login', 'register', 'pricing', 'architecture'].includes(view)) {
                 setCurrentView(view);
             } else {
                 setCurrentView('marketing'); // Default fallback
