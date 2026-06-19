@@ -3,10 +3,9 @@ import { motion } from 'framer-motion';
 import { 
     ArrowRight, MapPin, Shield, AlertTriangle, Activity, Eye, 
     XCircle, TrendingDown, CheckCircle2, Zap, 
-    BarChart3, Clock, Sun, Moon
+    BarChart3, Clock
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { useTheme } from '../context/ThemeContext';
 import { cn } from '../utils/cn';
 
 /* ─── Animated Counter (Deltas from previous) ───────────────────── */
@@ -399,7 +398,6 @@ const StatCard = ({ value, suffix, label }: { value: number; suffix: string; lab
 
 export const MarketingHome: React.FC = () => {
     const { setView, isAuthenticated } = useApp();
-    const { theme, toggleTheme } = useTheme();
 
     // Live Demo score loop states
     const [demoStep, setDemoStep] = useState(0);
@@ -475,13 +473,6 @@ export const MarketingHome: React.FC = () => {
                         <button onClick={() => setView('pricing')} className="hover:text-[#ffffff] transition-colors duration-200">Pricing</button>
                     </div>
                     <div className="flex items-center gap-3">
-                        <button
-                            onClick={toggleTheme}
-                            className="p-1.5 text-[#9c9c9d] hover:text-[#ffffff] hover:bg-white/5 rounded-[8px] transition-all duration-200"
-                            title={`Switch theme`}
-                        >
-                            {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
-                        </button>
                         {isAuthenticated ? (
                             <button
                                 onClick={() => setView('dashboard')}
